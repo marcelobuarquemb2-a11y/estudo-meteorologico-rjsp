@@ -4,6 +4,7 @@ name: Collect verified REAL station observations (audit)
     branches: [main]
     paths:
       - 'collect_observations.py'
+      - 'compare_forecasts.py'
       - '.github/workflows/observacoes.yml'
   schedule:
     - cron: '20 13 * * *'
@@ -28,12 +29,15 @@ jobs:
         env:
           GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: python collect_observations.py
+      - name: Join observations with archived forecast vintages
+        if: always()
+        run: python compare_forecasts.py
       - name: Preserve audit evidence, including unavailable sources
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observations/
+          git add data/observations/ data/comparisons/
           if ! git diff --cached --quiet; then
             git commit -m "Archive real station observation acquisition audit"
             git pull --rebase origin main
