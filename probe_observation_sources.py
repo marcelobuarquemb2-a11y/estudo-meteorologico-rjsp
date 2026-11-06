@@ -14,6 +14,8 @@ urls={
  "wis2_station_near_angra":"https://wis2bra.inmet.gov.br/oapi/collections/stations/items?"+urllib.parse.urlencode({"f":"json","limit":20,"bbox":"-44.5,-23.3,-44.0,-22.7"}),
  "wis2_synop":"https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&limit=5",
  "wis2_synop_near_angra":"https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?"+urllib.parse.urlencode({"f":"json","limit":20,"bbox":"-44.5,-23.3,-44.0,-22.7"}),
+ "wis2_angra_recent":"https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?"+urllib.parse.urlencode({"f":"json","limit":60,"bbox":"-44.5,-23.3,-44.0,-22.7","datetime":"2026-11-05T00:00:00Z/2026-11-07T23:59:59Z"}),
+ "wis2_angra_sept":"https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?"+urllib.parse.urlencode({"f":"json","limit":60,"bbox":"-44.5,-23.3,-44.0,-22.7","datetime":"2026-09-08T23:00:00Z/2026-09-09T02:00:00Z"}),
  "inmet_catalog":"https://apitempo.inmet.gov.br/estacoes/T",
  "inmet_legacy_observations":"https://apitempo.inmet.gov.br/estacao/2026-11-05/2026-11-07/A628"
 }
