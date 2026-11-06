@@ -157,7 +157,7 @@ def main():
             inmet["wis2"]={"status":"source_error","error_type":type(e).__name__}
     out=ROOT/"data"/"observations"/"reports"/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
-    path=out/(now.strftime("%H%M%S")+".json")
+    path=out/(now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
     path.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print("Observation report",path.relative_to(ROOT))
     for sid,r in result["stations"].items(): print(sid,r["status"])
