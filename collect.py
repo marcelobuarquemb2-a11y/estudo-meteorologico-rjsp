@@ -20,7 +20,7 @@ def fetch(url,params):
 
 def main():
     now=dt.datetime.now(TZ)
-    targets=[(now.date()+dt.timedelta(days=d)).isoformat()+f"T{now.hour:02d}:00" for d in (1,2,3)]
+    targets=[(now.date()+dt.timedelta(days=d)).isoformat()+f"T{min((9,12,15,18),key=lambda h:abs(h-now.hour)):02d}:00" for d in (1,2,3)]
     result={"consulted_at":now.isoformat(),"information_time_convention":"actual consultation time",
             "targets_local":targets,"station_results":{},"note":"Raw forecasts only; no observations or skill scores"}
     key=os.environ.get("METEOBLUE_API_KEY")
@@ -52,6 +52,9 @@ def main():
                     "mlm_provenance":"not verified","target_times":targets}
             except Exception as e:
                 item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
+    # Preserve raw API responses and generate normalized, audited forecast records.
+    from normalize_collection import normalize_collection
+    normalize_collection(result)
     out=ROOT/"data"/now.strftime("%Y-%m")/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
     path=out/(now.strftime("%H%M%S")+".json")
