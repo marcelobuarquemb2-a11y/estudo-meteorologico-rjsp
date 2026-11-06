@@ -1,0 +1,504 @@
+{
+  "time_brt": "2026-11-06T15:14:57.943946-03:00",
+  "checks": {
+    "wis2_stations": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=json&limit=5",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 4509,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 5,
+      "returned_count": 5,
+      "item_examples": [
+        {
+          "id": "0-76-0-1200351000000456",
+          "properties": {
+            "name": "MARECHAL THAUMATURGO",
+            "wigos_station_identifier": "0-76-0-1200351000000456",
+            "traditional_station_identifier": "81922",
+            "barometer_height": 222.48,
+            "facility_type": "landFixed",
+            "territory_name": "BRA",
+            "wmo_region": "southAmerica",
+            "url": "https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-76-0-1200351000000456",
+            "topic": "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop",
+            "topics": [
+              "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop"
+            ],
+            "status": "operational",
+            "id": "0-76-0-1200351000000456"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -72.786667,
+              -8.95,
+              220.98
+            ]
+          }
+        },
+        {
+          "id": "0-76-0-1200393000000457",
+          "properties": {
+            "name": "PORTO WALTER",
+            "wigos_station_identifier": "0-76-0-1200393000000457",
+            "traditional_station_identifier": "81921",
+            "barometer_height": 206.85,
+            "facility_type": "landFixed",
+            "territory_name": "BRA",
+            "wmo_region": "southAmerica",
+            "url": "https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-76-0-1200393000000457",
+            "topic": "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop",
+            "topics": [
+              "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop"
+            ],
+            "status": "operational",
+            "id": "0-76-0-1200393000000457"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -72.747778,
+              -8.267222,
+              205.35
+            ]
+          }
+        },
+        {
+          "id": "0-76-0-1100205000000227",
+          "properties": {
+            "name": "PORTO VELHO",
+            "wigos_station_identifier": "0-76-0-1100205000000227",
+            "traditional_station_identifier": "81932",
+            "barometer_height": 88.2,
+            "facility_type": "landFixed",
+            "territory_name": "BRA",
+            "wmo_region": "southAmerica",
+            "url": "https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-76-0-1100205000000227",
+            "topic": "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop",
+            "topics": [
+              "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop"
+            ],
+            "status": "operational",
+            "id": "0-76-0-1100205000000227"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -63.845833,
+              -8.793611,
+              86.7
+            ]
+          }
+        }
+      ]
+    },
+    "wis2_station_near_angra": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=json&limit=20&bbox=-44.5%2C-23.3%2C-44.0%2C-22.7",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 1726,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 1,
+      "returned_count": 1,
+      "item_examples": [
+        {
+          "id": "0-76-0-3300100000000555",
+          "properties": {
+            "name": "ANGRA DOS REIS",
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "traditional_station_identifier": "84817",
+            "barometer_height": 7.5,
+            "facility_type": "landFixed",
+            "territory_name": "BRA",
+            "wmo_region": "southAmerica",
+            "url": "https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-76-0-3300100000000555",
+            "topic": "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop",
+            "topics": [
+              "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop"
+            ],
+            "status": "operational",
+            "id": "0-76-0-3300100000000555"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -44.303333,
+              -22.975556,
+              6.0
+            ]
+          }
+        }
+      ]
+    },
+    "wis2_synop": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&limit=5",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 3617,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 5,
+      "returned_count": 5,
+      "item_examples": [
+        {
+          "id": "0-76-0-5208707000000007-202609090100-0",
+          "properties": {
+            "description": null,
+            "name": "non_coordinate_pressure",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-5208707000000007-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "hPa",
+            "value": 935.9,
+            "wigos_station_identifier": "0-76-0-5208707000000007",
+            "id": "0-76-0-5208707000000007-202609090100-0"
+          },
+          "geometry": {
+            "coordinates": [
+              -49.22028,
+              -16.64278,
+              728.8000000000001
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-5208707000000007-202609090100-1",
+          "properties": {
+            "description": "INCREASING (STEADILY OR UNSTEADILY)",
+            "name": "characteristic_of_pressure_tendency",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-5208707000000007-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "CODE TABLE",
+            "value": null,
+            "wigos_station_identifier": "0-76-0-5208707000000007",
+            "id": "0-76-0-5208707000000007-202609090100-1"
+          },
+          "geometry": {
+            "coordinates": [
+              -49.22028,
+              -16.64278,
+              728.8000000000001
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-5208707000000007-202609090100-2",
+          "properties": {
+            "description": null,
+            "name": "air_temperature",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-5208707000000007-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "Celsius",
+            "value": 21.5,
+            "wigos_station_identifier": "0-76-0-5208707000000007",
+            "id": "0-76-0-5208707000000007-202609090100-2"
+          },
+          "geometry": {
+            "coordinates": [
+              -49.22028,
+              -16.64278,
+              728.8000000000001
+            ],
+            "type": "Point"
+          }
+        }
+      ]
+    },
+    "wis2_synop_near_angra": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&limit=20&bbox=-44.5%2C-23.3%2C-44.0%2C-22.7",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 10812,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 20,
+      "returned_count": 20,
+      "item_examples": [
+        {
+          "id": "0-76-0-3300100000000555-202609090100-0",
+          "properties": {
+            "description": null,
+            "name": "non_coordinate_pressure",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "hPa",
+            "value": 1019.2,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-0"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202609090100-1",
+          "properties": {
+            "description": "INCREASING (STEADILY OR UNSTEADILY)",
+            "name": "characteristic_of_pressure_tendency",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "CODE TABLE",
+            "value": null,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-1"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202609090100-2",
+          "properties": {
+            "description": null,
+            "name": "air_temperature",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "Celsius",
+            "value": 18.8,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-2"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        }
+      ]
+    },
+    "wis2_angra_recent": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&limit=60&bbox=-44.5%2C-23.3%2C-44.0%2C-22.7&datetime=2026-11-05T00%3A00%3A00Z%2F2026-11-07T23%3A59%3A59Z",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 30177,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 60,
+      "returned_count": 60,
+      "item_examples": [
+        {
+          "id": "0-76-0-3300100000000555-202611050100-0",
+          "properties": {
+            "description": null,
+            "name": "non_coordinate_pressure",
+            "phenomenonTime": "2026-11-05T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202611050100",
+            "reportTime": "2026-11-05T01:00:00Z",
+            "units": "hPa",
+            "value": 1011.2,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202611050100-0"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202611050100-1",
+          "properties": {
+            "description": null,
+            "name": "air_temperature",
+            "phenomenonTime": "2026-11-05T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202611050100",
+            "reportTime": "2026-11-05T01:00:00Z",
+            "units": "Celsius",
+            "value": 25.0,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202611050100-1"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202611050100-2",
+          "properties": {
+            "description": null,
+            "name": "dewpoint_temperature",
+            "phenomenonTime": "2026-11-05T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202611050100",
+            "reportTime": "2026-11-05T01:00:00Z",
+            "units": "Celsius",
+            "value": 22.8,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202611050100-2"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        }
+      ]
+    },
+    "wis2_angra_sept": {
+      "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&limit=60&bbox=-44.5%2C-23.3%2C-44.0%2C-22.7&datetime=2026-09-08T23%3A00%3A00Z%2F2026-09-09T02%3A00%3A00Z",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 23682,
+      "json_type": "dict",
+      "keys": [
+        "type",
+        "features",
+        "numberMatched",
+        "numberReturned",
+        "links",
+        "timeStamp"
+      ],
+      "feature_count": 47,
+      "returned_count": 47,
+      "item_examples": [
+        {
+          "id": "0-76-0-3300100000000555-202609090100-0",
+          "properties": {
+            "description": null,
+            "name": "non_coordinate_pressure",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "hPa",
+            "value": 1019.2,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-0"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202609090100-1",
+          "properties": {
+            "description": "INCREASING (STEADILY OR UNSTEADILY)",
+            "name": "characteristic_of_pressure_tendency",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "CODE TABLE",
+            "value": null,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-1"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        },
+        {
+          "id": "0-76-0-3300100000000555-202609090100-2",
+          "properties": {
+            "description": null,
+            "name": "air_temperature",
+            "phenomenonTime": "2026-09-09T01:00:00Z",
+            "reportId": "0-76-0-3300100000000555-202609090100",
+            "reportTime": "2026-09-09T01:00:00Z",
+            "units": "Celsius",
+            "value": 18.8,
+            "wigos_station_identifier": "0-76-0-3300100000000555",
+            "id": "0-76-0-3300100000000555-202609090100-2"
+          },
+          "geometry": {
+            "coordinates": [
+              -44.30333,
+              -22.97556,
+              7.5
+            ],
+            "type": "Point"
+          }
+        }
+      ]
+    },
+    "inmet_catalog": {
+      "url": "https://apitempo.inmet.gov.br/estacoes/T",
+      "http": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 250000,
+      "body_sample": "[{\"CD_OSCAR\":null,\"DC_NOME\":\"ACAJUTIBA\",\"FL_CAPITAL\":\"N\",\"DT_FIM_OPERACAO\":null,\"CD_SITUACAO\":\"Operante\",\"TP_ESTACAO\":\"Automatica\",\"VL_LATITUDE\":\"-11.65444444\","
+    },
+    "inmet_legacy_observations": {
+      "url": "https://apitempo.inmet.gov.br/estacao/2026-11-05/2026-11-07/A628",
+      "http": 204,
+      "content_type": null,
+      "bytes": 0
+    }
+  }
+}
