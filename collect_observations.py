@@ -137,6 +137,24 @@ def main():
             entry["http_status"]=e.code;entry["status"]="http_error"
         except Exception as e:
             entry["status"]="retrieval_error";entry["error_type"]=type(e).__name__
+    # Independent official WIS2 channel, also tested when legacy API responds HTTP 204.
+    inmet=result["stations"]["inmet_a628_angra"]
+    if inmet.get("observed") is None:
+        try:
+            from inmet_wis2 import acquire
+            wis2,payload=acquire(target)
+            inmet["wis2"]=wis2
+            if payload is not None:
+                archive=ROOT/"data"/"observations"/"raw"/now.strftime("%Y-%m-%d")
+                archive.mkdir(parents=True,exist_ok=True)
+                fp=archive/("inmet_wis2_"+now.strftime("%H%M%S")+".json")
+                fp.write_text(json.dumps(payload,ensure_ascii=False)+"\\n",encoding="utf-8")
+                inmet["wis2_raw_archive"]=str(fp.relative_to(ROOT))
+            if wis2.get("observed") is not None:
+                inmet["observed"]=wis2["observed"]
+                inmet["status"]="observation_available_wis2"
+        except Exception as e:
+            inmet["wis2"]={"status":"source_error","error_type":type(e).__name__}
     out=ROOT/"data"/"observations"/"reports"/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
     path=out/(now.strftime("%H%M%S")+".json")
