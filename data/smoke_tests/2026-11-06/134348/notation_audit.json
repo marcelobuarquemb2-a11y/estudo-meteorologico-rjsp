@@ -1,0 +1,203 @@
+{
+  "source_smoke_report": "data/smoke_tests/2026-11-06/134348/report.json",
+  "audit_at": "2026-11-06T13:43:50.176753-03:00",
+  "reference_niteroi": {
+    "latitude": -22.88333,
+    "longitude": -43.10361
+  },
+  "checks": [
+    {
+      "source": "Open-Meteo Angra",
+      "requested": [
+        -22.97555554,
+        -44.30333333
+      ],
+      "returned": [
+        -23.0,
+        -44.375
+      ],
+      "distance_km": 7.823,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic Angra",
+      "requested": [
+        -22.97555554,
+        -44.30333333
+      ],
+      "returned": [
+        -22.975555,
+        -44.303333
+      ],
+      "distance_km": 0.0,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind Angra",
+      "requested": [
+        -22.97555554,
+        -44.30333333
+      ],
+      "returned": [
+        -22.975555,
+        -44.303333
+      ],
+      "distance_km": 0.0,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Open-Meteo Angra",
+      "target_local": "2026-11-07T12:00",
+      "target_utc": "2026-11-07T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic Angra",
+      "target_local": "2026-11-07T12:00",
+      "target_utc": "2026-11-07T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind Angra",
+      "target_local": "2026-11-07T12:00",
+      "target_utc": "2026-11-07T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Open-Meteo Angra",
+      "target_local": "2026-11-08T12:00",
+      "target_utc": "2026-11-08T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic Angra",
+      "target_local": "2026-11-08T12:00",
+      "target_utc": "2026-11-08T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind Angra",
+      "target_local": "2026-11-08T12:00",
+      "target_utc": "2026-11-08T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Open-Meteo Angra",
+      "target_local": "2026-11-09T12:00",
+      "target_utc": "2026-11-09T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic Angra",
+      "target_local": "2026-11-09T12:00",
+      "target_utc": "2026-11-09T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind Angra",
+      "target_local": "2026-11-09T12:00",
+      "target_utc": "2026-11-09T15:00:00+00:00",
+      "utc_offset_hours": -3,
+      "target_present": true,
+      "date_iso_valid": true,
+      "utc_roundtrip_valid": true,
+      "pass": true
+    },
+    {
+      "source": "Open-Meteo Niteroi",
+      "requested": [
+        -22.88333,
+        -43.10361
+      ],
+      "returned": [
+        -22.902695,
+        -43.007812
+      ],
+      "distance_km": 10.047,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Open-Meteo Niteroi timezone",
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic-1h Niteroi",
+      "requested": [
+        -22.88333,
+        -43.10361
+      ],
+      "returned": [
+        -22.88333,
+        -43.10361
+      ],
+      "distance_km": 0.0,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue basic-1h Niteroi timezone",
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind-3h Niteroi",
+      "requested": [
+        -22.88333,
+        -43.10361
+      ],
+      "returned": [
+        -22.88333,
+        -43.10361
+      ],
+      "distance_km": 0.0,
+      "valid_hemisphere": true,
+      "within_grid_tolerance": true,
+      "pass": true
+    },
+    {
+      "source": "Meteoblue wind-3h Niteroi timezone",
+      "pass": true
+    }
+  ],
+  "passed": true
+}
