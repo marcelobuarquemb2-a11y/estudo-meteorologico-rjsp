@@ -76,7 +76,7 @@ def main():
     out=ROOT/"data"/now.strftime("%Y-%m")/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
     path=out/(now.strftime("%H%M%S")+".json")
-    path.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+    path.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("Audit artifact:",path.relative_to(ROOT))
     print("Sources with numeric responses:",sum(len(x["sources"]) for x in result["station_results"].values()))
     print("Stations awaiting verified coordinates:",sum(x["lat"] is None for x in result["station_results"].values()))
