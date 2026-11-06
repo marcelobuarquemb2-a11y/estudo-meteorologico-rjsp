@@ -1,0 +1,31 @@
+name: Validate observed A628 station at first official 15h
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/teste-real-15h.yml'
+      - 'test_real_angra_15h.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test-real:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire official real A628 reading
+        run: python test_real_angra_15h.py
+      - name: Archive official observed raw measurements
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/observation_probes/official_15h_2026-11-06/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive verified 15h A628 observation probe"
+            git pull --rebase origin main
+            git push
+          fi
