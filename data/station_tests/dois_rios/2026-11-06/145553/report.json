@@ -1,0 +1,338 @@
+{
+  "consulted_at": "2026-11-06T14:55:53.353324-03:00",
+  "station": "Dois Rios Ilha Grande SiMCosta tide-gauge site (meteorological sensor unverified)",
+  "coordinate": {
+    "latitude": -23.182725447222225,
+    "longitude": -44.201081352777784
+  },
+  "targets_local": [
+    "2026-11-07T15:00",
+    "2026-11-08T15:00",
+    "2026-11-09T15:00"
+  ],
+  "model_identity": {
+    "ICON": "Open-Meteo icon_global",
+    "GFS": "Open-Meteo ncep_gfs_global",
+    "ECMWF": "Open-Meteo ecmwf_ifs",
+    "Meteoblue": "Package identity unverified; NOT certified AI/mLM"
+  },
+  "results": [
+    {
+      "model": "ICON",
+      "horizon_hours": 24,
+      "valid_local": "2026-11-07T15:00",
+      "values": {
+        "direction_deg": 247,
+        "mean_kt": 2.5,
+        "gust_kt": 6.4,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_icon_global",
+        "mean_kt": "wind_speed_10m_icon_global",
+        "gust_kt": "wind_gusts_10m_icon_global",
+        "precip_mm": "precipitation_icon_global"
+      }
+    },
+    {
+      "model": "ICON",
+      "horizon_hours": 48,
+      "valid_local": "2026-11-08T15:00",
+      "values": {
+        "direction_deg": 200,
+        "mean_kt": 6.8,
+        "gust_kt": 25.1,
+        "precip_mm": 0.6
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_icon_global",
+        "mean_kt": "wind_speed_10m_icon_global",
+        "gust_kt": "wind_gusts_10m_icon_global",
+        "precip_mm": "precipitation_icon_global"
+      }
+    },
+    {
+      "model": "ICON",
+      "horizon_hours": 72,
+      "valid_local": "2026-11-09T15:00",
+      "values": {
+        "direction_deg": 108,
+        "mean_kt": 8.4,
+        "gust_kt": 17.7,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_icon_global",
+        "mean_kt": "wind_speed_10m_icon_global",
+        "gust_kt": "wind_gusts_10m_icon_global",
+        "precip_mm": "precipitation_icon_global"
+      }
+    },
+    {
+      "model": "GFS",
+      "horizon_hours": 24,
+      "valid_local": "2026-11-07T15:00",
+      "values": {
+        "direction_deg": 88,
+        "mean_kt": 4.5,
+        "gust_kt": 1.9,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ncep_gfs_global",
+        "mean_kt": "wind_speed_10m_ncep_gfs_global",
+        "gust_kt": "wind_gusts_10m_ncep_gfs_global",
+        "precip_mm": "precipitation_ncep_gfs_global"
+      }
+    },
+    {
+      "model": "GFS",
+      "horizon_hours": 48,
+      "valid_local": "2026-11-08T15:00",
+      "values": {
+        "direction_deg": 230,
+        "mean_kt": 7.3,
+        "gust_kt": 9.1,
+        "precip_mm": 0.9
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ncep_gfs_global",
+        "mean_kt": "wind_speed_10m_ncep_gfs_global",
+        "gust_kt": "wind_gusts_10m_ncep_gfs_global",
+        "precip_mm": "precipitation_ncep_gfs_global"
+      }
+    },
+    {
+      "model": "GFS",
+      "horizon_hours": 72,
+      "valid_local": "2026-11-09T15:00",
+      "values": {
+        "direction_deg": 45,
+        "mean_kt": 0.8,
+        "gust_kt": 1.9,
+        "precip_mm": 0.6
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ncep_gfs_global",
+        "mean_kt": "wind_speed_10m_ncep_gfs_global",
+        "gust_kt": "wind_gusts_10m_ncep_gfs_global",
+        "precip_mm": "precipitation_ncep_gfs_global"
+      }
+    },
+    {
+      "model": "ECMWF",
+      "horizon_hours": 24,
+      "valid_local": "2026-11-07T15:00",
+      "values": {
+        "direction_deg": 112,
+        "mean_kt": 2.8,
+        "gust_kt": 7.8,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ecmwf_ifs",
+        "mean_kt": "wind_speed_10m_ecmwf_ifs",
+        "gust_kt": "wind_gusts_10m_ecmwf_ifs",
+        "precip_mm": "precipitation_ecmwf_ifs"
+      }
+    },
+    {
+      "model": "ECMWF",
+      "horizon_hours": 48,
+      "valid_local": "2026-11-08T15:00",
+      "values": {
+        "direction_deg": 199,
+        "mean_kt": 8.9,
+        "gust_kt": 30.9,
+        "precip_mm": 0.1
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ecmwf_ifs",
+        "mean_kt": "wind_speed_10m_ecmwf_ifs",
+        "gust_kt": "wind_gusts_10m_ecmwf_ifs",
+        "precip_mm": "precipitation_ecmwf_ifs"
+      }
+    },
+    {
+      "model": "ECMWF",
+      "horizon_hours": 72,
+      "valid_local": "2026-11-09T15:00",
+      "values": {
+        "direction_deg": 138,
+        "mean_kt": 6.8,
+        "gust_kt": 22.0,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "wind_direction_10m_ecmwf_ifs",
+        "mean_kt": "wind_speed_10m_ecmwf_ifs",
+        "gust_kt": "wind_gusts_10m_ecmwf_ifs",
+        "precip_mm": "precipitation_ecmwf_ifs"
+      }
+    },
+    {
+      "model": "Meteoblue (package; AI unverified)",
+      "horizon_hours": 24,
+      "valid_local": "2026-11-07T15:00",
+      "values": {
+        "direction_deg": 118,
+        "mean_kt": 1.089,
+        "gust_kt": 6.317,
+        "precip_mm": 0.1
+      },
+      "field_keys": {
+        "direction_deg": "data_1h.winddirection",
+        "mean_kt": "data_1h.windspeed",
+        "gust_kt": "data_3h.gust",
+        "precip_mm": "data_1h.precipitation"
+      },
+      "gust_height": "unverified",
+      "model_identity": "AI/mLM unverified",
+      "conversion": "m/s to kt * 1.9438444924"
+    },
+    {
+      "model": "Meteoblue (package; AI unverified)",
+      "horizon_hours": 48,
+      "valid_local": "2026-11-08T15:00",
+      "values": {
+        "direction_deg": 209,
+        "mean_kt": 9.078,
+        "gust_kt": 26.533,
+        "precip_mm": 0.7
+      },
+      "field_keys": {
+        "direction_deg": "data_1h.winddirection",
+        "mean_kt": "data_1h.windspeed",
+        "gust_kt": "data_3h.gust",
+        "precip_mm": "data_1h.precipitation"
+      },
+      "gust_height": "unverified",
+      "model_identity": "AI/mLM unverified",
+      "conversion": "m/s to kt * 1.9438444924"
+    },
+    {
+      "model": "Meteoblue (package; AI unverified)",
+      "horizon_hours": 72,
+      "valid_local": "2026-11-09T15:00",
+      "values": {
+        "direction_deg": 126,
+        "mean_kt": 7.639,
+        "gust_kt": 10.108,
+        "precip_mm": 0.0
+      },
+      "field_keys": {
+        "direction_deg": "data_1h.winddirection",
+        "mean_kt": "data_1h.windspeed",
+        "gust_kt": "data_3h.gust",
+        "precip_mm": "data_1h.precipitation"
+      },
+      "gust_height": "unverified",
+      "model_identity": "AI/mLM unverified",
+      "conversion": "m/s to kt * 1.9438444924"
+    }
+  ],
+  "errors": [],
+  "raw_files": [
+    "open_meteo_raw.json",
+    "meteoblue_basic-1h_raw.json",
+    "meteoblue_wind-3h_raw.json"
+  ],
+  "time_validation": [
+    {
+      "source": "Open-Meteo",
+      "offset_seconds": -10800,
+      "targets_utc": [
+        "2026-11-07T18:00:00+00:00",
+        "2026-11-08T18:00:00+00:00",
+        "2026-11-09T18:00:00+00:00"
+      ],
+      "passed": true
+    },
+    {
+      "source": "Meteoblue basic-1h",
+      "offset_seconds": -10800,
+      "targets_utc": [
+        "2026-11-07T18:00:00+00:00",
+        "2026-11-08T18:00:00+00:00",
+        "2026-11-09T18:00:00+00:00"
+      ],
+      "passed": true
+    },
+    {
+      "source": "Meteoblue wind-3h",
+      "offset_seconds": -10800,
+      "targets_utc": [
+        "2026-11-07T18:00:00+00:00",
+        "2026-11-08T18:00:00+00:00",
+        "2026-11-09T18:00:00+00:00"
+      ],
+      "passed": true
+    }
+  ],
+  "open_meteo_grid": {
+    "latitude": -23.125,
+    "longitude": -44.25,
+    "elevation": 108.0,
+    "units": {
+      "time": "iso8601",
+      "wind_direction_10m_icon_global": "°",
+      "wind_speed_10m_icon_global": "kn",
+      "wind_gusts_10m_icon_global": "kn",
+      "precipitation_icon_global": "mm",
+      "wind_direction_10m_ncep_gfs_global": "°",
+      "wind_speed_10m_ncep_gfs_global": "kn",
+      "wind_gusts_10m_ncep_gfs_global": "kn",
+      "precipitation_ncep_gfs_global": "mm",
+      "wind_direction_10m_ecmwf_ifs": "°",
+      "wind_speed_10m_ecmwf_ifs": "kn",
+      "wind_gusts_10m_ecmwf_ifs": "kn",
+      "precipitation_ecmwf_ifs": "mm"
+    }
+  },
+  "meteoblue_metadata": {
+    "basic-1h": {
+      "modelrun_updatetime_utc": "2026-11-06 17:55",
+      "name": "",
+      "height": 6,
+      "timezone_abbrevation": "GMT-03",
+      "latitude": -23.182726,
+      "modelrun_utc": "2026-11-06 17:55",
+      "longitude": -44.20108,
+      "utc_timeoffset": -3.0,
+      "generation_time_ms": 4.247546
+    },
+    "wind-3h": {
+      "modelrun_updatetime_utc": "2026-11-06 17:55",
+      "name": "",
+      "height": 6,
+      "timezone_abbrevation": "GMT-03",
+      "latitude": -23.182726,
+      "modelrun_utc": "2026-11-06 17:55",
+      "sigmalevel": 80.0,
+      "longitude": -44.20108,
+      "utc_timeoffset": -3.0,
+      "generation_time_ms": 3.5250187
+    }
+  },
+  "open_meteo_grid_offset_km": 8.137,
+  "meteoblue_offset_km": {
+    "basic-1h": 0.0,
+    "wind-3h": 0.0
+  },
+  "unit_checks": {
+    "open_meteo": true,
+    "meteoblue_basic_speed": true,
+    "meteoblue_basic_precip": true,
+    "meteoblue_gust_speed": true
+  },
+  "station_position_status": "Historical CEADS meteorological station position; station operational status unverified",
+  "scalar_count_non_null": 48,
+  "scalar_count_expected": 48,
+  "data_completeness_passed": true,
+  "validation_passed": false,
+  "validation_blockers": [
+    "Meteoblue AI/mLM identity unverified",
+    "Meteoblue gust reference height/definition unverified",
+    "Manual test times are next calendar days, not exact 24/48/72h from query timestamp"
+  ]
+}
