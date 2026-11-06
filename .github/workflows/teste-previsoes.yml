@@ -15,7 +15,14 @@ jobs:
         env:
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
         run: python smoke_test.py
+      - name: Triple-check coordinates, timezone and ISO dates (including Niteroi)
+        id: notation_audit
+        continue-on-error: true
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: python audit_notation.py
       - name: Commit test evidence
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -24,3 +31,6 @@ jobs:
             git commit -m "Archive forecast API smoke test"
             git push
           fi
+      - name: Enforce notation audit result
+        if: steps.notation_audit.outcome == 'failure'
+        run: exit 1
