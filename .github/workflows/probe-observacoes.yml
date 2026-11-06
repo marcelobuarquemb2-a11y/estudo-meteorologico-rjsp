@@ -1,0 +1,31 @@
+name: Probe official observation feeds
+'on':
+  push:
+    branches: [main]
+    paths:
+      - 'probe_observation_sources.py'
+      - '.github/workflows/probe-observacoes.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe raw station observations
+        run: python probe_observation_sources.py
+      - name: Persist probe report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/observation_probes/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive official observation-source probes"
+            git pull --rebase origin main
+            git push
+          fi
