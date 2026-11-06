@@ -1,0 +1,94 @@
+{
+  "acquired_at_brt": "2026-11-06T15:19:03.951808-03:00",
+  "target_local": "2026-11-06T13:00:00-03:00",
+  "scheduled_cron": null,
+  "target_measurement_delayed_by_minutes": 139.1,
+  "target_utc": "2026-11-06T16:00:00+00:00",
+  "real_observations_only": true,
+  "series_start": "2026-11-06T15:00:00-03:00",
+  "stations": {
+    "ilhabela": {
+      "station_name": "Ilhabela",
+      "source": "SiMCosta Ilhabela",
+      "source_status": "requires_verified_meteorological_sensor",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "sp1_sao_sebastiao": {
+      "station_name": "SP-1 São Sebastião",
+      "source": "SiMCosta SP-1",
+      "source_status": "requires_verified_data_endpoint",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_rasa": {
+      "station_name": "Ilha Rasa",
+      "source": "Marinha 83117 / PortosRio",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "cdrj1_ilha_pai": {
+      "station_name": "CDRJ-1 Ilha do Pai",
+      "source": "SiMCosta / PortosRio CDRJ-1",
+      "source_status": "requires_verified_data_endpoint",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_fiscal": {
+      "station_name": "Ilha Fiscal",
+      "source": "PortosRio SMA Ilha Fiscal",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "inmet_a628_angra": {
+      "station_name": "INMET A628 Angra",
+      "source": "INMET automatic station A628",
+      "source_status": "endpoint_trial",
+      "observed": {
+        "direction_deg": 224.0,
+        "mean_kt": 0.583,
+        "gust_kt": 5.443,
+        "precip_mm": 0.6000000000000001
+      },
+      "source_url": "https://apitempo.inmet.gov.br/estacao/2026-11-05/2026-11-07/A628",
+      "http_status": 204,
+      "response_content_type": "",
+      "response_bytes": 0,
+      "raw_body_sample": null,
+      "status": "observation_available_wis2",
+      "wis2": {
+        "status": "observation_available_wis2",
+        "source_url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.35%2C-23.02%2C-44.25%2C-22.93&datetime=2026-11-06T15%3A55%3A00Z%2F2026-11-06T16%3A05%3A00Z&limit=200",
+        "station_wigos": "0-76-0-3300100000000555",
+        "target_utc": "2026-11-06T16:00:00Z",
+        "observed": {
+          "direction_deg": 224.0,
+          "mean_kt": 0.583,
+          "gust_kt": 5.443,
+          "precip_mm": 0.6000000000000001
+        },
+        "features_returned": 12,
+        "units": {
+          "direction_deg": "deg",
+          "mean_kt": "m/s",
+          "gust_kt": "m/s",
+          "precip_mm": "kg m-2"
+        },
+        "report_time_matched": true,
+        "precipitation_definition": "kg/m2 = mm of liquid water (hourly period must be checked)",
+        "measurement_source": "INMET WIS2 SYNOP"
+      },
+      "wis2_raw_archive": "data/observations/raw/2026-11-06/inmet_wis2_151903_20261106_1300.json"
+    },
+    "dois_rios": {
+      "station_name": "Dois Rios Ilha Grande",
+      "source": "CEADS (historical)",
+      "source_status": "excluded",
+      "observed": null,
+      "status": "excluded"
+    }
+  },
+  "errors": []
+}
