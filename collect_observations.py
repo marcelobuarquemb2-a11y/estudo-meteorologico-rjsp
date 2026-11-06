@@ -86,9 +86,17 @@ def request(url):
 def main():
     now=dt.datetime.now(TZ)
     slot_env=os.getenv("OBS_TARGET_BRT")
-    slot=dt.datetime.fromisoformat(slot_env).replace(tzinfo=TZ) if slot_env else (now-dt.timedelta(minutes=80)).replace(minute=0,second=0,microsecond=0)
+    cron=os.getenv("GITHUB_EVENT_SCHEDULE","")
+    schedule_hours={"20 13 * * *":9,"20 16 * * *":12,"20 19 * * *":15,"20 22 * * *":18}
+    if slot_env:
+        slot=dt.datetime.fromisoformat(slot_env).replace(tzinfo=TZ)
+    elif cron in schedule_hours:
+        slot=now.replace(hour=schedule_hours[cron],minute=0,second=0,microsecond=0)
+    else:
+        slot=(now-dt.timedelta(minutes=80)).replace(minute=0,second=0,microsecond=0)
     target=slot.astimezone(UTC)
     result={"acquired_at_brt":now.isoformat(),"target_local":slot.isoformat(),
+        "scheduled_cron":cron or None,"target_measurement_delayed_by_minutes":round((now-slot).total_seconds()/60,1),
         "target_utc":target.isoformat(),"real_observations_only":True,
         "series_start":"2026-11-06T15:00:00-03:00",
         "stations":{},"errors":[]}
