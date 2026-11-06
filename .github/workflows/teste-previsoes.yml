@@ -1,5 +1,11 @@
 name: Validate forecast API acquisition
 'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/teste-previsoes.yml'
+      - 'audit_notation.py'
+      - 'smoke_test.py'
   workflow_dispatch:
     inputs:
       audit_reason:
