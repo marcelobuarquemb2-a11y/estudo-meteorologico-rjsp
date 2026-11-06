@@ -87,7 +87,7 @@ def main():
     now=dt.datetime.now(TZ)
     slot_env=os.getenv("OBS_TARGET_BRT")
     cron=os.getenv("GITHUB_EVENT_SCHEDULE","")
-    schedule_hours={"20 13 * * *":9,"20 16 * * *":12,"20 19 * * *":15,"20 22 * * *":18}
+    schedule_hours={"20 13 * * *":9,"20 14 * * *":9,"20 16 * * *":12,"20 17 * * *":12,"20 19 * * *":15,"20 20 * * *":15,"20 22 * * *":18,"20 23 * * *":18}
     if slot_env:
         slot=dt.datetime.fromisoformat(slot_env).replace(tzinfo=TZ)
     elif cron in schedule_hours:
@@ -129,7 +129,7 @@ def main():
                 entry["status"]="non_json_api_response";continue
             archive=ROOT/"data"/"observations"/"raw"/now.strftime("%Y-%m-%d")
             archive.mkdir(parents=True,exist_ok=True)
-            fname=archive/("inmet_a628_"+now.strftime("%H%M%S")+".json")
+            fname=archive/("inmet_a628_"+now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
             fname.write_text(json.dumps(payload,ensure_ascii=False)+"\n",encoding="utf-8")
             entry["raw_archive"]=str(fname.relative_to(ROOT))
             entry.update(normalize_inmet(payload,target))
@@ -147,7 +147,7 @@ def main():
             if payload is not None:
                 archive=ROOT/"data"/"observations"/"raw"/now.strftime("%Y-%m-%d")
                 archive.mkdir(parents=True,exist_ok=True)
-                fp=archive/("inmet_wis2_"+now.strftime("%H%M%S")+".json")
+                fp=archive/("inmet_wis2_"+now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
                 fp.write_text(json.dumps(payload,ensure_ascii=False)+"\\n",encoding="utf-8")
                 inmet["wis2_raw_archive"]=str(fp.relative_to(ROOT))
             if wis2.get("observed") is not None:
