@@ -1,0 +1,41 @@
+{
+  "station_id": "sp1_sao_sebastiao",
+  "phase": "real_observations_validation",
+  "status": "blocked_pending_authenticated_download_or_public_feed",
+  "checked_on": "2026-11-06",
+  "requested_series_start_brt": "2026-11-06T15:00:00-03:00",
+  "station": {
+    "name": "SiMCosta SP-1",
+    "coordinates_from_historical_buoy": {
+      "lat": -23.830583333333333,
+      "lon": -45.42216666666666
+    },
+    "current_mooring": "not independently confirmed"
+  },
+  "sources": [
+    {
+      "operator": "SiMCosta/FURG",
+      "url": "https://www.simcosta.furg.br/home",
+      "finding": "SP-1 São Sebastião listed as observation platform; data access site indicates free registration for data access; no authenticated machine-readable station observations retrieved",
+      "validated_current_2026_measurements": false
+    },
+    {
+      "operator": "CEBIMar/USP",
+      "url": "https://cebimar.usp.br/pesquisa-monitoramento-ambiental-estacao-meteorologica-do-cebimarusp/",
+      "finding": "Separate Davis Vantage Pro2 meteorological station at 23°49'25 S 45°25'18 W (~0.77 km from historical SP-1); historical XLSX datasets through 2025; 2026 hourly public raw feed not verified; raw data reproduction restricted",
+      "validated_current_2026_measurements": false,
+      "may_be_substituted_for_sp1_without_methodological_change": false
+    }
+  ],
+  "required_validation": [
+    "actual observation timestamp and UTC offset",
+    "station identity and current position",
+    "wind direction from",
+    "wind speed and gust reference height and averaging interval",
+    "hourly rainfall accumulation",
+    "consent/license/source compliance",
+    "raw response archive"
+  ],
+  "observed_values": null,
+  "notes": "Do not conflate CEBIMar and SiMCosta SP-1; missing must stay null."
+}
