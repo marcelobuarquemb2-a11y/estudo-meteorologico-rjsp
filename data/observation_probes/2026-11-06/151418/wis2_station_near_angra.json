@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "0-76-0-3300100000000555",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.303333,
+          -22.975556,
+          6.0
+        ]
+      },
+      "properties": {
+        "name": "ANGRA DOS REIS",
+        "wigos_station_identifier": "0-76-0-3300100000000555",
+        "traditional_station_identifier": "84817",
+        "barometer_height": 7.5,
+        "facility_type": "landFixed",
+        "territory_name": "BRA",
+        "wmo_region": "southAmerica",
+        "url": "https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-76-0-3300100000000555",
+        "topic": "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop",
+        "topics": [
+          "origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop"
+        ],
+        "status": "operational",
+        "id": "0-76-0-3300100000000555"
+      }
+    }
+  ],
+  "numberMatched": 1,
+  "numberReturned": 1,
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "title": "This document as GeoJSON",
+      "href": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=json&limit=20&bbox=-44.5,-23.3,-44.0,-22.7"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=jsonld&limit=20&bbox=-44.5,-23.3,-44.0,-22.7"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=html&limit=20&bbox=-44.5,-23.3,-44.0,-22.7"
+    },
+    {
+      "type": "text/csv; charset=utf-8",
+      "rel": "alternate",
+      "title": "This document as CSV",
+      "href": "https://wis2bra.inmet.gov.br/oapi/collections/stations/items?f=csv&limit=20&bbox=-44.5,-23.3,-44.0,-22.7"
+    },
+    {
+      "type": "application/json",
+      "title": "Stations",
+      "rel": "collection",
+      "href": "https://wis2bra.inmet.gov.br/oapi/collections/stations"
+    }
+  ],
+  "timeStamp": "2026-11-06T18:14:19.797427Z"
+}
