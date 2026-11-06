@@ -1,5 +1,11 @@
 name: RJ-SP meteorological forecast collection
-on:
+'on':
+  push:
+    branches: [main]
+    paths:
+      - 'collect.py'
+      - 'normalize_collection.py'
+      - '.github/workflows/coleta.yml'
   schedule:
     - cron: '0 12,15,18,21 * * *'
   workflow_dispatch:
