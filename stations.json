@@ -2,46 +2,70 @@
   {
     "id": "ilhabela",
     "name": "Ilhabela",
-    "lat": null,
-    "lon": null
+    "lat": -23.77361,
+    "lon": -45.35472,
+    "coordinate_source": "https://www.ioc-sealevelmonitoring.org/ssc/stationdetails.php?id=SSC-ilhab",
+    "coordinate_status": "site_confirmed_sensor_unconfirmed",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": false
   },
   {
     "id": "sp1_sao_sebastiao",
     "name": "SP-1 São Sebastião",
-    "lat": null,
-    "lon": null
+    "lat": -23.830583333333333,
+    "lon": -45.42216666666666,
+    "coordinate_source": "https://www.scielo.br/pdf/rbmet/v31n4/0102-7786-rbmet-0102-778631231420150032.pdf",
+    "coordinate_status": "historical_station_site",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": false
   },
   {
     "id": "ilha_rasa",
     "name": "Ilha Rasa",
     "lat": -23.063333333333333,
     "lon": -43.145,
-    "coordinate_source": "Marinha do Brasil CHM Folheto 07/2017: estação meteorológica 83117, 23°03.8'S 043°08.7'W; coordinates rounded to 0.1 arcminute",
-    "coordinate_precision": "0.1 arcminute (~185 m latitude)"
+    "coordinate_source": "Brazilian Navy CHM station 83117 (previously cited); compare to station in stations.json",
+    "coordinate_precision": "0.1 arcminute (~185 m latitude)",
+    "coordinate_status": "station_coordinates_published",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": true
   },
   {
     "id": "cdrj1_ilha_pai",
     "name": "CDRJ-1 Ilha do Pai",
-    "lat": null,
-    "lon": null
+    "lat": -22.9928,
+    "lon": -43.0906,
+    "coordinate_source": "https://labouee.app/en/buoy/ilha-do-pai",
+    "coordinate_status": "secondary_source_buoy_location",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": false
   },
   {
     "id": "ilha_fiscal",
     "name": "Ilha Fiscal",
-    "lat": null,
-    "lon": null
+    "lat": -22.896694444444442,
+    "lon": -43.166,
+    "coordinate_source": "https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50140%20-%20Ilha%20Fiscal%20%28F-41%20T%C3%A1buas%29%20Padr%C3%A3o%20V1-25.pdf",
+    "coordinate_status": "official_site_not_exact_met_sensor",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": false
   },
   {
     "id": "inmet_a628_angra",
     "name": "INMET A628 Angra",
     "lat": -22.97555554,
     "lon": -44.30333333,
-    "coordinate_source": "INMET station catalogue mirrored by plcrisp/automatic-idf-graphs; corroborated by USP station listing"
+    "coordinate_source": "INMET A628 catalogue, as currently registered",
+    "coordinate_status": "station_coordinates_published",
+    "forecast_acquisition_validated": true,
+    "observation_station_identity_verified": true
   },
   {
     "id": "dois_rios",
     "name": "Dois Rios Ilha Grande",
     "lat": null,
-    "lon": null
+    "lon": null,
+    "enabled": false,
+    "exclusion_reason": "Historical station non-operational; exclude from official forecasts and observations pending confirmation"
   }
 ]
