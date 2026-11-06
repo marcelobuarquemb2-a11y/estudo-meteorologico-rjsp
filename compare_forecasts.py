@@ -14,8 +14,20 @@ def main():
     observation_files=sorted((ROOT/"data"/"observations"/"reports").glob("*/*.json"))
     forecast_files=sorted((ROOT/"data"/"2026-11").glob("*/*.json"))
     # Each observed timestamp is joined only with a distinct forecast archive.
-    reports=[]
+    # A source may be polled repeatedly; use the strongest genuine measured response
+    # per observation instant, then most recent retrieval. Never count retries twice.
+    by_valid_time={}
     for path in observation_files:
+        ob=json.loads(path.read_text(encoding="utf-8"))
+        key=ob.get("target_local")
+        if not key:continue
+        quality=sum(sum(v is not None for v in (st.get("observed") or {}).values())
+                    for st in ob.get("stations",{}).values())
+        rank=(quality,ob.get("acquired_at_brt",""))
+        if key not in by_valid_time or rank>by_valid_time[key][0]:
+            by_valid_time[key]=(rank,path)
+    reports=[]
+    for rank,path in sorted(by_valid_time.values(),key=lambda x:x[1].name):
         ob=json.loads(path.read_text(encoding="utf-8"))
         valid=dt.datetime.fromisoformat(ob["target_local"])
         if valid.hour not in (9,12,15,18) or valid.date()<START: continue
