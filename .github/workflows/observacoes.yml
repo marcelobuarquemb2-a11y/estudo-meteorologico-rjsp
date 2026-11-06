@@ -5,6 +5,7 @@ name: Collect verified REAL station observations (audit)
     paths:
       - 'collect_observations.py'
       - 'compare_forecasts.py'
+      - 'backfill_observations.py'
       - '.github/workflows/observacoes.yml'
   schedule:
     - cron: '20 13 * * *'
@@ -15,6 +16,7 @@ name: Collect verified REAL station observations (audit)
     - cron: '20 20 * * *'
     - cron: '20 22 * * *'
     - cron: '20 23 * * *'
+    - cron: '40 11 * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -30,9 +32,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Acquire REAL observations (no substitutes)
+        if: github.event.schedule != '40 11 * * *'
         env:
           GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: python collect_observations.py
+      - name: Recover yesterday measured observations after publication delay
+        if: github.event.schedule == '40 11 * * *'
+        run: python backfill_observations.py
       - name: Join observations with archived forecast vintages
         if: always()
         run: python compare_forecasts.py
