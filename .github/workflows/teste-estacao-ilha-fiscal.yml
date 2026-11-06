@@ -1,0 +1,46 @@
+name: Validate Ilha Fiscal forecasts (isolated)
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/teste-estacao-ilha-fiscal.yml'
+      - 'test_station_ilha_fiscal.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test-ilha-fiscal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire and validate Ilha Fiscal forecasts
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: python test_station_ilha_fiscal.py
+      - name: Archive raw responses and report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/station_tests/ilha_fiscal/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive isolated Ilha Fiscal forecast test"
+            git push
+          fi
+      - name: Require complete acquisition and notation/unit checks
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=sorted(Path("data/station_tests/ilha_fiscal").glob("*/*/report.json"))[-1]
+          r=json.loads(p.read_text(encoding="utf-8"))
+          assert r["data_completeness_passed"], (r["scalar_count_non_null"],r["errors"])
+          assert len(r.get("time_validation",[]))==3
+          assert all(r["unit_checks"].values()),r["unit_checks"]
+          assert r.get("open_meteo_grid_offset_km",999)<=30
+          assert all(v<=30 for v in r.get("meteoblue_offset_km",{}).values())
+          print("Ilha Fiscal API integrity checks passed; site position remains provisional")
+          PY
