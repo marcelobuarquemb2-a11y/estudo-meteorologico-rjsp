@@ -1,0 +1,77 @@
+{
+  "purpose": "Candidate source-traceable coordinates for sequential testing; does NOT activate production collection",
+  "status": "not_approved_for_production",
+  "coordinate_system": "WGS84 decimal degrees, signed latitude/longitude; southern and western negative",
+  "stations": [
+    {
+      "id": "ilhabela",
+      "name": "Ilhabela",
+      "lat": -23.77361,
+      "lon": -45.35472,
+      "reference_type": "SiMCosta tide gauge site; not confirmed wind/precipitation sensor",
+      "confidence": "site_confirmed_sensor_unconfirmed",
+      "source": "https://www.ioc-sealevelmonitoring.org/ssc/stationdetails.php?id=SSC-ilhab",
+      "note": "This is a tide-gauge site (radar level); cannot assert meteorological observations are at the same location."
+    },
+    {
+      "id": "sp1_sao_sebastiao",
+      "name": "SP-1 São Sebastião",
+      "lat": -23.830583333333333,
+      "lon": -45.42216666666666,
+      "reference_type": "Historical fixed SiMCosta buoy SP-1 near CEBIMar",
+      "confidence": "historical_station_site",
+      "source": "https://www.scielo.br/pdf/rbmet/v31n4/0102-7786-rbmet-0102-778631231420150032.pdf",
+      "note": "Published deployment position for 2014-2015; current mooring position unverified."
+    },
+    {
+      "id": "ilha_rasa",
+      "name": "Ilha Rasa",
+      "lat": -23.063333333333333,
+      "lon": -43.145,
+      "reference_type": "Meteorological station 83117",
+      "confidence": "station_coordinates_published",
+      "source": "Brazilian Navy CHM station 83117 (previously cited); compare to station in stations.json",
+      "note": "Published to 0.1 arcminute."
+    },
+    {
+      "id": "cdrj1_ilha_pai",
+      "name": "CDRJ-1 Ilha do Pai",
+      "lat": -22.9928,
+      "lon": -43.0906,
+      "reference_type": "SiMCosta wave buoy",
+      "confidence": "secondary_source_buoy_location",
+      "source": "https://labouee.app/en/buoy/ilha-do-pai",
+      "note": "Secondary source cites SiMCosta; official station metadata and meteorological sensor availability still require confirmation."
+    },
+    {
+      "id": "ilha_fiscal",
+      "name": "Ilha Fiscal",
+      "lat": -22.896694444444442,
+      "lon": -43.166,
+      "reference_type": "Marinha CHM tide-gauge station F-41",
+      "confidence": "official_site_not_exact_met_sensor",
+      "source": "https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50140%20-%20Ilha%20Fiscal%20%28F-41%20T%C3%A1buas%29%20Padr%C3%A3o%20V1-25.pdf",
+      "note": "Official tide-gauge coordinate, not independently certified as the anemometer coordinate; PortosRio lists a weather station on Ilha Fiscal."
+    },
+    {
+      "id": "inmet_a628_angra",
+      "name": "INMET A628 Angra",
+      "lat": -22.97555554,
+      "lon": -44.30333333,
+      "reference_type": "Automatic INMET meteorological station",
+      "confidence": "station_coordinates_published",
+      "source": "INMET A628 catalogue, as currently registered",
+      "note": "Already active in stations.json"
+    },
+    {
+      "id": "dois_rios",
+      "name": "Dois Rios Ilha Grande",
+      "lat": -23.182725447222225,
+      "lon": -44.201081352777784,
+      "reference_type": "CEADS meteorological station geodetic survey historical position",
+      "confidence": "historical_site_station_inoperative",
+      "source": "https://livrozilla.com/doc/767691/mapeamento-digital-da-ilha-grande--angra-dos-reis--rj--ap...",
+      "note": "Survey explicitly identifies CEADS meteorological station; operator says historic station inoperative and its observations inaccessible; contemporary station status unverified."
+    }
+  ]
+}
