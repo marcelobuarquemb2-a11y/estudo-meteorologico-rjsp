@@ -1,6 +1,12 @@
 name: Validate forecast API acquisition
-on:
+'on':
   workflow_dispatch:
+    inputs:
+      audit_reason:
+        description: 'Reason for manual validation'
+        required: false
+        default: 'coordinate-time-date-check'
+        type: string
 permissions:
   contents: write
 jobs:
