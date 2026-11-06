@@ -1,0 +1,32 @@
+name: Validate SP-1 Sao Sebastiao forecasts (isolated)
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/teste-estacao-sp1.yml'
+      - 'test_station_sp1.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test-sp1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire and validate SP-1 forecasts
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: python test_station_sp1.py
+      - name: Archive raw responses and report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/station_tests/sp1_sao_sebastiao/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive isolated SP-1 forecast test"
+            git push
+          fi
