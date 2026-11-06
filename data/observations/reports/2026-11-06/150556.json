@@ -1,0 +1,66 @@
+{
+  "acquired_at_brt": "2026-11-06T15:05:56.558809-03:00",
+  "target_local": "2026-11-06T13:00:00-03:00",
+  "scheduled_cron": null,
+  "target_measurement_delayed_by_minutes": 125.9,
+  "target_utc": "2026-11-06T16:00:00+00:00",
+  "real_observations_only": true,
+  "series_start": "2026-11-06T15:00:00-03:00",
+  "stations": {
+    "ilhabela": {
+      "station_name": "Ilhabela",
+      "source": "SiMCosta Ilhabela",
+      "source_status": "requires_verified_meteorological_sensor",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "sp1_sao_sebastiao": {
+      "station_name": "SP-1 São Sebastião",
+      "source": "SiMCosta SP-1",
+      "source_status": "requires_verified_data_endpoint",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_rasa": {
+      "station_name": "Ilha Rasa",
+      "source": "Marinha 83117 / PortosRio",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "cdrj1_ilha_pai": {
+      "station_name": "CDRJ-1 Ilha do Pai",
+      "source": "SiMCosta / PortosRio CDRJ-1",
+      "source_status": "requires_verified_data_endpoint",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_fiscal": {
+      "station_name": "Ilha Fiscal",
+      "source": "PortosRio SMA Ilha Fiscal",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "inmet_a628_angra": {
+      "station_name": "INMET A628 Angra",
+      "source": "INMET automatic station A628",
+      "source_status": "endpoint_trial",
+      "observed": null,
+      "source_url": "https://apitempo.inmet.gov.br/estacao/2026-11-05/2026-11-07/A628",
+      "http_status": 204,
+      "response_content_type": "",
+      "response_bytes": 0,
+      "raw_body_sample": null,
+      "status": "empty_api_response"
+    },
+    "dois_rios": {
+      "station_name": "Dois Rios Ilha Grande",
+      "source": "CEADS (historical)",
+      "source_status": "excluded",
+      "observed": null,
+      "status": "excluded"
+    }
+  },
+  "errors": []
+}
