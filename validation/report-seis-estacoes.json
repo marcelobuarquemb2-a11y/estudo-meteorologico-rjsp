@@ -1,0 +1,681 @@
+{
+  "run_id": "42395900681",
+  "collected_at_brt": "2026-11-07T14:22:54.825732-03:00",
+  "targets_brt": [
+    "2026-11-06T09:00:00-03:00",
+    "2026-11-06T12:00:00-03:00",
+    "2026-11-06T15:00:00-03:00",
+    "2026-11-06T18:00:00-03:00",
+    "2026-11-07T09:00:00-03:00",
+    "2026-11-07T12:00:00-03:00"
+  ],
+  "expected_stations": 6,
+  "expected_values": 144,
+  "received_values": 144,
+  "portosrio_intervals": {
+    "wind_direction_and_mean": "native published averages at the exact local time",
+    "gust": "maximum of 12 published five-minute gust records",
+    "rain": "sum of 12 Precipt_5min readings in mm over (T-1h, T]"
+  },
+  "stations": {
+    "A619": {
+      "name": "Paraty",
+      "wigos": "0-76-0-3303807000000141",
+      "lat": -23.2236111,
+      "lon": -44.72694443,
+      "provider": "INMET WIS2 SYNOP",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "validation/raw/inmet-wis2.json",
+          "source_response_sha256": "34b029ac1b06cf47dffd723445053389e8e3dc3cef2f2956dbb01506257e2a4c",
+          "archived_records_sha256": "5a26323c2f42581aa6517a6732ecea802394b711566e6480083b128a7877410b",
+          "features": 2978
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 145.0,
+            "mean_kt": 4.471,
+            "gust_kt": 12.052,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "mean_kt": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "gust_kt": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z",
+            "precip_mm": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 349.0,
+            "mean_kt": 2.333,
+            "gust_kt": 5.637,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "mean_kt": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "gust_kt": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z",
+            "precip_mm": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 70.0,
+            "mean_kt": 3.693,
+            "gust_kt": 7.387,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "mean_kt": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "gust_kt": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z",
+            "precip_mm": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 8.0,
+            "mean_kt": 0.972,
+            "gust_kt": 9.33,
+            "precip_mm": 0.2
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "mean_kt": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "gust_kt": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z",
+            "precip_mm": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 67.0,
+            "mean_kt": 5.248,
+            "gust_kt": 9.914,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "mean_kt": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "gust_kt": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z",
+            "precip_mm": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 47.0,
+            "mean_kt": 4.86,
+            "gust_kt": 9.914,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "mean_kt": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "gust_kt": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z",
+            "precip_mm": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z"
+          }
+        }
+      ],
+      "complete_slots": 6,
+      "observed_values": 24
+    },
+    "A628": {
+      "name": "Angra dos Reis",
+      "wigos": "0-76-0-3300100000000555",
+      "lat": -22.97555554,
+      "lon": -44.30333333,
+      "provider": "INMET WIS2 SYNOP",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "validation/raw/inmet-wis2.json",
+          "source_response_sha256": "34b029ac1b06cf47dffd723445053389e8e3dc3cef2f2956dbb01506257e2a4c",
+          "archived_records_sha256": "5a26323c2f42581aa6517a6732ecea802394b711566e6480083b128a7877410b",
+          "features": 2978
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 65.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": 0.2
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "mean_kt": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "gust_kt": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z",
+            "precip_mm": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 289.0,
+            "mean_kt": 2.138,
+            "gust_kt": 7.775,
+            "precip_mm": 0.6000000000000001
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "mean_kt": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "gust_kt": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z",
+            "precip_mm": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 270.0,
+            "mean_kt": 0.583,
+            "gust_kt": 5.832,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "mean_kt": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "gust_kt": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z",
+            "precip_mm": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 242.0,
+            "mean_kt": 0.0,
+            "gust_kt": 3.693,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "mean_kt": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "gust_kt": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z",
+            "precip_mm": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 182.0,
+            "mean_kt": 2.138,
+            "gust_kt": 7.97,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "mean_kt": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "gust_kt": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z",
+            "precip_mm": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 310.0,
+            "mean_kt": 4.276,
+            "gust_kt": 8.747,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "mean_kt": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "gust_kt": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z",
+            "precip_mm": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z"
+          }
+        }
+      ],
+      "complete_slots": 6,
+      "observed_values": 24
+    },
+    "A602": {
+      "name": "Marambaia",
+      "wigos": "0-76-0-3304557000000024",
+      "lat": -23.05027777,
+      "lon": -43.59555555,
+      "provider": "INMET WIS2 SYNOP",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "validation/raw/inmet-wis2.json",
+          "source_response_sha256": "34b029ac1b06cf47dffd723445053389e8e3dc3cef2f2956dbb01506257e2a4c",
+          "archived_records_sha256": "5a26323c2f42581aa6517a6732ecea802394b711566e6480083b128a7877410b",
+          "features": 2978
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 172.0,
+            "mean_kt": 9.719,
+            "gust_kt": 11.469,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "mean_kt": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "gust_kt": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z",
+            "precip_mm": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 135.0,
+            "mean_kt": 6.609,
+            "gust_kt": 8.747,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "mean_kt": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "gust_kt": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z",
+            "precip_mm": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 135.0,
+            "mean_kt": 9.719,
+            "gust_kt": 13.024,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "mean_kt": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "gust_kt": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z",
+            "precip_mm": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 96.0,
+            "mean_kt": 5.637,
+            "gust_kt": 13.218,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "mean_kt": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "gust_kt": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z",
+            "precip_mm": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 351.0,
+            "mean_kt": 9.33,
+            "gust_kt": 16.134,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "mean_kt": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "gust_kt": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z",
+            "precip_mm": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 96.0,
+            "mean_kt": 10.108,
+            "gust_kt": 19.633,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "mean_kt": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "gust_kt": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z",
+            "precip_mm": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z"
+          }
+        }
+      ],
+      "complete_slots": 6,
+      "observed_values": 24
+    },
+    "A652": {
+      "name": "Forte de Copacabana",
+      "wigos": "0-76-0-3304557000000187",
+      "lat": -22.98833333,
+      "lon": -43.19055555,
+      "provider": "INMET WIS2 SYNOP",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "validation/raw/inmet-wis2.json",
+          "source_response_sha256": "34b029ac1b06cf47dffd723445053389e8e3dc3cef2f2956dbb01506257e2a4c",
+          "archived_records_sha256": "5a26323c2f42581aa6517a6732ecea802394b711566e6480083b128a7877410b",
+          "features": 2978
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 153.0,
+            "mean_kt": 6.415,
+            "gust_kt": 9.136,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "mean_kt": "2026-11-06T11:50:00Z/2026-11-06T12:00:00Z",
+            "gust_kt": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z",
+            "precip_mm": "2026-11-06T11:00:00Z/2026-11-06T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 114.0,
+            "mean_kt": 2.721,
+            "gust_kt": 4.86,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "mean_kt": "2026-11-06T14:50:00Z/2026-11-06T15:00:00Z",
+            "gust_kt": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z",
+            "precip_mm": "2026-11-06T14:00:00Z/2026-11-06T15:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 112.0,
+            "mean_kt": 4.276,
+            "gust_kt": 6.803,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "mean_kt": "2026-11-06T17:50:00Z/2026-11-06T18:00:00Z",
+            "gust_kt": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z",
+            "precip_mm": "2026-11-06T17:00:00Z/2026-11-06T18:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 112.0,
+            "mean_kt": 6.998,
+            "gust_kt": 10.691,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "mean_kt": "2026-11-06T20:50:00Z/2026-11-06T21:00:00Z",
+            "gust_kt": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z",
+            "precip_mm": "2026-11-06T20:00:00Z/2026-11-06T21:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 60.0,
+            "mean_kt": 3.305,
+            "gust_kt": 10.302,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "mean_kt": "2026-11-07T11:50:00Z/2026-11-07T12:00:00Z",
+            "gust_kt": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z",
+            "precip_mm": "2026-11-07T11:00:00Z/2026-11-07T12:00:00Z"
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 102.0,
+            "mean_kt": 11.274,
+            "gust_kt": 16.523,
+            "precip_mm": 0.0
+          },
+          "intervals_utc": {
+            "direction_deg": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "mean_kt": "2026-11-07T14:50:00Z/2026-11-07T15:00:00Z",
+            "gust_kt": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z",
+            "precip_mm": "2026-11-07T14:00:00Z/2026-11-07T15:00:00Z"
+          }
+        }
+      ],
+      "complete_slots": 6,
+      "observed_values": 24
+    },
+    "ilha_rasa": {
+      "name": "ILHA RASA",
+      "provider": "PortosRio SMA",
+      "station_id": 6,
+      "instrument": "GMX551",
+      "lat": -23.0634,
+      "lon": -43.146167,
+      "requests": [
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=6&date_start=2026-11-06+08:00&date_end=2026-11-06+18:01",
+          "http_status": 200,
+          "raw_path": "validation/raw/portosrio-ilha_rasa-2026-11-06.json",
+          "source_response_sha256": "a64a1c5fa86b658abf5fcb22d4872c7f6a8bf04f444a4618a7b561ca7e370aca",
+          "archived_records_sha256": "070560c7e0ebd71719e343c050b38612983b63f7ab6a9e97d6dc81f9adc3ab3b"
+        },
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=6&date_start=2026-11-07+08:00&date_end=2026-11-07+12:01",
+          "http_status": 200,
+          "raw_path": "validation/raw/portosrio-ilha_rasa-2026-11-07.json",
+          "source_response_sha256": "1bdfbd6a64f42d49ac444f171f687bda5f9a2d542b893046f3b6d7041a064236",
+          "archived_records_sha256": "5cda84874529776424aab76a4ca6ea34cc4949e09565c1245504e176ca849573"
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 55,
+            "mean_kt": 1.52,
+            "precip_mm": 0.0,
+            "gust_kt": 7.41
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 122,
+            "mean_kt": 2.41,
+            "precip_mm": 0.0,
+            "gust_kt": 5.83
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 100,
+            "mean_kt": 3.46,
+            "precip_mm": 0.0,
+            "gust_kt": 8.13
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 105,
+            "mean_kt": 3.58,
+            "precip_mm": 0.0,
+            "gust_kt": 8.88
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 64,
+            "mean_kt": 3.67,
+            "precip_mm": 0.0,
+            "gust_kt": 8.13
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 79,
+            "mean_kt": 8.73,
+            "precip_mm": 0.0,
+            "gust_kt": 20.33
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        }
+      ],
+      "errors": [],
+      "complete_slots": 6,
+      "observed_values": 24
+    },
+    "ilha_fiscal": {
+      "name": "ILHA FISCAL",
+      "provider": "PortosRio SMA",
+      "station_id": 7,
+      "instrument": "GMX600",
+      "lat": -22.896683,
+      "lon": -43.165933,
+      "requests": [
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=7&date_start=2026-11-06+08:00&date_end=2026-11-06+18:01",
+          "http_status": 200,
+          "raw_path": "validation/raw/portosrio-ilha_fiscal-2026-11-06.json",
+          "source_response_sha256": "6426933d7d337e4f068bad30b2b66f7f4bd7e7e88aa92e1178c9002e22262d97",
+          "archived_records_sha256": "76f1a17a37c94ad579bc8a494dc49a02dbaf0c5d4a25b02600d8fe1db399c7d7"
+        },
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=7&date_start=2026-11-07+08:00&date_end=2026-11-07+12:01",
+          "http_status": 200,
+          "raw_path": "validation/raw/portosrio-ilha_fiscal-2026-11-07.json",
+          "source_response_sha256": "6b7cafcbec52360df94e28e2c2255c923cd3330398d0048b7f0f610fa2a027f6",
+          "archived_records_sha256": "fa89a7c18fac2ca4cb47a91ab6c275db6a5e6caed8b29e6aa9cc8f5816d04c55"
+        }
+      ],
+      "records": [
+        {
+          "target_brt": "2026-11-06T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 166,
+            "mean_kt": 9.84,
+            "precip_mm": 0.0,
+            "gust_kt": 13.41
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 157,
+            "mean_kt": 8.96,
+            "precip_mm": 0.0,
+            "gust_kt": 10.92
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T15:00:00-03:00",
+          "observed": {
+            "direction_deg": 164,
+            "mean_kt": 10.85,
+            "precip_mm": 0.0,
+            "gust_kt": 14.91
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-06T18:00:00-03:00",
+          "observed": {
+            "direction_deg": 159,
+            "mean_kt": 10.28,
+            "precip_mm": 0.0,
+            "gust_kt": 13.1
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-07T09:00:00-03:00",
+          "observed": {
+            "direction_deg": 326,
+            "mean_kt": 3.71,
+            "precip_mm": 0.0,
+            "gust_kt": 5.5
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        },
+        {
+          "target_brt": "2026-11-07T12:00:00-03:00",
+          "observed": {
+            "direction_deg": 175,
+            "mean_kt": 13.47,
+            "precip_mm": 0.0,
+            "gust_kt": 22.04
+          },
+          "missing_five_minute_slots": {
+            "precip_mm": [],
+            "gust_kt": []
+          }
+        }
+      ],
+      "errors": [],
+      "complete_slots": 6,
+      "observed_values": 24
+    }
+  },
+  "errors": []
+}
