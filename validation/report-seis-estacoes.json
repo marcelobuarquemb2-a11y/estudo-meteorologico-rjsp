@@ -1,6 +1,6 @@
 {
-  "run_id": "42396196847",
-  "collected_at_brt": "2026-11-07T14:26:43.869981-03:00",
+  "run_id": "42396447514",
+  "collected_at_brt": "2026-11-07T14:31:07.712030-03:00",
   "targets_brt": [
     "2026-11-06T09:00:00-03:00",
     "2026-11-06T12:00:00-03:00",
@@ -29,7 +29,7 @@
           "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
           "http_status": 200,
           "raw_path": "validation/raw/inmet-wis2.json",
-          "source_response_sha256": "918a3cffdc1b23a78cb53e767007e072f5ddf8aadaa2cbee5cc7f5d3a012c6b4",
+          "source_response_sha256": "94ab3688fa09c9b4db298c00cd1b841ad17dd5503cdedf473ab19776eaa39857",
           "archived_records_sha256": "77cbf762e6a03ba04c20a9556ce7db917042e428b8baff9141e712822cdea572",
           "features": 2978
         }
@@ -140,7 +140,7 @@
           "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
           "http_status": 200,
           "raw_path": "validation/raw/inmet-wis2.json",
-          "source_response_sha256": "918a3cffdc1b23a78cb53e767007e072f5ddf8aadaa2cbee5cc7f5d3a012c6b4",
+          "source_response_sha256": "94ab3688fa09c9b4db298c00cd1b841ad17dd5503cdedf473ab19776eaa39857",
           "archived_records_sha256": "77cbf762e6a03ba04c20a9556ce7db917042e428b8baff9141e712822cdea572",
           "features": 2978
         }
@@ -251,7 +251,7 @@
           "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
           "http_status": 200,
           "raw_path": "validation/raw/inmet-wis2.json",
-          "source_response_sha256": "918a3cffdc1b23a78cb53e767007e072f5ddf8aadaa2cbee5cc7f5d3a012c6b4",
+          "source_response_sha256": "94ab3688fa09c9b4db298c00cd1b841ad17dd5503cdedf473ab19776eaa39857",
           "archived_records_sha256": "77cbf762e6a03ba04c20a9556ce7db917042e428b8baff9141e712822cdea572",
           "features": 2978
         }
@@ -362,7 +362,7 @@
           "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-06T11:55:00Z/2026-11-07T15:05:00Z&limit=5000",
           "http_status": 200,
           "raw_path": "validation/raw/inmet-wis2.json",
-          "source_response_sha256": "918a3cffdc1b23a78cb53e767007e072f5ddf8aadaa2cbee5cc7f5d3a012c6b4",
+          "source_response_sha256": "94ab3688fa09c9b4db298c00cd1b841ad17dd5503cdedf473ab19776eaa39857",
           "archived_records_sha256": "77cbf762e6a03ba04c20a9556ce7db917042e428b8baff9141e712822cdea572",
           "features": 2978
         }
@@ -568,12 +568,14 @@
       "errors": [],
       "positive_rain_check": {
         "request": {
-          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=6&date_start=2026-11-04+00:00&date_end=2026-11-06+00:00",
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=6&date_start=2026-10-30+00:00&date_end=2026-11-06+00:00",
           "http_status": 200,
           "raw_path": "validation/raw/portosrio-ilha_rasa-rain-check.json",
-          "source_response_sha256": "440317a90a80015dfc29af878a4a9a81002884dc8517bdf42ce2d9affeab4afb",
-          "archived_records_sha256": "c2855dccb1e861672c6bda4ffce33588d6ff440c4b356fcfb82298b2b56fe1f8"
+          "source_response_sha256": "a40ad7e7ee6fcd70032e6dbb97d49f6af68115e34b6444b7ab0158beb4b53019",
+          "archived_records_sha256": "7f1e9f87bff62cfebb618fdb445254f7e6195ed07c72b8a4c9c9d726e34f630f"
         },
+        "complete_hours": 149,
+        "positive_5min_values": 0,
         "wet_hours": []
       },
       "complete_slots": 6,
@@ -691,6 +693,8 @@
           "source_response_sha256": "9c2b665e7a09148be7ecd70885f930b2eee086feda63da901d5847aab68869e2",
           "archived_records_sha256": "df83784d243f8c9435239f170f9aadcae633a85ba3aa03593c3bdcb2ee1bde64"
         },
+        "complete_hours": 46,
+        "positive_5min_values": 35,
         "wet_hours": [
           {
             "target_brt": "2026-11-05T01:00:00-03:00",
