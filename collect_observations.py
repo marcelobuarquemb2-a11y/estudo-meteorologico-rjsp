@@ -1,167 +1,348 @@
 #!/usr/bin/env python3
-"""Acquire REAL station observations only; never replace a sensor with model/grid values."""
-import datetime as dt
+"""Collect genuine surface observations at the study's scheduled local times."""
+import hashlib
 import json
+import math
 import os
-import urllib.error
+import urllib.parse
 import urllib.request
-from pathlib import Path
-from zoneinfo import ZoneInfo
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 
-ROOT=Path(__file__).resolve().parent
-TZ=ZoneInfo("America/Sao_Paulo")
-UTC=dt.timezone.utc
-KNOTS=1.9438444924
-STATIONS=json.loads((ROOT/"stations.json").read_text(encoding="utf-8"))
-SOURCES={
-    "inmet_a628_angra":{"name":"INMET automatic station A628","status":"endpoint_trial",
-        "url_template":"https://apitempo.inmet.gov.br/estacao/{start}/{end}/A628"},
-    "sp1_sao_sebastiao":{"name":"SiMCosta SP-1","status":"requires_verified_data_endpoint"},
-    "ilhabela":{"name":"SiMCosta Ilhabela","status":"requires_verified_meteorological_sensor"},
-    "cdrj1_ilha_pai":{"name":"SiMCosta / PortosRio CDRJ-1","status":"requires_verified_data_endpoint"},
-    "ilha_rasa":{"name":"Marinha 83117 / PortosRio","status":"requires_machine_readable_access"},
-    "ilha_fiscal":{"name":"PortosRio SMA Ilha Fiscal","status":"requires_machine_readable_access"},
-    "dois_rios":{"name":"CEADS (historical)","status":"excluded"}
+from study_config import ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ
+
+KNOTS_PER_MPS = 1.9438444924
+WIS2 = "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items"
+SMA = "https://sma.portosrio.gov.br/api/ma/estacao/sismowater"
+ACTIVE = [s for s in STATIONS if s.get("enabled", True)]
+INMET = {
+    s["id"]: (s["name"], s["observation_source"]["wigos"], s["lat"], s["lon"])
+    for s in ACTIVE if s["observation_source"]["provider"] == "inmet_wis2"
+}
+PORTOSRIO = {
+    s["id"]: (
+        s["observation_source"]["station_id"], s["name"].upper(),
+        s["observation_source"]["instrument"], s["lat"], s["lon"],
+    )
+    for s in ACTIVE if s["observation_source"]["provider"] == "portosrio_sma"
+}
+WIS_FIELDS = {
+    "direction_deg": ("wind_direction", "deg", 360, 10),
+    "mean_kt": ("wind_speed", "m/s", 90, 10),
+    "gust_kt": ("maximum_wind_gust_speed", "m/s", 100, 60),
+    "precip_mm": ("total_precipitation_or_total_water_equivalent", "kg m-2", 500, 60),
+}
+SMA_FIELDS = {
+    "direction_deg": ("WindDir", "graus, de onde o vento vem, norte geográfico", 360),
+    "mean_kt": ("WindSpeed", "nós", 175),
+    "gust_kt": ("WindGust", "nós", 195),
+    "precip_mm": ("Precipt_5min", "mm", 500),
+}
+OBSERVATIONS = ROOT / "data" / "observations"
+SCHEDULE_HOURS = {
+    "20 13 * * *": 9, "20 14 * * *": 9,
+    "20 16 * * *": 12, "20 17 * * *": 12,
+    "20 19 * * *": 15, "20 20 * * *": 15,
+    "20 22 * * *": 18, "20 23 * * *": 18,
 }
 
-def clean(v):
-    if v is None or (isinstance(v,str) and v.strip().lower() in ("","null","none","nan","9999")):
+def numeric(value, maximum):
+    if type(value) not in (int, float) or not math.isfinite(value):
         return None
-    try:
-        n=float(str(v).replace(",","."))
-        return None if n in (9999,-9999) else n
-    except (ValueError,TypeError):
-        return None
+    return value if 0 <= value <= maximum else None
 
-def timestamp(row):
-    # INMET fields document a UTC timestamp (YYYY-MM-DD plus HHmm).
-    d=row.get("DT_MEDICAO")
-    h=row.get("HR_MEDICAO")
-    if not isinstance(d,str) or h is None:
-        return None
-    h=str(h).strip().zfill(4)
-    if not (len(h)==4 and h.isdigit()):
-        return None
-    try:
-        return dt.datetime.strptime(d+" "+h,"%Y-%m-%d %H%M").replace(tzinfo=UTC)
-    except ValueError:
-        return None
 
-def normalize_inmet(payload,target):
-    if not isinstance(payload,list): return {"status":"unexpected_schema","observed":None}
-    selected=[]
-    for row in payload:
-        if not isinstance(row,dict): continue
-        sid=str(row.get("CD_ESTACAO","")).upper()
-        if sid!="A628":continue
-        if timestamp(row)==target: selected.append(row)
-    if not selected:return {"status":"target_not_available","observed":None,"records_in_response":len(payload)}
-    if len(selected)!=1:return {"status":"ambiguous_duplicate_records","observed":None}
-    row=selected[0]
-    direction=clean(row.get("VEN_DIR"))
-    speed=clean(row.get("VEN_VEL"))
-    gust=clean(row.get("VEN_RAJ"))
-    rain=clean(row.get("CHUVA"))
-    values={
-        "direction_deg":direction if direction is not None and 0<=direction<=360 else None,
-        "mean_kt":round(speed*KNOTS,3) if speed is not None and 0<=speed<=90 else None,
-        "gust_kt":round(gust*KNOTS,3) if gust is not None and 0<=gust<=100 else None,
-        "precip_mm":rain if rain is not None and 0<=rain<=500 else None
+def fetch_json(endpoint, params, raw_dir, filename):
+    url = endpoint + "?" + urllib.parse.urlencode(params, safe=",:/")
+    request = urllib.request.Request(
+        url, headers={"Accept": "application/json", "User-Agent": "RJSP-observations/1.0"}
+    )
+    with urllib.request.urlopen(request, timeout=45) as response:
+        body = response.read()
+        status = response.status
+    data = json.loads(body)
+    path = raw_dir / filename
+    if endpoint == WIS2:
+        wigos = {station[1] for station in INMET.values()}
+        archive = {
+            "type": data["type"],
+            "features": [
+                feature for feature in data["features"]
+                if feature["properties"].get("wigos_station_identifier") in wigos
+            ]
+        }
+    else:
+        station = data["estacao"]
+        fields = {definition[0] for definition in SMA_FIELDS.values()} | {"Precipt_24hs_calculada"}
+        channels = [
+            {
+                key: meta[key] for key in
+                ("codg_tipo_dado", "nome_tipo_dado", "numg_estacao", "equipamento", "unidade_medida")
+            }
+            for meta in station["tipos_dado"] if meta["nome_tipo_dado"] in fields
+        ]
+        channel_ids = {str(meta["codg_tipo_dado"]) for meta in channels}
+        public_station = {
+            key: station[key] for key in
+            ("numg_estacao", "nome_estacao", "codg_latitude", "codg_longitude")
+        }
+        public_station["tipos_dado"] = channels
+        archive = {
+            "estacao": public_station,
+            "dados": [
+                row for row in data["dados"] if str(row["data_type_id"]) in channel_ids
+            ],
+        }
+    path.write_text(json.dumps(archive, ensure_ascii=False) + "\n", encoding="utf-8")
+    evidence = {
+        "url": url,
+        "http_status": status,
+        "raw_path": str(path.relative_to(ROOT)),
+        "source_response_sha256": hashlib.sha256(body).hexdigest(),
+        "archived_records_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
     }
-    return {"status":"observation_available" if any(x is not None for x in values.values()) else "all_variables_missing",
-            "observed":values,"measurement_time_utc":target.isoformat(),
-            "measurement_time_brt":target.astimezone(TZ).isoformat(),
-            "units":{"wind":"kn","precipitation":"mm","direction":"degrees"},
-            "raw_units":{"VEN_VEL":"m/s","VEN_RAJ":"m/s","VEN_DIR":"degree","CHUVA":"mm"},
-            "field_mapping":{"direction_deg":"VEN_DIR","mean_kt":"VEN_VEL",
-                             "gust_kt":"VEN_RAJ","precip_mm":"CHUVA"},
-            "raw_station_code":"A628"}
+    return data, evidence
 
-def request(url):
-    req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Observations-Audit/1.0","Accept":"application/json"})
-    with urllib.request.urlopen(req,timeout=35) as response:
-        raw=response.read()
-        return response.status, response.headers.get("Content-Type",""),raw
+
+def valid_position(actual, expected):
+    return all(abs(float(a) - b) < 0.001 for a, b in zip(actual, expected, strict=True))
+
+
+def as_utc(value):
+    return value.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def collect_wis2(targets, raw_dir):
+    params = {
+        "f": "json",
+        "bbox": "-44.80,-23.30,-42.90,-22.86",
+        "datetime": as_utc(min(targets) - timedelta(minutes=5))
+        + "/" + as_utc(max(targets) + timedelta(minutes=5)),
+        "limit": 5000,
+    }
+    payload, evidence = fetch_json(WIS2, params, raw_dir, "inmet-wis2.json")
+    if payload.get("type") != "FeatureCollection" or any(
+        link["rel"] == "next" for link in payload.get("links", [])
+    ):
+        raise ValueError("Unexpected or paginated WIS2 response")
+    evidence["features"] = len(payload["features"])
+    by_wigos = {config[1]: code for code, config in INMET.items()}
+    readings = defaultdict(list)
+    for feature in payload["features"]:
+        p = feature["properties"]
+        wigos = p.get("wigos_station_identifier")
+        if wigos not in by_wigos:
+            continue
+        coords = feature["geometry"]["coordinates"]
+        _, _, lat, lon = INMET[by_wigos[wigos]]
+        if valid_position(coords[:2], (lon, lat)):
+            readings[wigos, p.get("reportTime"), p.get("name")].append(p)
+
+    result = {}
+    for code, (label, wigos, lat, lon) in INMET.items():
+        rows = []
+        for target in targets:
+            values = {}
+            intervals = {}
+            for field, (source, unit, maximum, minutes) in WIS_FIELDS.items():
+                matches = readings[wigos, as_utc(target), source]
+                value = None
+                if len(matches) == 1:
+                    match = matches[0]
+                    observed_period = match.get("phenomenonTime")
+                    expected_period = (
+                        as_utc(target - timedelta(minutes=minutes)) + "/" + as_utc(target)
+                    )
+                    if observed_period == expected_period and match["units"] == unit:
+                        value = numeric(match["value"], maximum)
+                        intervals[field] = observed_period
+                if value is not None and unit == "m/s":
+                    value = round(value * KNOTS_PER_MPS, 3)
+                values[field] = value
+            rows.append({"target_brt": target.isoformat(), "observed": values, "intervals_utc": intervals})
+        result[code] = {
+            "name": label,
+            "wigos": wigos,
+            "lat": lat,
+            "lon": lon,
+            "provider": "INMET WIS2 SYNOP",
+            "requests": [evidence],
+            "records": rows,
+        }
+    return result
+
+
+def sma_index(payload, config):
+    station_id, name, instrument, lat, lon = config
+    station = payload["estacao"]
+    if (
+        int(station["numg_estacao"]) != station_id
+        or station["nome_estacao"] != name
+        or not valid_position(
+            (station["codg_latitude"], station["codg_longitude"]), (lat, lon)
+        )
+    ):
+        raise ValueError("PortosRio returned a different station")
+    source_by_id = {}
+    for field, (name, unit, maximum) in SMA_FIELDS.items():
+        metadata = [m for m in station["tipos_dado"] if m["nome_tipo_dado"] == name]
+        if len(metadata) != 1:
+            raise ValueError(f"Expected one PortosRio field named {name}")
+        meta = metadata[0]
+        if (
+            meta["unidade_medida"]["nome_unidade_medida"] != unit
+            or instrument not in meta["equipamento"]["nome_tipo_equipamento"]
+            or int(meta["numg_estacao"]) != station_id
+        ):
+            raise ValueError(f"Unexpected PortosRio metadata for {name}")
+        source_by_id[str(meta["codg_tipo_dado"])] = (field, maximum)
+    if len(source_by_id) != len(SMA_FIELDS):
+        raise ValueError("PortosRio channel identifiers are not distinct")
+
+    readings = defaultdict(list)
+    for row in payload["dados"]:
+        source = source_by_id.get(str(row["data_type_id"]))
+        if source is None:
+            continue
+        field, maximum = source
+        timestamp = datetime.fromisoformat(row["date_time"])
+        local = timestamp.astimezone(TZ) if timestamp.tzinfo else timestamp.replace(tzinfo=TZ)
+        readings[field, local].append(numeric(row["data_value"], maximum))
+    return readings
+
+
+def sma_value(readings, field, timestamp):
+    values = readings.get((field, timestamp), [])
+    return values[0] if len(values) == 1 else None
+
+
+def sma_record(readings, target):
+    values = {
+        field: sma_value(readings, field, target) for field in ("direction_deg", "mean_kt")
+    }
+    gaps = {}
+    window = [target - timedelta(minutes=5 * offset) for offset in range(11, -1, -1)]
+    for field, reducer in (("precip_mm", math.fsum), ("gust_kt", max)):
+        pairs = [(t, sma_value(readings, field, t)) for t in window]
+        missing = [t.isoformat() for t, value in pairs if value is None]
+        values[field] = None if missing else round(reducer([v for _, v in pairs]), 3)
+        gaps[field] = missing
+    return {
+        "target_brt": target.isoformat(),
+        "observed": values,
+        "missing_five_minute_slots": gaps,
+    }
+
+
+def collect_sma(code, config, targets, raw_dir):
+    station_id, label, instrument, lat, lon = config
+    result = {
+        "name": label, "provider": "PortosRio SMA", "station_id": station_id,
+        "instrument": instrument, "lat": lat, "lon": lon,
+        "requests": [], "records": [], "errors": [],
+    }
+    for date in sorted({t.date() for t in targets}):
+        on_date = [t for t in targets if t.date() == date]
+        params = {
+            "id": station_id,
+            "date_start": (min(on_date) - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M"),
+            "date_end": (max(on_date) + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M"),
+        }
+        try:
+            payload, evidence = fetch_json(SMA, params, raw_dir, f"portosrio-{code}-{date}.json")
+            result["requests"].append(evidence)
+            readings = sma_index(payload, config)
+            result["records"].extend(sma_record(readings, t) for t in on_date)
+        except Exception as exc:
+            result["errors"].append({"date": date.isoformat(), "error": f"{type(exc).__name__}: {exc}"})
+    return result
+
+
+def observation_target(now, cron):
+    override = os.environ.get("OBS_TARGET_BRT")
+    if override:
+        value = datetime.fromisoformat(override)
+        return value.astimezone(TZ) if value.tzinfo else value.replace(tzinfo=TZ)
+    if cron in SCHEDULE_HOURS:
+        return now.replace(hour=SCHEDULE_HOURS[cron], minute=0, second=0, microsecond=0)
+    available = now - timedelta(minutes=80)
+    for hour in reversed(SLOT_HOURS):
+        if hour <= available.hour:
+            return available.replace(hour=hour, minute=0, second=0, microsecond=0)
+    return (available - timedelta(days=1)).replace(
+        hour=SLOT_HOURS[-1], minute=0, second=0, microsecond=0
+    )
+
 
 def main():
-    now=dt.datetime.now(TZ)
-    slot_env=os.getenv("OBS_TARGET_BRT")
-    cron=os.getenv("GITHUB_EVENT_SCHEDULE","")
-    schedule_hours={"20 13 * * *":9,"20 14 * * *":9,"20 16 * * *":12,"20 17 * * *":12,"20 19 * * *":15,"20 20 * * *":15,"20 22 * * *":18,"20 23 * * *":18}
-    if slot_env:
-        slot=dt.datetime.fromisoformat(slot_env).replace(tzinfo=TZ)
-    elif cron in schedule_hours:
-        slot=now.replace(hour=schedule_hours[cron],minute=0,second=0,microsecond=0)
-    else:
-        slot=(now-dt.timedelta(minutes=80)).replace(minute=0,second=0,microsecond=0)
-    target=slot.astimezone(UTC)
-    result={"acquired_at_brt":now.isoformat(),"target_local":slot.isoformat(),
-        "scheduled_cron":cron or None,"target_measurement_delayed_by_minutes":round((now-slot).total_seconds()/60,1),
-        "target_utc":target.isoformat(),"real_observations_only":True,
-        "series_start":"2026-11-06T15:00:00-03:00",
-        "stations":{},"errors":[]}
-    day0=(target-dt.timedelta(days=1)).date().isoformat()
-    day1=(target+dt.timedelta(days=1)).date().isoformat()
-    for st in STATIONS:
-        sid=st["id"]
-        src=SOURCES.get(sid,{"status":"no_source"})
-        entry={"station_name":st["name"],"source":src["name"] if "name" in src else None,
-               "source_status":src["status"],"observed":None}
-        result["stations"][sid]=entry
-        if st.get("enabled",True) is False:
-            entry["status"]="excluded";continue
-        if sid!="inmet_a628_angra":
-            entry["status"]="not_automated_no_verified_observation_endpoint"
-            continue
-        url=src["url_template"].format(start=day0,end=day1)
-        entry["source_url"]=url
-        try:
-            http_status,content_type,body=request(url)
-            entry["http_status"]=http_status
-            entry["response_content_type"]=content_type
-            entry["response_bytes"]=len(body)
-            entry["raw_body_sample"]=body[:300].decode("utf-8",errors="replace") if body and "json" not in content_type.lower() else None
-            if not body:
-                entry["status"]="empty_api_response";continue
-            try:
-                payload=json.loads(body)
-            except ValueError:
-                entry["status"]="non_json_api_response";continue
-            archive=ROOT/"data"/"observations"/"raw"/now.strftime("%Y-%m-%d")
-            archive.mkdir(parents=True,exist_ok=True)
-            fname=archive/("inmet_a628_"+now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
-            fname.write_text(json.dumps(payload,ensure_ascii=False)+"\n",encoding="utf-8")
-            entry["raw_archive"]=str(fname.relative_to(ROOT))
-            entry.update(normalize_inmet(payload,target))
-        except urllib.error.HTTPError as e:
-            entry["http_status"]=e.code;entry["status"]="http_error"
-        except Exception as e:
-            entry["status"]="retrieval_error";entry["error_type"]=type(e).__name__
-    # Independent official WIS2 channel, also tested when legacy API responds HTTP 204.
-    inmet=result["stations"]["inmet_a628_angra"]
-    if inmet.get("observed") is None:
-        try:
-            from inmet_wis2 import acquire
-            wis2,payload=acquire(target)
-            inmet["wis2"]=wis2
-            if payload is not None:
-                archive=ROOT/"data"/"observations"/"raw"/now.strftime("%Y-%m-%d")
-                archive.mkdir(parents=True,exist_ok=True)
-                fp=archive/("inmet_wis2_"+now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
-                fp.write_text(json.dumps(payload,ensure_ascii=False)+"\\n",encoding="utf-8")
-                inmet["wis2_raw_archive"]=str(fp.relative_to(ROOT))
-            if wis2.get("observed") is not None:
-                inmet["observed"]=wis2["observed"]
-                inmet["status"]="observation_available_wis2"
-        except Exception as e:
-            inmet["wis2"]={"status":"source_error","error_type":type(e).__name__}
-    out=ROOT/"data"/"observations"/"reports"/now.strftime("%Y-%m-%d")
-    out.mkdir(parents=True,exist_ok=True)
-    path=out/(now.strftime("%H%M%S")+"_"+slot.strftime("%Y%m%d_%H%M")+".json")
-    path.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
-    print("Observation report",path.relative_to(ROOT))
-    for sid,r in result["stations"].items(): print(sid,r["status"])
-    print("Actual observed stations:",sum(x.get("observed") is not None for x in result["stations"].values()))
+    now = datetime.now(TZ)
+    cron = os.environ.get("GITHUB_EVENT_SCHEDULE", "")
+    target = observation_target(now, cron)
+    if target.hour not in SLOT_HOURS or target.minute or target.second or target.microsecond or target > now:
+        raise ValueError("Expected a past nominal study hour")
 
-if __name__=="__main__":
+    stamp = now.strftime("%H%M%S%f") + "_" + target.strftime("%Y%m%d_%H%M")
+    raw_dir = OBSERVATIONS / "raw" / now.date().isoformat() / stamp
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    errors = []
+    try:
+        readings = collect_wis2([target], raw_dir)
+    except Exception as exc:
+        errors.append({"provider": "INMET WIS2", "error": type(exc).__name__})
+        readings = {}
+    for sid, config in PORTOSRIO.items():
+        readings[sid] = collect_sma(sid, config, [target], raw_dir)
+
+    results = {}
+    for station in ACTIVE:
+        sid = station["id"]
+        source = readings.get(sid, {})
+        rows = source.get("records", [])
+        row = rows[0] if rows else {}
+        observed = row.get("observed", {})
+        count = sum(value is not None for value in observed.values())
+        if observed.get("precip_mm") is not None:
+            observed["precip_mm"] = round(observed["precip_mm"], 3)
+        status = (
+            "observation_available" if count == len(WIS_FIELDS)
+            else "partial_observation" if count else "observation_unavailable"
+        )
+        results[sid] = {
+            "station_name": station["name"],
+            "source": source.get("provider", station["observation_source"]["provider"]),
+            "source_metadata": station["observation_source"],
+            "lat": station["lat"],
+            "lon": station["lon"],
+            "status": status,
+            "observed": observed if count else None,
+            "requests": source.get("requests", []),
+            "intervals_utc": row.get("intervals_utc"),
+            "missing_five_minute_slots": row.get("missing_five_minute_slots"),
+            "errors": source.get("errors", []),
+        }
+
+    report = {
+        "acquired_at_brt": now.isoformat(),
+        "target_local": target.isoformat(),
+        "scheduled_cron": cron or None,
+        "target_measurement_delayed_by_minutes": round((now - target).total_seconds() / 60, 1),
+        "target_utc": target.astimezone(timezone.utc).isoformat(),
+        "real_observations_only": True,
+        "series_start": SERIES_START.isoformat(),
+        "stations": results,
+        "errors": errors,
+    }
+    out = OBSERVATIONS / "reports" / now.date().isoformat()
+    out.mkdir(parents=True, exist_ok=True)
+    path = out / (stamp + ".json")
+    path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8"
+    )
+    print("Observation report:", path.relative_to(ROOT))
+    print("Complete stations:", sum(s["status"] == "observation_available" for s in results.values()))
+    for sid, reading in results.items():
+        print(sid, reading["status"])
+
+
+if __name__ == "__main__":
     main()
