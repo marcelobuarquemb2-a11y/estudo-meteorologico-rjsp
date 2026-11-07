@@ -1,53 +1,33 @@
-name: Validate public observation feeds
+name: Validate six station observations
 'on':
   push:
     branches: ['validation/observacoes-seis-20261107']
-    paths: ['.github/workflows/validate-observation-sources.yml', 'validation/*.py']
+    paths: ['validation/validate_six.py']
 permissions:
   contents: write
 jobs:
-  probe:
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect public observation feeds
-        run: |
-          python3 - <<'PY'
-          import json
-          import os
-          import re
-          import urllib.request
-          from pathlib import Path
-          
-          host = "https://sma.portosrio.gov.br"
-          def read(path):
-              req = urllib.request.Request(host + path, headers={"User-Agent": "RJSP-observations-validation/1.0"})
-              with urllib.request.urlopen(req, timeout=25) as response:
-                  return response.headers.get("Content-Type", ""), response.read().decode("utf-8")
-          out = {"run_id": os.environ["GITHUB_RUN_ID"]}
-          _, body = read("/js/index.js?v=1788473201")
-          keys = ["ma/dado", "ma/estacao", "baseURL:", "sismowater", "Precipitação"]
-          out["usage"] = {
-              key: [body[max(0, m.start()-165):m.start()+300] for m in list(re.finditer(re.escape(key),body,re.I))[:18]]
-              for key in keys
-          }
-          for path in ("/api/ma/estacao/6", "/api/ma/estacao/7"):
-              try:
-                  mime, text = read(path)
-                  data = json.loads(text)
-                  out[path] = {"mime": mime, "type": type(data).__name__, "sample": json.dumps(data, ensure_ascii=False)[:4500]}
-              except Exception as exc:
-                  out[path] = {"error": type(exc).__name__, "detail": str(exc)[:230]}
-          Path("validation").mkdir(exist_ok=True)
-          Path("validation/sma-probe.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-          PY
-      - name: Save validation evidence to the isolated branch
+      - name: Fetch and validate measurements for the six stations
+        run: python3 validation/validate_six.py
+      - name: Upload observed records and validation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: observed-records-six-stations
+          path: |
+            validation/raw/
+            validation/report-seis-estacoes.json
+          if-no-files-found: error
+      - name: Record the validation report on this branch
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add validation/sma-probe.json
+          git add validation/report-seis-estacoes.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record public SMA request and station metadata'
+            git commit -m 'Archive six-station observation validation'
             git push origin HEAD
           fi
