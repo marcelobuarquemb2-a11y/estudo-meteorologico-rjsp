@@ -9,10 +9,10 @@ name: RJ-SP meteorological forecast collection
       - 'normalize_collection.py'
       - '.github/workflows/coleta.yml'
   schedule:
-    - cron: '0 12 * * *'
-    - cron: '0 15 * * *'
-    - cron: '0 18 * * *'
-    - cron: '0 21 * * *'
+    - cron: '45 11 * * *'
+    - cron: '45 14 * * *'
+    - cron: '45 17 * * *'
+    - cron: '45 20 * * *'
   workflow_dispatch:
 permissions:
   contents: write
