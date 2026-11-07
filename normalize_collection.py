@@ -1,6 +1,7 @@
 """Normalize saved forecast responses without inferring missing observations."""
-import datetime as dt
 import math
+
+from study_config import local_time, within_slot
 
 FIELDS={"direction_deg":"wind_direction_10m","mean_kt":"wind_speed_10m","gust_kt":"wind_gusts_10m","precip_mm":"precipitation"}
 MODELS={"ICON":"icon_global","GFS":"ncep_gfs_global","ECMWF":"ecmwf_ifs"}
@@ -18,6 +19,19 @@ def get_at(data,field,time):
     i=ts.index(time)
     return vals[i] if i<len(vals) else None
 
+
+def local_times(data):
+    return {local_time(value): value for value in data.get("time", [])}
+
+
+def nearest_time(times, target):
+    return min(
+        (when for when in times if within_slot(when, target)),
+        key=lambda when: (abs(when - target), when),
+        default=None,
+    )
+
+
 def normalize_collection(result):
     for sid,station in result["station_results"].items():
         if station["lat"] is None or station["lon"] is None:
@@ -34,26 +48,41 @@ def normalize_collection(result):
         if all(x is not None for x in grid):
             offset=round(distance((station["lat"],station["lon"]),grid),3)
         station["open_meteo_grid"]={"latitude":grid[0],"longitude":grid[1],"distance_km":offset}
+        b=basic.get("data_1h",{})
+        w=wind.get("data_3h",{})
+        bu=basic.get("units",{})
+        wu=wind.get("units",{})
+        open_times = local_times(hourly)
+        basic_times = local_times(b)
+        wind_times = local_times(w)
+        common_times = basic_times.keys() & wind_times.keys()
+        target_ok = True
         rows=[]
         for day,target in enumerate(result["targets_local"],1):
+            nominal = local_time(target)
+            open_valid = nearest_time(open_times, nominal)
+            meteoblue_valid = (
+                nearest_time(common_times, nominal)
+                or nearest_time(basic_times, nominal)
+                or nearest_time(wind_times, nominal)
+            )
+            target_ok &= open_valid is not None and meteoblue_valid in common_times
             for name,suffix in MODELS.items():
                 values={}
                 for field,base in FIELDS.items():
                     key=base+"_"+suffix
                     expected="°" if field=="direction_deg" else ("mm" if field=="precip_mm" else "kn")
-                    values[field]=get_at(hourly,key,target) if units.get(key)==expected else None
-                rows.append({"model":name,"source":"Open-Meteo","day_offset":day,"target_local":target,"values":values})
-            b=basic.get("data_1h",{})
-            w=wind.get("data_3h",{})
-            bu=basic.get("units",{})
-            wu=wind.get("units",{})
-            t=target.replace("T"," ")
-            speed=get_at(b,"windspeed",t)
-            gust=get_at(w,"gust",t)
-            direction=get_at(b,"winddirection",t)
-            rain=get_at(b,"precipitation",t)
+                    values[field]=get_at(hourly,key,open_times.get(open_valid)) if units.get(key)==expected else None
+                rows.append({"model":name,"source":"Open-Meteo","day_offset":day,"target_local":target,
+                    "valid_at_local":open_valid.isoformat() if open_valid else None,"values":values})
+            basic_time = basic_times.get(meteoblue_valid)
+            speed=get_at(b,"windspeed",basic_time)
+            gust=get_at(w,"gust",wind_times.get(meteoblue_valid))
+            direction=get_at(b,"winddirection",basic_time)
+            rain=get_at(b,"precipitation",basic_time)
             rows.append({"model":"Meteoblue package (AI/mLM unverified)","source":"Meteoblue",
                 "day_offset":day,"target_local":target,
+                "valid_at_local":meteoblue_valid.isoformat() if meteoblue_valid else None,
                 "values":{"direction_deg":direction if bu.get("winddirection")=="degree" else None,
                           "mean_kt":round(speed*1.9438444924,3) if speed is not None and bu.get("windspeed")=="ms-1" else None,
                           "gust_kt":round(gust*1.9438444924,3) if gust is not None and wu.get("windspeed")=="ms-1" else None,
@@ -64,9 +93,6 @@ def normalize_collection(result):
         time_ok=(om.get("timezone")=="America/Sao_Paulo" and om.get("utc_offset_seconds")==-10800
                  and basic.get("metadata",{}).get("utc_timeoffset")==-3
                  and wind.get("metadata",{}).get("utc_timeoffset")==-3)
-        target_ok=all(t in hourly.get("time",[]) and t.replace("T"," ") in basic.get("data_1h",{}).get("time",[])
-                      and t.replace("T"," ") in wind.get("data_3h",{}).get("time",[])
-                      and dt.datetime.fromisoformat(t).date().isoformat()==t[:10] for t in result["targets_local"])
         grid_ok=(offset is not None and offset<=30 and -24.5<grid[0]<-21 and -46<grid[1]<-42)
         station["notation_audit"]={"timezone_ok":time_ok,"date_and_target_ok":target_ok,
                                    "grid_sanity_ok":grid_ok,"passed":time_ok and target_ok and grid_ok}

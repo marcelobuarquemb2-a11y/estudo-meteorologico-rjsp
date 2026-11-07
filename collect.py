@@ -8,10 +8,13 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from study_config import HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ
+from study_config import HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ, within_slot
 
 MODELS=("ncep_gfs_global","icon_global","ecmwf_ifs")
 VARS=("wind_speed_10m","wind_direction_10m","wind_gusts_10m","precipitation")
+SCHEDULE_HOURS = {
+    "45 11 * * *": 9, "45 14 * * *": 12, "45 17 * * *": 15, "45 20 * * *": 18,
+}
 
 def fetch(url,params):
     request=urllib.request.Request(url+"?"+urllib.parse.urlencode(params),headers={"User-Agent":"RJSP-Weather-Research/1.0"})
@@ -41,12 +44,13 @@ def main():
     now=dt.datetime.now(TZ)
     cron = os.environ.get("GITHUB_EVENT_SCHEDULE", "")
     event = os.environ.get("GITHUB_EVENT_NAME", "")
-    slots_by_cron = {"0 12 * * *": 9, "0 15 * * *": 12, "0 18 * * *": 15, "0 21 * * *": 18}
-    scheduled_slot = slots_by_cron.get(cron)
-    hour = scheduled_slot if scheduled_slot is not None else max(
-        (slot for slot in SLOT_HOURS if slot <= now.hour), default=SLOT_HOURS[0]
-    )
-    nominal_issue = now.replace(hour=hour, minute=0, second=0, microsecond=0)
+    scheduled_slot = SCHEDULE_HOURS.get(cron)
+    top_of_hour = now.replace(minute=0, second=0, microsecond=0)
+    if scheduled_slot is None:
+        candidates = (top_of_hour.replace(hour=hour) for hour in SLOT_HOURS)
+        nominal_issue = min(candidates, key=lambda slot: abs(now - slot))
+    else:
+        nominal_issue = top_of_hour.replace(hour=scheduled_slot)
     targets = [
         (nominal_issue + dt.timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
         for lead in HORIZON_HOURS
@@ -54,7 +58,7 @@ def main():
     explicit_push = requested_push_capture(event, nominal_issue)
     official = (
         (scheduled_slot is not None or event == "workflow_dispatch" or explicit_push)
-        and SERIES_START <= nominal_issue <= now < nominal_issue + dt.timedelta(hours=3)
+        and nominal_issue >= SERIES_START and within_slot(now, nominal_issue)
     )
 
     result = {
@@ -62,7 +66,8 @@ def main():
         "official_series_start_local": SERIES_START.isoformat(),
         "official_series_eligible": official,
         "nominal_issue_at_local": nominal_issue.isoformat(),
-        "nominal_slot_hour_brt": hour,
+        "nominal_slot_hour_brt": nominal_issue.hour,
+        "consultation_offset_minutes": round((now - nominal_issue).total_seconds() / 60, 4),
         "schedule_event": cron or None,
         "trigger_event": event or None,
         "explicit_push_capture": explicit_push,
