@@ -7,6 +7,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
 from study_config import HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ
 
 MODELS=("ncep_gfs_global","icon_global","ecmwf_ifs")
@@ -26,6 +27,16 @@ def fetch(url,params):
                 raise
         time.sleep(3)
 
+def requested_push_capture(event, nominal_issue):
+    event_path = os.environ.get("GITHUB_EVENT_PATH")
+    if event != "push" or not event_path:
+        return False
+    payload = json.loads(Path(event_path).read_text(encoding="utf-8"))
+    message = (payload.get("head_commit") or {}).get("message", "")
+    expected = f"Capture official forecast at {nominal_issue:%Y-%m-%d %H:%M} BRT"
+    return message.partition("\n")[0] == expected
+
+
 def main():
     now=dt.datetime.now(TZ)
     cron = os.environ.get("GITHUB_EVENT_SCHEDULE", "")
@@ -40,8 +51,9 @@ def main():
         (nominal_issue + dt.timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
         for lead in HORIZON_HOURS
     ]
+    explicit_push = requested_push_capture(event, nominal_issue)
     official = (
-        (scheduled_slot is not None or event == "workflow_dispatch")
+        (scheduled_slot is not None or event == "workflow_dispatch" or explicit_push)
         and SERIES_START <= nominal_issue <= now < nominal_issue + dt.timedelta(hours=3)
     )
 
@@ -53,6 +65,7 @@ def main():
         "nominal_slot_hour_brt": hour,
         "schedule_event": cron or None,
         "trigger_event": event or None,
+        "explicit_push_capture": explicit_push,
         "information_time_convention": "actual consultation time",
         "targets_local": targets,
         "station_results": {},
