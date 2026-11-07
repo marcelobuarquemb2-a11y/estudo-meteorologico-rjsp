@@ -17,10 +17,25 @@ def values_present(values):
     )
 
 
-def first_archives():
+def read_archive(path, unreadable):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        unreadable.append({"file": str(path.relative_to(ROOT)), "error": type(exc).__name__})
+        return {}
+
+
+def first_archives(unreadable):
     by_issue = {}
     for path in (ROOT / "data").glob("????-??/????-??-??/*.json"):
-        report = json.loads(path.read_text(encoding="utf-8"))
+        day = path.parent.name
+        start_day = SERIES_START.date().isoformat()
+        if day < start_day or (
+            day == start_day and len(path.stem) == 6 and path.stem.isdigit()
+            and path.stem < SERIES_START.strftime("%H%M%S")
+        ):
+            continue
+        report = read_archive(path, unreadable)
         if (
             not report.get("official_series_eligible")
             or report.get("official_series_start_local") != SERIES_START.isoformat()
@@ -36,10 +51,12 @@ def first_archives():
     return by_issue
 
 
-def measured_by_time(active_ids):
+def measured_by_time(active_ids, unreadable):
     observed = {}
     for path in sorted((ROOT / "data" / "observations" / "reports").glob("*/*.json")):
-        report = json.loads(path.read_text(encoding="utf-8"))
+        report = read_archive(path, unreadable)
+        if not report.get("target_local"):
+            continue
         valid = datetime.fromisoformat(report["target_local"])
         if valid < SERIES_START or valid.hour not in SLOT_HOURS:
             continue
@@ -57,8 +74,9 @@ def measured_by_time(active_ids):
 
 def main():
     active = {s["id"]: s for s in STATIONS if s.get("enabled", True)}
-    forecasts = first_archives()
-    observations = measured_by_time(active)
+    unreadable = []
+    forecasts = first_archives(unreadable)
+    observations = measured_by_time(active, unreadable)
     frames = []
     for valid, measured in sorted(observations.items()):
         horizons = [
@@ -116,6 +134,7 @@ def main():
         "generated_at": datetime.now(TZ).isoformat(),
         "series_start_local": SERIES_START.isoformat(),
         "first_complete_nominal_15h_frame": FIRST_FULL_FRAME.isoformat(),
+        "unreadable_archives": unreadable,
         "frames": frames,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Comparison frames:", len(frames))
