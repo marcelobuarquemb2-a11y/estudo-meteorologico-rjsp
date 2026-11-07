@@ -65,6 +65,7 @@ def fetch_json(endpoint, params, filename):
     if endpoint == WIS2:
         wigos = {station[1] for station in INMET.values()}
         archive = {
+            "type": data["type"],
             "features": [
                 feature for feature in data["features"]
                 if feature["properties"].get("wigos_station_identifier") in wigos
@@ -72,7 +73,7 @@ def fetch_json(endpoint, params, filename):
         }
     else:
         station = data["estacao"]
-        fields = {definition[0] for definition in SMA_FIELDS.values()}
+        fields = {definition[0] for definition in SMA_FIELDS.values()} | {"Precipt_24hs_calculada"}
         channels = [
             {
                 key: meta[key] for key in
@@ -81,12 +82,13 @@ def fetch_json(endpoint, params, filename):
             for meta in station["tipos_dado"] if meta["nome_tipo_dado"] in fields
         ]
         channel_ids = {str(meta["codg_tipo_dado"]) for meta in channels}
+        public_station = {
+            key: station[key] for key in
+            ("numg_estacao", "nome_estacao", "codg_latitude", "codg_longitude")
+        }
+        public_station["tipos_dado"] = channels
         archive = {
-            "estacao": {
-                key: station[key] for key in
-                ("numg_estacao", "nome_estacao", "codg_latitude", "codg_longitude")
-            },
-            "tipos_dado": channels,
+            "estacao": public_station,
             "dados": [
                 row for row in data["dados"] if str(row["data_type_id"]) in channel_ids
             ],
@@ -260,6 +262,46 @@ def collect_sma(code, config, targets):
     return result
 
 
+def check_positive_rain(code, config):
+    """Compare measured five-minute rain amounts with the daily counter on wet hours."""
+    params = {"id": config[0], "date_start": "2026-11-04 00:00", "date_end": "2026-11-06 00:00"}
+    payload, evidence = fetch_json(SMA, params, f"portosrio-{code}-rain-check.json")
+    readings = sma_index(payload, config)
+    station = payload["estacao"]
+    metadata = [
+        meta for meta in station["tipos_dado"]
+        if meta["nome_tipo_dado"] == "Precipt_24hs_calculada"
+        and meta["unidade_medida"]["nome_unidade_medida"] == "mm"
+    ]
+    if len(metadata) != 1:
+        raise ValueError("Missing daily rainfall counter")
+    channel = str(metadata[0]["codg_tipo_dado"])
+    for row in payload["dados"]:
+        if str(row["data_type_id"]) != channel:
+            continue
+        stamp = datetime.fromisoformat(row["date_time"])
+        local = stamp.astimezone(TZ) if stamp.tzinfo else stamp.replace(tzinfo=TZ)
+        readings["rain_daily", local].append(numeric(row["data_value"], 1000))
+
+    wet_hours = []
+    for day in (4, 5):
+        for hour in range(1, 24):
+            target = datetime(2026, 11, day, hour, tzinfo=TZ)
+            rain = sma_record(readings, target)["observed"]["precip_mm"]
+            before = sma_value(readings, "rain_daily", target - timedelta(hours=1))
+            after = sma_value(readings, "rain_daily", target)
+            if rain is None or rain <= 0 or before is None or after is None:
+                continue
+            change = round(after - before, 3)
+            wet_hours.append({
+                "target_brt": target.isoformat(),
+                "sum_5min_mm": rain,
+                "daily_counter_difference_mm": change,
+                "matches_within_0_01_mm": abs(change - rain) <= 0.0100001,
+            })
+    return {"request": evidence, "wet_hours": wet_hours}
+
+
 def main():
     RAW.mkdir(parents=True, exist_ok=True)
     errors = []
@@ -270,6 +312,10 @@ def main():
         stations = {code: {"name": cfg[0], "records": []} for code, cfg in INMET.items()}
     for code, config in PORTOSRIO.items():
         stations[code] = collect_sma(code, config, TARGETS)
+        try:
+            stations[code]["positive_rain_check"] = check_positive_rain(code, config)
+        except Exception as exc:
+            stations[code]["positive_rain_check"] = {"error": f"{type(exc).__name__}: {exc}"}
     for station in stations.values():
         station["complete_slots"] = sum(complete(r) for r in station["records"])
         station["observed_values"] = sum(
