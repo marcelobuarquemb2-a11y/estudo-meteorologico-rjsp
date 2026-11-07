@@ -5,6 +5,7 @@ name: RJ-SP meteorological forecast collection
     paths:
       - 'collect.py'
       - 'stations.json'
+      - 'study_config.py'
       - 'normalize_collection.py'
       - '.github/workflows/coleta.yml'
   schedule:
@@ -38,5 +39,6 @@ jobs:
           git add data/
           if ! git diff --cached --quiet; then
             git commit -m "Archive RJ-SP forecast audit"
+            git pull --rebase origin main
             git push
           fi
