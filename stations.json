@@ -1,71 +1,86 @@
 [
   {
-    "id": "ilhabela",
-    "name": "Ilhabela",
-    "lat": -23.77361,
-    "lon": -45.35472,
-    "coordinate_source": "https://www.ioc-sealevelmonitoring.org/ssc/stationdetails.php?id=SSC-ilhab",
-    "coordinate_status": "site_confirmed_sensor_unconfirmed",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": false
+    "id": "inmet_a619_paraty",
+    "name": "Paraty",
+    "lat": -23.2236111,
+    "lon": -44.72694443,
+    "coordinate_source": "https://apitempo.inmet.gov.br/estacoes/T",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "inmet_wis2",
+      "station_code": "A619",
+      "wigos": "0-76-0-3303807000000141"
+    }
   },
   {
-    "id": "sp1_sao_sebastiao",
-    "name": "SP-1 São Sebastião",
-    "lat": -23.830583333333333,
-    "lon": -45.42216666666666,
-    "coordinate_source": "https://www.scielo.br/pdf/rbmet/v31n4/0102-7786-rbmet-0102-778631231420150032.pdf",
-    "coordinate_status": "historical_station_site",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": false
+    "id": "inmet_a628_angra",
+    "name": "Angra dos Reis",
+    "lat": -22.97555554,
+    "lon": -44.30333333,
+    "coordinate_source": "https://apitempo.inmet.gov.br/estacoes/T",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "inmet_wis2",
+      "station_code": "A628",
+      "wigos": "0-76-0-3300100000000555"
+    }
+  },
+  {
+    "id": "inmet_a602_marambaia",
+    "name": "Marambaia",
+    "lat": -23.05027777,
+    "lon": -43.59555555,
+    "coordinate_source": "https://apitempo.inmet.gov.br/estacoes/T",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "inmet_wis2",
+      "station_code": "A602",
+      "wigos": "0-76-0-3304557000000024"
+    }
+  },
+  {
+    "id": "inmet_a652_copacabana",
+    "name": "Forte de Copacabana",
+    "lat": -22.98833333,
+    "lon": -43.19055555,
+    "coordinate_source": "https://apitempo.inmet.gov.br/estacoes/T",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "inmet_wis2",
+      "station_code": "A652",
+      "wigos": "0-76-0-3304557000000187"
+    }
   },
   {
     "id": "ilha_rasa",
     "name": "Ilha Rasa",
-    "lat": -23.063333333333333,
-    "lon": -43.145,
-    "coordinate_source": "Brazilian Navy CHM station 83117 (previously cited); compare to station in stations.json",
-    "coordinate_precision": "0.1 arcminute (~185 m latitude)",
-    "coordinate_status": "station_coordinates_published",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": true
-  },
-  {
-    "id": "cdrj1_ilha_pai",
-    "name": "CDRJ-1 Ilha do Pai",
-    "lat": -22.9928,
-    "lon": -43.0906,
-    "coordinate_source": "https://labouee.app/en/buoy/ilha-do-pai",
-    "coordinate_status": "secondary_source_buoy_location",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": false
+    "lat": -23.0634,
+    "lon": -43.146167,
+    "coordinate_source": "https://sma.portosrio.gov.br/home/6",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "portosrio_sma",
+      "station_id": 6,
+      "instrument": "GMX551"
+    }
   },
   {
     "id": "ilha_fiscal",
     "name": "Ilha Fiscal",
-    "lat": -22.896694444444442,
-    "lon": -43.166,
-    "coordinate_source": "https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50140%20-%20Ilha%20Fiscal%20%28F-41%20T%C3%A1buas%29%20Padr%C3%A3o%20V1-25.pdf",
-    "coordinate_status": "official_site_not_exact_met_sensor",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": false
-  },
-  {
-    "id": "inmet_a628_angra",
-    "name": "INMET A628 Angra",
-    "lat": -22.97555554,
-    "lon": -44.30333333,
-    "coordinate_source": "INMET A628 catalogue, as currently registered",
-    "coordinate_status": "station_coordinates_published",
-    "forecast_acquisition_validated": true,
-    "observation_station_identity_verified": true
-  },
-  {
-    "id": "dois_rios",
-    "name": "Dois Rios Ilha Grande",
-    "lat": null,
-    "lon": null,
-    "enabled": false,
-    "exclusion_reason": "Historical station non-operational; exclude from official forecasts and observations pending confirmation"
+    "lat": -22.896683,
+    "lon": -43.165933,
+    "coordinate_source": "https://sma.portosrio.gov.br/home/7",
+    "coordinate_status": "official_observation_station",
+    "observation_station_identity_verified": true,
+    "observation_source": {
+      "provider": "portosrio_sma",
+      "station_id": 7,
+      "instrument": "GMX600"
+    }
   }
 ]

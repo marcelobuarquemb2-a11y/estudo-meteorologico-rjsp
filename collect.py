@@ -3,41 +3,63 @@
 import datetime as dt
 import json
 import os
-from pathlib import Path
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
-from zoneinfo import ZoneInfo
+from study_config import HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ
 
-ROOT=Path(__file__).resolve().parent
-TZ=ZoneInfo("America/Sao_Paulo")
 MODELS=("ncep_gfs_global","icon_global","ecmwf_ifs")
 VARS=("wind_speed_10m","wind_direction_10m","wind_gusts_10m","precipitation")
 
 def fetch(url,params):
     request=urllib.request.Request(url+"?"+urllib.parse.urlencode(params),headers={"User-Agent":"RJSP-Weather-Research/1.0"})
-    with urllib.request.urlopen(request,timeout=45) as response:
-        return json.load(response)
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen(request, timeout=45) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            if attempt or exc.code not in (408, 429, 500, 502, 503, 504):
+                raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt:
+                raise
+        time.sleep(3)
 
 def main():
     now=dt.datetime.now(TZ)
-    start=dt.datetime(2026,11,6,15,0,tzinfo=TZ)
-    # A delayed scheduled job keeps its requested nominal slot distinct from API retrieval time.
-    cron=os.environ.get("GITHUB_EVENT_SCHEDULE","")
-    slots={"0 12,15,18,21 * * *":None,"0 12 * * *":9,"0 15 * * *":12,
-           "0 18 * * *":15,"0 21 * * *":18}
-    scheduled_slot=slots.get(cron)
-    if scheduled_slot is None:
-        scheduled_slot=min((9,12,15,18),key=lambda h:abs(h-now.hour))
-    targets=[(now.date()+dt.timedelta(days=d)).isoformat()+f"T{scheduled_slot:02d}:00" for d in (1,2,3)]
-    official=(now>=start and now.date()>=start.date() and
-              (now.date()>start.date() or scheduled_slot>=15))
+    cron = os.environ.get("GITHUB_EVENT_SCHEDULE", "")
+    event = os.environ.get("GITHUB_EVENT_NAME", "")
+    slots_by_cron = {"0 12 * * *": 9, "0 15 * * *": 12, "0 18 * * *": 15, "0 21 * * *": 18}
+    scheduled_slot = slots_by_cron.get(cron)
+    hour = scheduled_slot if scheduled_slot is not None else max(
+        (slot for slot in SLOT_HOURS if slot <= now.hour), default=SLOT_HOURS[0]
+    )
+    nominal_issue = now.replace(hour=hour, minute=0, second=0, microsecond=0)
+    targets = [
+        (nominal_issue + dt.timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
+        for lead in HORIZON_HOURS
+    ]
+    official = (
+        (scheduled_slot is not None or event == "workflow_dispatch")
+        and SERIES_START <= nominal_issue <= now < nominal_issue + dt.timedelta(hours=3)
+    )
 
-    result={"consulted_at":now.isoformat(),"official_series_start_local":start.isoformat(),
-            "official_series_eligible":official,"nominal_slot_hour_brt":scheduled_slot,
-            "schedule_event":cron or None,"information_time_convention":"actual consultation time",
-            "targets_local":targets,"station_results":{},"note":"Raw forecasts only; no observations or skill scores"}
+    result = {
+        "consulted_at": now.isoformat(),
+        "official_series_start_local": SERIES_START.isoformat(),
+        "official_series_eligible": official,
+        "nominal_issue_at_local": nominal_issue.isoformat(),
+        "nominal_slot_hour_brt": hour,
+        "schedule_event": cron or None,
+        "trigger_event": event or None,
+        "information_time_convention": "actual consultation time",
+        "targets_local": targets,
+        "station_results": {},
+        "note": "Raw forecasts only; no observations or skill scores",
+    }
     key=os.environ.get("METEOBLUE_API_KEY")
-    for st in json.loads((ROOT/"stations.json").read_text(encoding="utf-8")):
+    for st in STATIONS:
         item={"name":st["name"],"lat":st["lat"],"lon":st["lon"],"sources":{},"errors":[],
               "coordinate_status":st.get("coordinate_status"),
               "forecast_acquisition_validated":st.get("forecast_acquisition_validated",False)}
