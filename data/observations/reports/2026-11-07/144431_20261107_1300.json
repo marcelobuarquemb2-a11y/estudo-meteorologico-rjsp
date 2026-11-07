@@ -1,0 +1,87 @@
+{
+  "acquired_at_brt": "2026-11-07T14:44:31.043710-03:00",
+  "target_local": "2026-11-07T13:00:00-03:00",
+  "scheduled_cron": null,
+  "target_measurement_delayed_by_minutes": 104.5,
+  "target_utc": "2026-11-07T16:00:00+00:00",
+  "real_observations_only": true,
+  "series_start": "2026-11-06T15:00:00-03:00",
+  "stations": {
+    "inmet_a619_paraty": {
+      "station_name": "Paraty",
+      "source": null,
+      "source_status": "no_source",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "inmet_a628_angra": {
+      "station_name": "Angra dos Reis",
+      "source": "INMET automatic station A628",
+      "source_status": "endpoint_trial",
+      "observed": {
+        "direction_deg": 275.0,
+        "mean_kt": 3.888,
+        "gust_kt": 7.775,
+        "precip_mm": 0.0
+      },
+      "source_url": "https://apitempo.inmet.gov.br/estacao/2026-11-06/2026-11-08/A628",
+      "http_status": 204,
+      "response_content_type": "",
+      "response_bytes": 0,
+      "raw_body_sample": null,
+      "status": "observation_available_wis2",
+      "wis2": {
+        "status": "observation_available_wis2",
+        "source_url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.35%2C-23.02%2C-44.25%2C-22.93&datetime=2026-11-07T15%3A55%3A00Z%2F2026-11-07T16%3A05%3A00Z&limit=200",
+        "station_wigos": "0-76-0-3300100000000555",
+        "target_utc": "2026-11-07T16:00:00Z",
+        "observed": {
+          "direction_deg": 275.0,
+          "mean_kt": 3.888,
+          "gust_kt": 7.775,
+          "precip_mm": 0.0
+        },
+        "features_returned": 13,
+        "units": {
+          "direction_deg": "deg",
+          "mean_kt": "m/s",
+          "gust_kt": "m/s",
+          "precip_mm": "kg m-2"
+        },
+        "report_time_matched": true,
+        "precipitation_definition": "kg/m2 = mm of liquid water (hourly period must be checked)",
+        "measurement_source": "INMET WIS2 SYNOP"
+      },
+      "wis2_raw_archive": "data/observations/raw/2026-11-07/inmet_wis2_144431_20261107_1300.json"
+    },
+    "inmet_a602_marambaia": {
+      "station_name": "Marambaia",
+      "source": null,
+      "source_status": "no_source",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "inmet_a652_copacabana": {
+      "station_name": "Forte de Copacabana",
+      "source": null,
+      "source_status": "no_source",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_rasa": {
+      "station_name": "Ilha Rasa",
+      "source": "Marinha 83117 / PortosRio",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    },
+    "ilha_fiscal": {
+      "station_name": "Ilha Fiscal",
+      "source": "PortosRio SMA Ilha Fiscal",
+      "source_status": "requires_machine_readable_access",
+      "observed": null,
+      "status": "not_automated_no_verified_observation_endpoint"
+    }
+  },
+  "errors": []
+}
