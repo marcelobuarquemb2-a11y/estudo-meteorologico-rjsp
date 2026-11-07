@@ -7,7 +7,7 @@ import os
 import urllib.parse
 import urllib.request
 from collections import defaultdict
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -264,7 +264,9 @@ def collect_sma(code, config, targets):
 
 def check_positive_rain(code, config):
     """Compare measured five-minute rain amounts with the daily counter on wet hours."""
-    params = {"id": config[0], "date_start": "2026-11-04 00:00", "date_end": "2026-11-06 00:00"}
+    first = date(2026, 10, 30) if code == "ilha_rasa" else date(2026, 11, 4)
+    end = date(2026, 11, 6)
+    params = {"id": config[0], "date_start": f"{first} 00:00", "date_end": f"{end} 00:00"}
     payload, evidence = fetch_json(SMA, params, f"portosrio-{code}-rain-check.json")
     readings = sma_index(payload, config)
     station = payload["estacao"]
@@ -284,13 +286,19 @@ def check_positive_rain(code, config):
         readings["rain_daily", local].append(numeric(row["data_value"], 1000))
 
     wet_hours = []
-    for day in (4, 5):
+    days = (end - first).days
+    complete_hours = 0
+    for i in range(days):
+        day = first + timedelta(days=i)
         for hour in range(1, 24):
-            target = datetime(2026, 11, day, hour, tzinfo=TZ)
+            target = datetime(day.year, day.month, day.day, hour, tzinfo=TZ)
             rain = sma_record(readings, target)["observed"]["precip_mm"]
             before = sma_value(readings, "rain_daily", target - timedelta(hours=1))
             after = sma_value(readings, "rain_daily", target)
-            if rain is None or rain <= 0 or before is None or after is None:
+            if rain is None:
+                continue
+            complete_hours += 1
+            if rain <= 0 or before is None or after is None:
                 continue
             change = round(after - before, 3)
             wet_hours.append({
@@ -299,7 +307,14 @@ def check_positive_rain(code, config):
                 "daily_counter_difference_mm": change,
                 "matches_within_0_01_mm": abs(change - rain) <= 0.0100001,
             })
-    return {"request": evidence, "wet_hours": wet_hours}
+    positive_values = sum(
+        1 for (field, _), values in readings.items()
+        if field == "precip_mm" and len(values) == 1 and values[0] is not None and values[0] > 0
+    )
+    return {
+        "request": evidence, "complete_hours": complete_hours,
+        "positive_5min_values": positive_values, "wet_hours": wet_hours,
+    }
 
 
 def main():
