@@ -9,7 +9,7 @@ import urllib.request
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
-from study_config import ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ
+from study_config import ROOT, SERIES_START, SLOT_HOURS, SLOT_TOLERANCE, STATIONS, TZ, local_time, within_slot
 
 KNOTS_PER_MPS = 1.9438444924
 WIS2 = "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items"
@@ -112,12 +112,21 @@ def as_utc(value):
     return value.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def best_observation(records, target):
+    def priority(record):
+        actual = local_time(record["observed_at_local"])
+        present = sum(value is not None for value in record["observed"].values())
+        return -present, abs(actual - target), actual
+
+    return {**min(records, key=priority), "target_brt": target.isoformat()}
+
+
 def collect_wis2(targets, raw_dir):
     params = {
         "f": "json",
         "bbox": "-44.80,-23.30,-42.90,-22.86",
-        "datetime": as_utc(min(targets) - timedelta(minutes=5))
-        + "/" + as_utc(max(targets) + timedelta(minutes=5)),
+        "datetime": as_utc(min(targets) - SLOT_TOLERANCE)
+        + "/" + as_utc(max(targets) + SLOT_TOLERANCE),
         "limit": 5000,
     }
     payload, evidence = fetch_json(WIS2, params, raw_dir, "inmet-wis2.json")
@@ -127,39 +136,50 @@ def collect_wis2(targets, raw_dir):
         raise ValueError("Unexpected or paginated WIS2 response")
     evidence["features"] = len(payload["features"])
     by_wigos = {config[1]: code for code, config in INMET.items()}
+    source_names = {definition[0] for definition in WIS_FIELDS.values()}
     readings = defaultdict(list)
+    measured_times = defaultdict(set)
     for feature in payload["features"]:
         p = feature["properties"]
         wigos = p.get("wigos_station_identifier")
-        if wigos not in by_wigos:
+        source = p.get("name")
+        if wigos not in by_wigos or source not in source_names:
             continue
         coords = feature["geometry"]["coordinates"]
         _, _, lat, lon = INMET[by_wigos[wigos]]
-        if valid_position(coords[:2], (lon, lat)):
-            readings[wigos, p.get("reportTime"), p.get("name")].append(p)
+        if not valid_position(coords[:2], (lon, lat)):
+            continue
+        start, _, end = (p.get("phenomenonTime") or "").partition("/")
+        try:
+            actual = local_time(end)
+            began = local_time(start)
+        except ValueError:
+            continue
+        measured_times[wigos].add(actual)
+        readings[wigos, actual, source].append((p, began))
 
     result = {}
     for code, (label, wigos, lat, lon) in INMET.items():
         rows = []
         for target in targets:
-            values = {}
-            intervals = {}
-            for field, (source, unit, maximum, minutes) in WIS_FIELDS.items():
-                matches = readings[wigos, as_utc(target), source]
-                value = None
-                if len(matches) == 1:
-                    match = matches[0]
-                    observed_period = match.get("phenomenonTime")
-                    expected_period = (
-                        as_utc(target - timedelta(minutes=minutes)) + "/" + as_utc(target)
-                    )
-                    if observed_period == expected_period and match["units"] == unit:
-                        value = numeric(match["value"], maximum)
-                        intervals[field] = observed_period
-                if value is not None and unit == "m/s":
-                    value = round(value * KNOTS_PER_MPS, 3)
-                values[field] = value
-            rows.append({"target_brt": target.isoformat(), "observed": values, "intervals_utc": intervals})
+            candidates = {when for when in measured_times[wigos] if within_slot(when, target)}
+            records = []
+            for actual in candidates or {target}:
+                values = {}
+                intervals = {}
+                for field, (source, unit, maximum, minutes) in WIS_FIELDS.items():
+                    matches = readings.get((wigos, actual, source), [])
+                    value = None
+                    if len(matches) == 1:
+                        match, began = matches[0]
+                        if actual - began == timedelta(minutes=minutes) and match["units"] == unit:
+                            value = numeric(match["value"], maximum)
+                            intervals[field] = match["phenomenonTime"]
+                    if value is not None and unit == "m/s":
+                        value = round(value * KNOTS_PER_MPS, 3)
+                    values[field] = value
+                records.append({"observed_at_local": actual.isoformat(), "observed": values, "intervals_utc": intervals})
+            rows.append(best_observation(records, target))
         result[code] = {
             "name": label,
             "wigos": wigos,
@@ -205,8 +225,7 @@ def sma_index(payload, config):
         if source is None:
             continue
         field, maximum = source
-        timestamp = datetime.fromisoformat(row["date_time"])
-        local = timestamp.astimezone(TZ) if timestamp.tzinfo else timestamp.replace(tzinfo=TZ)
+        local = local_time(row["date_time"])
         readings[field, local].append(numeric(row["data_value"], maximum))
     return readings
 
@@ -229,6 +248,7 @@ def sma_record(readings, target):
         gaps[field] = missing
     return {
         "target_brt": target.isoformat(),
+        "observed_at_local": target.isoformat(),
         "observed": values,
         "missing_five_minute_slots": gaps,
     }
@@ -245,14 +265,18 @@ def collect_sma(code, config, targets, raw_dir):
         on_date = [t for t in targets if t.date() == date]
         params = {
             "id": station_id,
-            "date_start": (min(on_date) - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M"),
-            "date_end": (max(on_date) + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M"),
+            "date_start": (min(on_date) - timedelta(hours=1) - SLOT_TOLERANCE).strftime("%Y-%m-%d %H:%M"),
+            "date_end": (max(on_date) + SLOT_TOLERANCE + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M"),
         }
         try:
             payload, evidence = fetch_json(SMA, params, raw_dir, f"portosrio-{code}-{date}.json")
             result["requests"].append(evidence)
             readings = sma_index(payload, config)
-            result["records"].extend(sma_record(readings, t) for t in on_date)
+            measured_times = {when for _, when in readings}
+            for target in on_date:
+                candidates = {when for when in measured_times if within_slot(when, target)}
+                records = (sma_record(readings, when) for when in candidates or {target})
+                result["records"].append(best_observation(records, target))
         except Exception as exc:
             result["errors"].append({"date": date.isoformat(), "error": f"{type(exc).__name__}: {exc}"})
     return result
@@ -301,6 +325,7 @@ def main():
         row = rows[0] if rows else {}
         observed = row.get("observed", {})
         count = sum(value is not None for value in observed.values())
+        measured_at = row.get("observed_at_local") if count else None
         if observed.get("precip_mm") is not None:
             observed["precip_mm"] = round(observed["precip_mm"], 3)
         status = (
@@ -314,6 +339,10 @@ def main():
             "lat": station["lat"],
             "lon": station["lon"],
             "status": status,
+            "observed_at_local": measured_at,
+            "observation_offset_minutes": (
+                round((local_time(measured_at) - target).total_seconds() / 60, 4) if measured_at else None
+            ),
             "observed": observed if count else None,
             "requests": source.get("requests", []),
             "intervals_utc": row.get("intervals_utc"),
