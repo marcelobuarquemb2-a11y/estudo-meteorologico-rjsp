@@ -1,7 +1,7 @@
 """Normalize saved forecast responses without inferring missing observations."""
 import math
 
-from study_config import local_time, within_slot
+from study_config import direction_octant, local_time, within_slot
 
 FIELDS={"direction_deg":"wind_direction_10m","mean_kt":"wind_speed_10m","gust_kt":"wind_gusts_10m","precip_mm":"precipitation"}
 MODELS={"ICON":"icon_global","GFS":"ncep_gfs_global","ECMWF":"ecmwf_ifs"}
@@ -88,6 +88,8 @@ def normalize_collection(result):
                           "gust_kt":round(gust*1.9438444924,3) if gust is not None and wu.get("windspeed")=="ms-1" else None,
                           "precip_mm":rain if bu.get("precipitation")=="mm" else None},
                 "gust_height":"unverified","model_identity":"AI/mLM unverified"})
+        for row in rows:
+            row["direction_octant"] = direction_octant(row["values"]["direction_deg"])
         station["forecasts"]=rows
         station["completeness"]={"present":sum(v is not None for r in rows for v in r["values"].values()),"expected":len(rows)*4}
         time_ok=(om.get("timezone")=="America/Sao_Paulo" and om.get("utc_offset_seconds")==-10800
