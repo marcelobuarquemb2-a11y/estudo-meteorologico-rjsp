@@ -7,7 +7,7 @@ import math
 from normalize_collection import FIELDS, MODELS
 from study_config import (
     FIRST_FULL_FRAME, HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, SLOT_TOLERANCE,
-    STATIONS, TZ, local_time, within_slot,
+    STATIONS, TZ, direction_octant, local_time, within_slot,
 )
 
 MODEL_NAMES = (*MODELS, "Meteoblue package (AI/mLM unverified)")
@@ -131,6 +131,8 @@ def main():
                         "observation_source": observation_source,
                         "forecast": {key: values.get(key) for key in FIELDS},
                         "observed": actual,
+                        "forecast_direction_octant": direction_octant(values.get("direction_deg")),
+                        "observed_direction_octant": direction_octant((actual or {}).get("direction_deg")),
                         "comparable": (
                             values_present(actual or {}) == len(FIELDS)
                             and values_present(values) == len(FIELDS)
