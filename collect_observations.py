@@ -9,7 +9,10 @@ import urllib.request
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
-from study_config import ROOT, SERIES_START, SLOT_HOURS, SLOT_TOLERANCE, STATIONS, TZ, local_time, within_slot
+from study_config import (
+    ROOT, SERIES_START, SLOT_HOURS, SLOT_TOLERANCE, STATIONS, TZ,
+    direction_octant, local_time, within_slot,
+)
 
 KNOTS_PER_MPS = 1.9438444924
 WIS2 = "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items"
@@ -344,6 +347,7 @@ def main():
                 round((local_time(measured_at) - target).total_seconds() / 60, 4) if measured_at else None
             ),
             "observed": observed if count else None,
+            "direction_octant": direction_octant(observed.get("direction_deg")),
             "requests": source.get("requests", []),
             "intervals_utc": row.get("intervals_utc"),
             "missing_five_minute_slots": row.get("missing_five_minute_slots"),
