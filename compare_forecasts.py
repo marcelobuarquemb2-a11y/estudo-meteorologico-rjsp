@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Match official forecast vintages and measured observations at each valid local hour."""
 from datetime import datetime, timedelta
+from decimal import Decimal
 import json
 import math
 
@@ -11,6 +12,7 @@ from study_config import (
 )
 
 MODEL_NAMES = (*MODELS, "Meteoblue package (AI/mLM unverified)")
+DIRECTION_TOLERANCE_DEG = 30
 
 
 def values_present(values):
@@ -18,6 +20,23 @@ def values_present(values):
         type(values.get(field)) in (int, float) and math.isfinite(values[field])
         for field in FIELDS
     )
+
+
+def direction_comparison(forecast_deg, observed_deg):
+    forecast_octant = direction_octant(forecast_deg)
+    observed_octant = direction_octant(observed_deg)
+    error = None
+    hit = None
+    if forecast_octant is not None and observed_octant is not None:
+        delta = abs(Decimal(str(forecast_deg)) - Decimal(str(observed_deg)))
+        error = min(delta, 360 - delta)
+        hit = forecast_octant == observed_octant or error < DIRECTION_TOLERANCE_DEG
+    return {
+        "forecast_direction_octant": forecast_octant,
+        "observed_direction_octant": observed_octant,
+        "direction_error_deg": float(error) if error is not None else None,
+        "direction_hit": hit,
+    }
 
 
 def read_archive(path, unreadable):
@@ -131,8 +150,7 @@ def main():
                         "observation_source": observation_source,
                         "forecast": {key: values.get(key) for key in FIELDS},
                         "observed": actual,
-                        "forecast_direction_octant": direction_octant(values.get("direction_deg")),
-                        "observed_direction_octant": direction_octant((actual or {}).get("direction_deg")),
+                        **direction_comparison(values.get("direction_deg"), (actual or {}).get("direction_deg")),
                         "comparable": (
                             values_present(actual or {}) == len(FIELDS)
                             and values_present(values) == len(FIELDS)
