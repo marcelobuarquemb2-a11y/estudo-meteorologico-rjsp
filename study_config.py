@@ -1,4 +1,5 @@
 """Shared forecast and observation settings for the official study series."""
+from bisect import bisect_right
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -12,6 +13,16 @@ HORIZON_HOURS = (24, 48, 72)
 SERIES_START = datetime(2026, 11, 7, 15, tzinfo=TZ)
 FIRST_FULL_FRAME = SERIES_START + timedelta(hours=max(HORIZON_HOURS))
 STATIONS = json.loads((ROOT / "stations.json").read_text(encoding="utf-8"))
+_DIRECTION_OCTANTS = ("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+_OCTANT_BOUNDARIES = (22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5)
+
+
+def direction_octant(degrees):
+    """Classify a wind-from bearing, assigning boundaries clockwise."""
+    if type(degrees) not in (int, float) or not 0 <= degrees <= 360:
+        return None
+    index = bisect_right(_OCTANT_BOUNDARIES, degrees)
+    return _DIRECTION_OCTANTS[index % len(_DIRECTION_OCTANTS)]
 
 
 def local_time(value):
