@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T14:21:23.223074-03:00",
+  "generated_at": "2026-11-09T17:04:34.877673-03:00",
   "series_start_local": "2026-11-07T15:00:00-03:00",
   "slot_tolerance_minutes": 30,
   "first_complete_nominal_15h_frame": "2026-11-10T15:00:00-03:00",
@@ -2862,6 +2862,1408 @@
       ],
       "matched_rows": 24,
       "rows_with_real_observations": 24,
+      "expected_rows_full_frame": 72,
+      "complete": false
+    },
+    {
+      "observed_time": "2026-11-09T15:00:00-03:00",
+      "observation_file": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+      "rows": [
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 98,
+            "mean_kt": 2.9,
+            "gust_kt": 7.2,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 150.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 27,
+            "mean_kt": 0.4,
+            "gust_kt": 2.1,
+            "precip_mm": 0.3
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "NE",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 139.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 352,
+            "mean_kt": 1.4,
+            "gust_kt": 7.6,
+            "precip_mm": 0.4
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "N",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 104.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 80,
+            "mean_kt": 4.374,
+            "gust_kt": 9.952,
+            "precip_mm": 0.1
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 168.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 135,
+            "mean_kt": 1.4,
+            "gust_kt": 6.0,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 90.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 277,
+            "mean_kt": 1.6,
+            "gust_kt": 2.7,
+            "precip_mm": 0.5
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "W",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 128.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 246,
+            "mean_kt": 2.1,
+            "gust_kt": 8.9,
+            "precip_mm": 0.7
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SW",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 159.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 130,
+            "mean_kt": 3.927,
+            "gust_kt": 5.87,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 85.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 126,
+            "mean_kt": 3.3,
+            "gust_kt": 6.8,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 98.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 100,
+            "mean_kt": 4.5,
+            "gust_kt": 8.2,
+            "precip_mm": 0.5
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 72.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 130,
+            "mean_kt": 7.2,
+            "gust_kt": 16.1,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 102.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 124,
+            "mean_kt": 4.801,
+            "gust_kt": 8.359,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 96.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 109,
+            "mean_kt": 3.5,
+            "gust_kt": 9.3,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 98.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 111,
+            "mean_kt": 3.3,
+            "gust_kt": 5.6,
+            "precip_mm": 0.6
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 96.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 139,
+            "mean_kt": 7.3,
+            "gust_kt": 20.0,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 68.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 131,
+            "mean_kt": 4.626,
+            "gust_kt": 10.011,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 76.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 123,
+            "mean_kt": 9.3,
+            "gust_kt": 12.4,
+            "precip_mm": 0.2
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 79.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 111,
+            "mean_kt": 3.3,
+            "gust_kt": 8.7,
+            "precip_mm": 0.6
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 67.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 147,
+            "mean_kt": 11.6,
+            "gust_kt": 15.9,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 103.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 134,
+            "mean_kt": 8.786,
+            "gust_kt": 14.676,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 90.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 109,
+            "mean_kt": 3.5,
+            "gust_kt": 9.3,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 23.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 111,
+            "mean_kt": 3.3,
+            "gust_kt": 5.6,
+            "precip_mm": 0.6
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 21.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 139,
+            "mean_kt": 7.3,
+            "gust_kt": 20.0,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 7.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-08T15:13:04.580279-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 24,
+          "actual_lead_hours": 23.782,
+          "forecast_source": "data/2026-11/2026-11-08/151304.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 119,
+            "mean_kt": 8.242,
+            "gust_kt": 14.268,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 13.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 120,
+            "mean_kt": 4.3,
+            "gust_kt": 10.7,
+            "precip_mm": 0.2
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 128.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 288,
+            "mean_kt": 1.2,
+            "gust_kt": 3.5,
+            "precip_mm": 0.2
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "W",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 40.0,
+          "direction_hit": true,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 19,
+            "mean_kt": 2.1,
+            "gust_kt": 8.7,
+            "precip_mm": 0.5
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "N",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 131.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a619_paraty",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 101,
+            "mean_kt": 3.324,
+            "gust_kt": 9.078,
+            "precip_mm": 0.1
+          },
+          "observed": {
+            "direction_deg": 248.0,
+            "mean_kt": 4.276,
+            "gust_kt": 7.775,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "W",
+          "direction_error_deg": 147.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 171,
+            "mean_kt": 4.7,
+            "gust_kt": 9.3,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "S",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 126.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 277,
+            "mean_kt": 3.1,
+            "gust_kt": 2.5,
+            "precip_mm": 0.5
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "W",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 128.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 152,
+            "mean_kt": 2.7,
+            "gust_kt": 10.9,
+            "precip_mm": 0.6
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 107.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a628_angra",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 141,
+            "mean_kt": 3.985,
+            "gust_kt": 4.218,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 45.0,
+            "mean_kt": 0.389,
+            "gust_kt": 8.359,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 96.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 119,
+            "mean_kt": 4.9,
+            "gust_kt": 10.5,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 91.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 95,
+            "mean_kt": 4.5,
+            "gust_kt": 7.4,
+            "precip_mm": 0.1
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 67.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 123,
+            "mean_kt": 7.9,
+            "gust_kt": 18.7,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 95.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a602_marambaia",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 124,
+            "mean_kt": 4.84,
+            "gust_kt": 8.261,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 28.0,
+            "mean_kt": 4.471,
+            "gust_kt": 17.106,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 96.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 110,
+            "mean_kt": 3.9,
+            "gust_kt": 10.3,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 97.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 128,
+            "mean_kt": 3.5,
+            "gust_kt": 9.1,
+            "precip_mm": 0.3
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 79.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 138,
+            "mean_kt": 7.4,
+            "gust_kt": 18.7,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 69.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "inmet_a652_copacabana",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 129,
+            "mean_kt": 4.782,
+            "gust_kt": 6.706,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 207.0,
+            "mean_kt": 1.361,
+            "gust_kt": 6.415,
+            "precip_mm": null
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SW",
+          "direction_error_deg": 78.0,
+          "direction_hit": false,
+          "comparable": false
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 133,
+            "mean_kt": 10.9,
+            "gust_kt": 15.9,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 89.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 128,
+            "mean_kt": 3.5,
+            "gust_kt": 8.6,
+            "precip_mm": 0.3
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 84.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 131,
+            "mean_kt": 12.1,
+            "gust_kt": 16.1,
+            "precip_mm": 0.1
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 87.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_rasa",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 132,
+            "mean_kt": 8.767,
+            "gust_kt": 11.177,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 44,
+            "mean_kt": 3.98,
+            "precip_mm": 0.0,
+            "gust_kt": 6.45
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "NE",
+          "direction_error_deg": 88.0,
+          "direction_hit": false,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ICON",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 110,
+            "mean_kt": 3.9,
+            "gust_kt": 10.3,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "E",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 22.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "GFS",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 128,
+            "mean_kt": 3.5,
+            "gust_kt": 9.1,
+            "precip_mm": 0.3
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 4.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "ECMWF",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 138,
+            "mean_kt": 7.4,
+            "gust_kt": 18.7,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 6.0,
+          "direction_hit": true,
+          "comparable": true
+        },
+        {
+          "station_id": "ilha_fiscal",
+          "valid_local": "2026-11-09T15:00:00-03:00",
+          "forecast_consulted_at_local": "2026-11-07T15:05:24.981486-03:00",
+          "forecast_valid_at_local": "2026-11-09T15:00:00-03:00",
+          "observed_at_local": "2026-11-09T15:00:00-03:00",
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "nominal_horizon_hours": 48,
+          "actual_lead_hours": 47.91,
+          "forecast_source": "data/2026-11/2026-11-07/150524.json",
+          "observation_source": "data/observations/reports/2026-11-09/170351654309_20261109_1500.json",
+          "forecast": {
+            "direction_deg": 132,
+            "mean_kt": 8.222,
+            "gust_kt": 9.428,
+            "precip_mm": 0.0
+          },
+          "observed": {
+            "direction_deg": 132,
+            "mean_kt": 3.65,
+            "precip_mm": 0.0,
+            "gust_kt": 14.93
+          },
+          "forecast_direction_octant": "SE",
+          "observed_direction_octant": "SE",
+          "direction_error_deg": 0.0,
+          "direction_hit": true,
+          "comparable": true
+        }
+      ],
+      "matched_rows": 48,
+      "rows_with_real_observations": 16,
       "expected_rows_full_frame": 72,
       "complete": false
     }
