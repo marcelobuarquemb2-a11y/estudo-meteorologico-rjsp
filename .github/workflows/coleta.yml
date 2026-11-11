@@ -8,11 +8,17 @@ name: RJ-SP meteorological forecast collection
       - 'study_config.py'
       - 'normalize_collection.py'
       - '.github/workflows/coleta.yml'
+      - 'test_forecast_retries.py'
   schedule:
-    - cron: '45 11 * * *'
-    - cron: '45 14 * * *'
-    - cron: '45 17 * * *'
-    - cron: '45 20 * * *'
+    # Six attempts per nominal hour, from 29 minutes before to 21 minutes after.
+    - cron: '31,41,51 11 * * *'
+    - cron: '1,11,21 12 * * *'
+    - cron: '31,41,51 14 * * *'
+    - cron: '1,11,21 15 * * *'
+    - cron: '31,41,51 17 * * *'
+    - cron: '1,11,21 18 * * *'
+    - cron: '31,41,51 20 * * *'
+    - cron: '1,11,21 21 * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -24,15 +30,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check forecast retry behavior
+        run: python -m unittest -q test_forecast_retries
       - name: Collect
         env:
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
           GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: python collect.py
       - name: Commit audit artifacts
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
