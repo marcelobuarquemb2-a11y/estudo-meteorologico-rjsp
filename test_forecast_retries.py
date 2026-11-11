@@ -39,7 +39,7 @@ class ForecastRetryTests(unittest.TestCase):
         self.enterContext(patch.object(collect.dt, "datetime", FrozenDateTime))
         self.enterContext(patch.dict(collect.os.environ, {
             "GITHUB_EVENT_NAME": "schedule",
-            "GITHUB_EVENT_SCHEDULE": "31,41,51 11 * * *",
+            "GITHUB_EVENT_SCHEDULE": "40,50 11 * * *",
             "METEOBLUE_API_KEY": "offline-test",
         }, clear=True))
         self.enterContext(redirect_stdout(io.StringIO()))
@@ -102,7 +102,7 @@ class ForecastRetryTests(unittest.TestCase):
             offsets[slot].extend((int(hour) - 3 - slot) * 60 + int(m) for m in minute.split(","))
         self.assertEqual(set(offsets), set(SLOT_HOURS))
         for hour, minutes in offsets.items():
-            self.assertEqual(sorted(minutes), [-29, -19, -9, 1, 11, 21])
+            self.assertEqual(sorted(minutes), [-20, -10, 0, 10, 20, 30])
             self.assertEqual(collect.SCHEDULE_HOURS[f"45 {hour + 2} * * *"], hour)
 
     def test_complete_capture_skips_every_source_call(self):
@@ -203,6 +203,71 @@ class ForecastRetryTests(unittest.TestCase):
         fetch.assert_not_called()
         self.assertEqual(len(list(first.parent.glob("*.json"))), 2)
 
+    def test_pre_nominal_success_still_queries_minus_ten_and_nominal(self):
+        self.report["consulted_at"] = (self.issue - dt.timedelta(minutes=20)).isoformat()
+        self.save_report("084000.json", self.report)
+        for minutes in (-10, 0):
+            FrozenDateTime.current = self.issue + dt.timedelta(minutes=minutes)
+            with patch.object(collect, "fetch", side_effect=self.response) as fetch:
+                collect.main()
+            self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=10)
+        with patch.object(collect, "fetch") as fetch:
+            collect.main()
+        fetch.assert_not_called()
+
+    def test_failed_nominal_refresh_keeps_earlier_complete_fallback(self):
+        self.report["consulted_at"] = (self.issue - dt.timedelta(minutes=20)).isoformat()
+        previous = self.save_report("084000.json", self.report)
+        with patch.object(collect, "fetch", side_effect=TimeoutError):
+            collect.main()
+        self.assertEqual(collect.completed_capture(self.issue, self.targets), previous)
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=10)
+        with patch.object(collect, "fetch") as fetch:
+            collect.main()
+        fetch.assert_not_called()
+
+    def test_delayed_first_post_nominal_attempt_still_refreshes(self):
+        self.report["consulted_at"] = (self.issue - dt.timedelta(minutes=20)).isoformat()
+        self.save_report("084000.json", self.report)
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=12)
+        with patch.object(collect, "fetch", side_effect=self.response) as fetch:
+            collect.main()
+        self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=20)
+        with patch.object(collect, "fetch") as fetch:
+            collect.main()
+        fetch.assert_not_called()
+
+    def test_last_boundary_attempt_runs_but_later_start_does_not(self):
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=30)
+        with patch.object(collect, "fetch", side_effect=self.response) as fetch:
+            collect.main()
+        self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+
+    def test_deployment_does_not_make_unscheduled_source_calls(self):
+        with patch.dict(collect.os.environ, {"GITHUB_EVENT_NAME": "push", "GITHUB_EVENT_SCHEDULE": ""}):
+            with patch.object(collect, "fetch") as fetch:
+                collect.main()
+        fetch.assert_not_called()
+
+    def test_comparison_uses_complete_capture_closest_to_nominal(self):
+        import compare_forecasts
+        for minutes, filename in ((-20, "084000.json"), (-10, "085000.json"), (0, "090000.json")):
+            report = copy.deepcopy(self.report)
+            report["consulted_at"] = (self.issue + dt.timedelta(minutes=minutes)).isoformat()
+            report["collection_summary"] = {"forecast_values_present": 288}
+            self.save_report(filename, report)
+        later = copy.deepcopy(self.report)
+        later["consulted_at"] = (self.issue + dt.timedelta(minutes=10)).isoformat()
+        later["collection_summary"] = {"forecast_values_present": 287}
+        self.save_report("091000.json", later)
+        with patch.object(compare_forecasts, "ROOT", self.root):
+            chosen = compare_forecasts.forecast_archives([])[self.issue]
+        self.assertEqual(chosen[1], self.issue)
+        self.assertTrue(chosen[2].endswith("090000.json"))
+
 
 if __name__ == "__main__":
     unittest.main()
+

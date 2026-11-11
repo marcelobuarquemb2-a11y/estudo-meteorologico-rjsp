@@ -9,11 +9,13 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 from compare_forecasts import MODEL_NAMES, values_present
+from collection_schedule import SCHEDULE_HOURS as WINDOW_SCHEDULE, needs_query
 from study_config import HORIZON_HOURS, ROOT, SERIES_START, SLOT_HOURS, STATIONS, TZ, local_time, within_slot
 
 MODELS=("ncep_gfs_global","icon_global","ecmwf_ifs")
 VARS=("wind_speed_10m","wind_direction_10m","wind_gusts_10m","precipitation")
 SCHEDULE_HOURS = {
+    **WINDOW_SCHEDULE,
     "31,41,51 11 * * *": 9, "1,11,21 12 * * *": 9,
     "31,41,51 14 * * *": 12, "1,11,21 15 * * *": 12,
     "31,41,51 17 * * *": 15, "1,11,21 18 * * *": 15,
@@ -56,16 +58,31 @@ def collection_complete(report, nominal_issue, targets):
     return True
 
 
-def completed_capture(nominal_issue, targets):
+def capture_state(nominal_issue, targets):
+    """Find a complete fallback and whether a nominal refresh was already attempted."""
     folder = ROOT / "data" / nominal_issue.strftime("%Y-%m") / nominal_issue.strftime("%Y-%m-%d")
+    complete = None
+    nominal_attempted = False
     for path in sorted(folder.glob("*.json")):
         try:
             report = json.loads(path.read_text(encoding="utf-8"))
+            if (
+                not report.get("official_series_eligible")
+                or report.get("official_series_start_local") != SERIES_START.isoformat()
+                or local_time(report["nominal_issue_at_local"]) != nominal_issue
+                or not within_slot(local_time(report["consulted_at"]), nominal_issue)
+            ):
+                continue
+            nominal_attempted |= local_time(report["consulted_at"]) >= nominal_issue
             if collection_complete(report, nominal_issue, targets):
-                return path
+                complete = complete or path
         except (OSError, ValueError, TypeError, KeyError, AttributeError):
             print("Ignoring unusable audit artifact:", path.name)
-    return None
+    return complete, nominal_attempted
+
+
+def completed_capture(nominal_issue, targets):
+    return capture_state(nominal_issue, targets)[0]
 
 
 def fetch(url,params):
@@ -113,12 +130,17 @@ def main():
         and nominal_issue >= SERIES_START and within_slot(now, nominal_issue)
     )
     if scheduled_slot is not None or official:
-        previous = completed_capture(nominal_issue, targets)
-        if previous is not None:
+        previous, nominal_attempted = capture_state(nominal_issue, targets)
+        if previous is not None and (
+            not official or not needs_query(now, nominal_issue, True, nominal_attempted)
+        ):
             print("Complete official capture already archived:", previous.relative_to(ROOT))
             return
     if scheduled_slot is not None and not official:
         raise SystemExit("Scheduled capture missed the permitted time window: " + now.isoformat())
+    if event == "push" and not explicit_push:
+        print("Deployment verified; forecast queries wait for a scheduled acquisition")
+        return
 
     result = {
         "consulted_at": now.isoformat(),
@@ -130,6 +152,7 @@ def main():
         "schedule_event": cron or None,
         "trigger_event": event or None,
         "explicit_push_capture": explicit_push,
+        "nominal_refresh_attempt": now >= nominal_issue,
         "information_time_convention": "actual consultation time",
         "targets_local": targets,
         "station_results": {},
@@ -179,8 +202,9 @@ def main():
     print("Audit artifact:",path.relative_to(ROOT))
     print("Sources with numeric responses:",sum(len(x["sources"]) for x in result["station_results"].values()))
     print("Stations awaiting verified coordinates:",sum(x["lat"] is None for x in result["station_results"].values()))
-    if official and not collection_complete(result, nominal_issue, targets):
+    if official and not collection_complete(result, nominal_issue, targets) and completed_capture(nominal_issue, targets) is None:
         raise SystemExit("Incomplete official capture archived; later scheduled attempts can retry")
 
 if __name__=="__main__":
     main()
+
