@@ -8,6 +8,7 @@ import urllib.parse
 import urllib.request
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from collection_schedule import SCHEDULE_HOURS as WINDOW_SCHEDULE, needs_query
 
 from study_config import (
     ROOT, SERIES_START, SLOT_HOURS, SLOT_TOLERANCE, STATIONS, TZ,
@@ -43,11 +44,47 @@ SMA_FIELDS = {
 }
 OBSERVATIONS = ROOT / "data" / "observations"
 SCHEDULE_HOURS = {
+    **WINDOW_SCHEDULE,
     "20 13 * * *": 9, "20 14 * * *": 9,
     "20 16 * * *": 12, "20 17 * * *": 12,
     "20 19 * * *": 15, "20 20 * * *": 15,
     "20 22 * * *": 18, "20 23 * * *": 18,
 }
+
+def archived_observations(target, now):
+    """Reuse complete validated readings and record whether nominal was attempted."""
+    saved = {}
+    nominal_attempted = False
+    configs = {station["id"]: station for station in ACTIVE}
+    for path in sorted((OBSERVATIONS / "reports").glob("*/*.json")):
+        try:
+            report = json.loads(path.read_text(encoding="utf-8"))
+            if local_time(report["target_local"]) != target:
+                continue
+            acquired = local_time(report["acquired_at_brt"])
+            if acquired > now:
+                continue
+            nominal_attempted |= acquired >= target
+            for sid, record in report["stations"].items():
+                config = configs.get(sid)
+                if not config or (
+                    record.get("source_metadata") != config["observation_source"]
+                    or (record.get("lat"), record.get("lon")) != (config["lat"], config["lon"])
+                ):
+                    continue
+                values = record.get("observed") or {}
+                if not all(numeric(values.get(field), definition[2]) is not None for field, definition in SMA_FIELDS.items()):
+                    continue
+                measured = local_time(record["observed_at_local"])
+                if measured > acquired or not within_slot(measured, target):
+                    continue
+                rank = (abs(measured - target), measured, -acquired.timestamp())
+                if sid not in saved or rank < saved[sid][0]:
+                    saved[sid] = (rank, {**record, "reused_from": str(path.relative_to(ROOT))})
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+            print("Ignoring unusable observation artifact:", path.name)
+    return {sid: record for sid, (_, record) in saved.items()}, nominal_attempted
+
 
 def numeric(value, maximum):
     if type(value) not in (int, float) or not math.isfinite(value):
@@ -115,21 +152,30 @@ def as_utc(value):
     return value.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def best_observation(records, target):
+def best_observation(records, target, available_at=None):
     def priority(record):
         actual = local_time(record["observed_at_local"])
         present = sum(value is not None for value in record["observed"].values())
         return -present, abs(actual - target), actual
 
-    return {**min(records, key=priority), "target_brt": target.isoformat()}
+    candidates = [
+        record for record in records
+        if available_at is None or local_time(record["observed_at_local"]) <= available_at
+    ]
+    best = min(candidates, key=priority) if candidates else {
+        "observed_at_local": target.isoformat(),
+        "observed": {field: None for field in WIS_FIELDS},
+    }
+    return {**best, "target_brt": target.isoformat()}
 
 
-def collect_wis2(targets, raw_dir):
+def collect_wis2(targets, raw_dir, available_at=None):
+    available_at = available_at or datetime.now(TZ)
     params = {
         "f": "json",
         "bbox": "-44.80,-23.30,-42.90,-22.86",
         "datetime": as_utc(min(targets) - SLOT_TOLERANCE)
-        + "/" + as_utc(max(targets) + SLOT_TOLERANCE),
+        + "/" + as_utc(min(max(targets) + SLOT_TOLERANCE, available_at)),
         "limit": 5000,
     }
     payload, evidence = fetch_json(WIS2, params, raw_dir, "inmet-wis2.json")
@@ -158,6 +204,8 @@ def collect_wis2(targets, raw_dir):
             began = local_time(start)
         except ValueError:
             continue
+        if actual > available_at:
+            continue
         measured_times[wigos].add(actual)
         readings[wigos, actual, source].append((p, began))
 
@@ -182,7 +230,7 @@ def collect_wis2(targets, raw_dir):
                         value = round(value * KNOTS_PER_MPS, 3)
                     values[field] = value
                 records.append({"observed_at_local": actual.isoformat(), "observed": values, "intervals_utc": intervals})
-            rows.append(best_observation(records, target))
+            rows.append(best_observation(records, target, available_at))
         result[code] = {
             "name": label,
             "wigos": wigos,
@@ -257,7 +305,8 @@ def sma_record(readings, target):
     }
 
 
-def collect_sma(code, config, targets, raw_dir):
+def collect_sma(code, config, targets, raw_dir, available_at=None):
+    available_at = available_at or datetime.now(TZ)
     station_id, label, instrument, lat, lon = config
     result = {
         "name": label, "provider": "PortosRio SMA", "station_id": station_id,
@@ -269,7 +318,7 @@ def collect_sma(code, config, targets, raw_dir):
         params = {
             "id": station_id,
             "date_start": (min(on_date) - timedelta(hours=1) - SLOT_TOLERANCE).strftime("%Y-%m-%d %H:%M"),
-            "date_end": (max(on_date) + SLOT_TOLERANCE + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M"),
+            "date_end": (min(max(on_date) + SLOT_TOLERANCE, available_at) + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M"),
         }
         try:
             payload, evidence = fetch_json(SMA, params, raw_dir, f"portosrio-{code}-{date}.json")
@@ -277,9 +326,9 @@ def collect_sma(code, config, targets, raw_dir):
             readings = sma_index(payload, config)
             measured_times = {when for _, when in readings}
             for target in on_date:
-                candidates = {when for when in measured_times if within_slot(when, target)}
-                records = (sma_record(readings, when) for when in candidates or {target})
-                result["records"].append(best_observation(records, target))
+                candidates = {when for when in measured_times if when <= available_at and within_slot(when, target)}
+                records = (sma_record(readings, when) for when in candidates)
+                result["records"].append(best_observation(records, target, available_at))
         except Exception as exc:
             result["errors"].append({"date": date.isoformat(), "error": f"{type(exc).__name__}: {exc}"})
     return result
@@ -292,6 +341,10 @@ def observation_target(now, cron):
         return value.astimezone(TZ) if value.tzinfo else value.replace(tzinfo=TZ)
     if cron in SCHEDULE_HOURS:
         return now.replace(hour=SCHEDULE_HOURS[cron], minute=0, second=0, microsecond=0)
+    nearby = [now.replace(hour=hour, minute=0, second=0, microsecond=0) for hour in SLOT_HOURS]
+    in_window = [target for target in nearby if target - timedelta(minutes=20) <= now <= target + SLOT_TOLERANCE]
+    if in_window:
+        return min(in_window, key=lambda target: abs(now - target))
     available = now - timedelta(minutes=80)
     for hour in reversed(SLOT_HOURS):
         if hour <= available.hour:
@@ -305,24 +358,41 @@ def main():
     now = datetime.now(TZ)
     cron = os.environ.get("GITHUB_EVENT_SCHEDULE", "")
     target = observation_target(now, cron)
-    if target.hour not in SLOT_HOURS or target.minute or target.second or target.microsecond or target > now:
-        raise ValueError("Expected a past nominal study hour")
+    if target.hour not in SLOT_HOURS or target.minute or target.second or target.microsecond or now < target - timedelta(minutes=20):
+        raise ValueError("Expected a nominal study hour, at most 20 minutes ahead")
+    previous, nominal_attempted = archived_observations(target, now)
+    complete = len(previous) == len(ACTIVE)
+    if cron in WINDOW_SCHEDULE and now > target + SLOT_TOLERANCE:
+        if complete:
+            print("Late observation attempt skipped; complete readings already archived")
+            return
+        raise SystemExit("Scheduled observation attempt missed the consultation window; delayed recovery remains enabled")
+    if not needs_query(now, target, complete, nominal_attempted):
+        print("Complete real observations already archived; no source queries needed")
+        return
+    refresh = now < target or not nominal_attempted
+    pending = {station["id"] for station in ACTIVE if refresh or station["id"] not in previous}
 
     stamp = now.strftime("%H%M%S%f") + "_" + target.strftime("%Y%m%d_%H%M")
     raw_dir = OBSERVATIONS / "raw" / now.date().isoformat() / stamp
     raw_dir.mkdir(parents=True, exist_ok=True)
     errors = []
-    try:
-        readings = collect_wis2([target], raw_dir)
-    except Exception as exc:
-        errors.append({"provider": "INMET WIS2", "error": type(exc).__name__})
-        readings = {}
+    readings = {}
+    if pending.intersection(INMET):
+        try:
+            readings = collect_wis2([target], raw_dir, available_at=now)
+        except Exception as exc:
+            errors.append({"provider": "INMET WIS2", "error": type(exc).__name__})
     for sid, config in PORTOSRIO.items():
-        readings[sid] = collect_sma(sid, config, [target], raw_dir)
+        if sid in pending:
+            readings[sid] = collect_sma(sid, config, [target], raw_dir, available_at=now)
 
     results = {}
     for station in ACTIVE:
         sid = station["id"]
+        if sid not in pending:
+            results[sid] = previous[sid]
+            continue
         source = readings.get(sid, {})
         rows = source.get("records", [])
         row = rows[0] if rows else {}
@@ -358,6 +428,10 @@ def main():
         "acquired_at_brt": now.isoformat(),
         "target_local": target.isoformat(),
         "scheduled_cron": cron or None,
+        "nominal_refresh_attempt": now >= target,
+        "acquisition_phase": "before_nominal" if now < target else (
+            "delayed_recovery" if now > target + SLOT_TOLERANCE else "nominal_refresh" if refresh else "retry"
+        ),
         "target_measurement_delayed_by_minutes": round((now - target).total_seconds() / 60, 1),
         "target_utc": target.astimezone(timezone.utc).isoformat(),
         "real_observations_only": True,
@@ -379,3 +453,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
