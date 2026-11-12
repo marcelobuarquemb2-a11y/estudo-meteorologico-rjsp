@@ -18,3 +18,8 @@ Fontes: Open-Meteo (ICON, GFS, ECMWF) e Meteoblue (basic-1h, wind-3h; identifica
 
 A série oficial começa em 07/11/2026 às 15h de Brasília. A primeira comparação possível com os três horizontes é a da observação de 10/11/2026 às 15h, após a publicação das medições.
 
+
+
+## Candidata de migração para Google Cloud
+
+A infraestrutura paralela, condições de ativação, custos e plano de sete dias estão em [cloud/README.md](cloud/README.md). A configuração não ativa a migração automaticamente.

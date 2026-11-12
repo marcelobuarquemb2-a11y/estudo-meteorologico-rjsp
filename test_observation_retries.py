@@ -154,13 +154,13 @@ class ObservationRetryTests(unittest.TestCase):
         wis.assert_not_called()
         port.assert_not_called()
 
-    def test_expired_primary_attempt_does_not_query_sources(self):
-        FrozenDateTime.current = self.target + dt.timedelta(minutes=30, seconds=1)
-        with patch.object(observations, "collect_wis2") as wis, patch.object(observations, "collect_sma") as port:
-            with self.assertRaises(SystemExit):
-                observations.main()
-        wis.assert_not_called()
-        port.assert_not_called()
+    def test_expired_primary_attempt_recovers_original_measurement(self):
+        wis, port = self.run_capture(56)
+        wis.assert_called_once()
+        self.assertEqual(wis.call_args.args[0], [self.target])
+        report = json.loads(self.reports()[-1].read_text())
+        self.assertEqual(report["acquisition_phase"], "delayed_recovery")
+        self.assertEqual(report["coverage"], {"present": 24, "expected": 24})
 
     def test_last_boundary_attempt_is_allowed(self):
         wis, port = self.run_capture(30)
