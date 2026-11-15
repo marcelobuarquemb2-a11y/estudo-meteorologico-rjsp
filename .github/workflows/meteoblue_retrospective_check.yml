@@ -1,0 +1,142 @@
+name: Meteoblue retrospective reproducibility check (non-official)
+'on':
+  push:
+    paths:
+      - '.github/workflows/meteoblue_retrospective_check.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: meteoblue-retrospective-test
+  cancel-in-progress: false
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query Meteoblue and compare with original archived forecasts
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json,random,urllib.parse,urllib.request,urllib.error,time,traceback
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          TZ=ZoneInfo("America/Sao_Paulo")
+          SEED=20261115
+          FIELD_KEYS=("direction_deg","mean_kt","gust_kt","precip_mm")
+          origdir=Path("data/2026-11")
+          candidates=[]
+          for path in origdir.glob("2026-11-*/*.json"):
+              try:
+                  record=json.loads(path.read_text())
+                  nominal=datetime.fromisoformat(record["nominal_issue_at_local"])
+                  if datetime(2026,11,11,12,tzinfo=TZ)<=nominal<=datetime(2026,11,14,18,tzinfo=TZ):
+                      if any(r.get("model")=="Meteoblue package (AI/mLM unverified)" for st in record["station_results"].values() for r in st.get("forecasts",[])):
+                          candidates.append((nominal,path))
+              except Exception: pass
+          rng=random.Random(SEED)
+          candidates.sort()
+          selected=sorted(rng.sample(candidates,k=min(8,len(candidates))))
+          stations=json.loads(Path("stations.json").read_text())
+          inmet=[x for x in stations if x["id"].startswith("inmet_")]
+          harbor=[x for x in stations if not x["id"].startswith("inmet_")]
+          selected_stations=[rng.choice(inmet),rng.choice(harbor)]
+          print("Selected station IDs:",*[x["id"] for x in selected_stations],flush=True)
+          print("Selected timestamps:",*[t.isoformat() for t,_ in selected],flush=True)
+          output={"purpose":"retrospective_nonofficial","sample_seed":SEED,"baseline":[str(p) for _,p in selected],
+            "stations":[s["id"] for s in selected_stations],"api_request_params":{"history_days":4,"forecast_days":5},
+            "provider_mlm_archival_identity_proven":False,"comparisons":[],"api_metadata":{},
+            "errors":[]}
+          import os
+          key=os.environ.get("METEOBLUE_API_KEY")
+          if not key:
+              output["errors"].append("METEOBLUE_API_KEY unavailable in GitHub Actions")
+          else:
+              for station in selected_stations:
+                  raw={}
+                  for package in ("basic-1h","wind-3h"):
+                      params={"lat":station["lat"],"lon":station["lon"],"asl":0,"tz":"America/Sao_Paulo",
+                              "format":"json","apikey":key,"history_days":4,"forecast_days":5}
+                      url="https://my.meteoblue.com/packages/"+package+"?"+urllib.parse.urlencode(params)
+                      try:
+                          req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Meteoblue-Reproducibility/1.0"})
+                          with urllib.request.urlopen(req,timeout=50) as response: payload=json.load(response)
+                          if payload.get("error") or "metadata" not in payload: raise ValueError(str(payload)[:700])
+                          raw[package]=payload
+                          key2=station["id"]+"/"+package
+                          data=payload.get("data_1h") if package=="basic-1h" else payload.get("data_3h")
+                          output["api_metadata"][key2]={
+                            "metadata":payload.get("metadata",{}),
+                            "units":payload.get("units",{}),
+                            "times_min":(data.get("time") or [None])[0],
+                            "times_max":(data.get("time") or [None])[-1],
+                            "n_times":len(data.get("time") or [])}
+                          print(station["id"],package,"OK",output["api_metadata"][key2]["times_min"],flush=True)
+                      except Exception as exc:
+                          output["errors"].append(station["id"]+"/"+package+": "+str(exc)[:400])
+                          print(station["id"],package,"ERROR",str(exc)[:140],flush=True)
+                      time.sleep(.2)
+                  for nominal,path in selected:
+                      origin=json.loads(path.read_text())["station_results"][station["id"]]
+                      rows=[r for r in origin.get("forecasts",[]) if r.get("model")=="Meteoblue package (AI/mLM unverified)"]
+                      basic=raw.get("basic-1h",{}).get("data_1h",{})
+                      wind=raw.get("wind-3h",{}).get("data_3h",{})
+                      bs={t:i for i,t in enumerate(basic.get("time",[]))}
+                      ws={t:i for i,t in enumerate(wind.get("time",[]))}
+                      for row in rows:
+                          target=datetime.fromisoformat(row["target_local"]).strftime("%Y-%m-%d %H:%M")
+                          b_idx=bs.get(target);w_idx=ws.get(target)
+                          def get(tab,key,ix):
+                              arr=tab.get(key) or []
+                              return arr[ix] if ix is not None and ix<len(arr) else None
+                          new={"direction_deg":get(basic,"winddirection",b_idx),
+                            "mean_kt":get(basic,"windspeed",b_idx),
+                            "gust_kt":get(wind,"gust",w_idx),
+                            "precip_mm":get(basic,"precipitation",b_idx)}
+                          if new["mean_kt"] is not None:new["mean_kt"]=round(new["mean_kt"]*1.9438444924,3)
+                          if new["gust_kt"] is not None:new["gust_kt"]=round(new["gust_kt"]*1.9438444924,3)
+                          for field in FIELD_KEYS:
+                              old=row.get("values",{}).get(field);value=new[field]
+                              diff=(round(value-old,4) if type(old) in (int,float) and type(value) in (int,float) else None)
+                              ok=diff is not None and abs(diff)<=0.002
+                              output["comparisons"].append({
+                                  "station":station["id"],"issue_brt":nominal.isoformat(),
+                                  "source_file":str(path),"target_brt":row["target_local"],
+                                  "lead_hours":row["day_offset"]*24,"variable":field,
+                                  "original":old,"retrospective":value,
+                                  "difference":diff,"identical":ok,
+                                  "retrieved_from":"forecast_API_history_days=4"})
+          valid=[x for x in output["comparisons"] if x["difference"] is not None]
+          exact=[x for x in valid if x["identical"]]
+          output["summary"]={"pairs_with_both_values":len(valid),"exact_matches":len(exact),
+              "exact_rate":round(len(exact)/len(valid),5) if valid else None,
+              "expected_comparisons":len(selected)*len(selected_stations)*3*4,
+              "variable_breakdown":{}}
+          for field in FIELD_KEYS:
+              v=[x for x in valid if x["variable"]==field]
+              output["summary"]["variable_breakdown"][field]={
+                "compared":len(v),"identical":sum(x["identical"] for x in v),
+                "differences":sum(not x["identical"] for x in v)}
+          p=Path("data/recovery_candidates/meteoblue_retrospective_test_20261115.json")
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n")
+          print("Final summary:",json.dumps(output["summary"],ensure_ascii=False),flush=True)
+          print("Errors:",output["errors"],flush=True)
+          PY
+      - name: Archive comparison result only (do not touch official data)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/recovery_candidates/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive Meteoblue past-forecast reproducibility test"
+            git pull --rebase origin main
+            git push
+          fi
