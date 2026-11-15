@@ -4,6 +4,7 @@ import datetime as dt
 import json
 import os
 import time
+from artifact_store import save_text, StorageError
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -99,6 +100,13 @@ def fetch(url,params):
                 raise
         time.sleep(3)
 
+def query_source(endpoint, params, nominal_issue, official):
+    consulted = dt.datetime.now(TZ)
+    if official and not within_slot(consulted, nominal_issue):
+        raise TimeoutError("Forecast source query would start outside its reference window")
+    return fetch(endpoint, params), consulted.isoformat()
+
+
 def requested_push_capture(event, nominal_issue):
     event_path = os.environ.get("GITHUB_EVENT_PATH")
     if event != "push" or not event_path:
@@ -120,13 +128,18 @@ def main():
         nominal_issue = min(candidates, key=lambda slot: abs(now - slot))
     else:
         nominal_issue = top_of_hour.replace(hour=scheduled_slot)
+    override = os.environ.get("NOMINAL_ISSUE_BRT")
+    if override:
+        nominal_issue = local_time(override)
+        if nominal_issue.hour not in SLOT_HOURS or nominal_issue.minute or nominal_issue.second or nominal_issue.microsecond:
+            raise ValueError("Expected an explicit nominal study hour")
     targets = [
         (nominal_issue + dt.timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
         for lead in HORIZON_HOURS
     ]
     explicit_push = requested_push_capture(event, nominal_issue)
     official = (
-        (scheduled_slot is not None or event == "workflow_dispatch" or explicit_push)
+        (scheduled_slot is not None or event in ("workflow_dispatch", "cloud_scheduler") or explicit_push)
         and nominal_issue >= SERIES_START and within_slot(now, nominal_issue)
     )
     if scheduled_slot is not None or official:
@@ -136,7 +149,7 @@ def main():
         ):
             print("Complete official capture already archived:", previous.relative_to(ROOT))
             return
-    if scheduled_slot is not None and not official:
+    if (scheduled_slot is not None or event == "cloud_scheduler") and not official:
         raise SystemExit("Scheduled capture missed the permitted time window: " + now.isoformat())
     if event == "push" and not explicit_push:
         print("Deployment verified; forecast queries wait for a scheduled acquisition")
@@ -158,6 +171,7 @@ def main():
         "station_results": {},
         "note": "Raw forecasts only; no observations or skill scores",
     }
+    raw_dir = ROOT / "data" / "forecast_raw" / now.strftime("%Y-%m-%d") / now.strftime("%H%M%S%f")
     key=os.environ.get("METEOBLUE_API_KEY")
     for st in STATIONS:
         item={"name":st["name"],"lat":st["lat"],"lon":st["lon"],"sources":{},"errors":[],
@@ -174,9 +188,12 @@ def main():
                 "models":",".join(MODELS),"wind_speed_unit":"kn",
                 "timezone":"America/Sao_Paulo","forecast_days":5}
         try:
-            raw=fetch("https://api.open-meteo.com/v1/forecast",params)
-            item["sources"]["open_meteo"]={"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
+            raw, source_consulted = query_source("https://api.open-meteo.com/v1/forecast", params, nominal_issue, official)
+            save_text(raw_dir / (st["id"] + "-open_meteo.json"), json.dumps(raw, ensure_ascii=False, allow_nan=False))
+            item["sources"]["open_meteo"]={"consulted_at_local":source_consulted,"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
                 "raw":raw,"target_times":targets,"model_run":"not reported explicitly"}
+        except StorageError:
+            raise
         except Exception as e:
             item["errors"].append("Open-Meteo "+type(e).__name__)
         if not key:
@@ -184,12 +201,15 @@ def main():
             continue
         for package in ("basic-1h","wind-3h"):
             try:
-                raw=fetch("https://my.meteoblue.com/packages/"+package,
+                raw, source_consulted = query_source("https://my.meteoblue.com/packages/"+package,
                           {"lat":st["lat"],"lon":st["lon"],"asl":0,"tz":"America/Sao_Paulo",
-                           "format":"json","apikey":key})
-                item["sources"]["meteoblue_"+package]={"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
+                           "format":"json","apikey":key}, nominal_issue, official)
+                save_text(raw_dir / (st["id"] + "-meteoblue-" + package + ".json"), json.dumps(raw, ensure_ascii=False, allow_nan=False))
+                item["sources"]["meteoblue_"+package]={"consulted_at_local":source_consulted,"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
                     "raw":raw,"model_run":raw.get("metadata",{}).get("modelrun_utc"),
                     "mlm_provenance":"not verified","target_times":targets}
+            except StorageError:
+                raise
             except Exception as e:
                 item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
     # Preserve raw API responses and generate normalized, audited forecast records.
@@ -197,8 +217,8 @@ def main():
     normalize_collection(result)
     out=ROOT/"data"/now.strftime("%Y-%m")/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
-    path=out/(now.strftime("%H%M%S")+".json")
-    path.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    path=out/(now.strftime("%H%M%S%f" if os.environ.get("ARTIFACT_BUCKET") else "%H%M%S")+".json")
+    save_text(path, json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+"\n")
     print("Audit artifact:",path.relative_to(ROOT))
     print("Sources with numeric responses:",sum(len(x["sources"]) for x in result["station_results"].values()))
     print("Stations awaiting verified coordinates:",sum(x["lat"] is None for x in result["station_results"].values()))

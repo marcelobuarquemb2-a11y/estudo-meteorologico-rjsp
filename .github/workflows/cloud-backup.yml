@@ -1,0 +1,38 @@
+name: Backup Cloud Run parallel evidence
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  id-token: write
+concurrency:
+  group: rjsp-cloud-backup
+  cancel-in-progress: false
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_BACKUP_SERVICE_ACCOUNT }}
+      - run: pip install -r requirements-cloud.txt
+      - name: Download immutable cloud evidence
+        env:
+          ARCHIVE_BUCKET: ${{ vars.GCP_ARTIFACT_BUCKET }}
+        run: python cloud/export_archive.py --bucket "$ARCHIVE_BUCKET"
+      - name: Publish backup with retry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cloud_parallel/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Back up immutable Cloud Run parallel evidence"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main || exit 1
+          done
+          exit 1

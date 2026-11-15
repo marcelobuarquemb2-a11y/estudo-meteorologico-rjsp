@@ -1,0 +1,17 @@
+name: Offline collection reliability tests
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-cloud.txt python-hcl2
+      - run: python -m unittest -q test_forecast_retries test_observation_retries test_cloud_collection
+      - run: python -c "import hcl2; hcl2.load(open('cloud/main.tf'))"

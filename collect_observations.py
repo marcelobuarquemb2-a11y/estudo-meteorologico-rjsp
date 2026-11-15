@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Collect genuine surface observations at the study's scheduled local times."""
+from artifact_store import save_text, StorageError
 import hashlib
 import json
 import math
@@ -133,7 +134,7 @@ def fetch_json(endpoint, params, raw_dir, filename):
                 row for row in data["dados"] if str(row["data_type_id"]) in channel_ids
             ],
         }
-    path.write_text(json.dumps(archive, ensure_ascii=False) + "\n", encoding="utf-8")
+    save_text(path, json.dumps(archive, ensure_ascii=False, allow_nan=False) + "\n")
     evidence = {
         "url": url,
         "http_status": status,
@@ -166,7 +167,15 @@ def best_observation(records, target, available_at=None):
         "observed_at_local": target.isoformat(),
         "observed": {field: None for field in WIS_FIELDS},
     }
-    return {**best, "target_brt": target.isoformat()}
+    alternatives = {
+        field: min((record for record in candidates if record.get("observed", {}).get(field) is not None),
+                   key=lambda record: abs(local_time(record["observed_at_local"]) - target), default=None)
+        for field in WIS_FIELDS
+    }
+    return {**best, "target_brt": target.isoformat(), "indicator_candidates": {
+        field: {"value": record["observed"][field], "observed_at_local": record["observed_at_local"]}
+        for field, record in alternatives.items() if record is not None
+    }}
 
 
 def collect_wis2(targets, raw_dir, available_at=None):
@@ -329,6 +338,8 @@ def collect_sma(code, config, targets, raw_dir, available_at=None):
                 candidates = {when for when in measured_times if when <= available_at and within_slot(when, target)}
                 records = (sma_record(readings, when) for when in candidates)
                 result["records"].append(best_observation(records, target, available_at))
+        except StorageError:
+            raise
         except Exception as exc:
             result["errors"].append({"date": date.isoformat(), "error": f"{type(exc).__name__}: {exc}"})
     return result
@@ -362,11 +373,7 @@ def main():
         raise ValueError("Expected a nominal study hour, at most 20 minutes ahead")
     previous, nominal_attempted = archived_observations(target, now)
     complete = len(previous) == len(ACTIVE)
-    if cron in WINDOW_SCHEDULE and now > target + SLOT_TOLERANCE:
-        if complete:
-            print("Late observation attempt skipped; complete readings already archived")
-            return
-        raise SystemExit("Scheduled observation attempt missed the consultation window; delayed recovery remains enabled")
+    # Publication can be delayed: constrain measurement time, never consultation time.
     if not needs_query(now, target, complete, nominal_attempted):
         print("Complete real observations already archived; no source queries needed")
         return
@@ -381,6 +388,8 @@ def main():
     if pending.intersection(INMET):
         try:
             readings = collect_wis2([target], raw_dir, available_at=now)
+        except StorageError:
+            raise
         except Exception as exc:
             errors.append({"provider": "INMET WIS2", "error": type(exc).__name__})
     for sid, config in PORTOSRIO.items():
@@ -419,6 +428,7 @@ def main():
             "observed": observed if count else None,
             "direction_octant": direction_octant(observed.get("direction_deg")),
             "requests": source.get("requests", []),
+            "indicator_candidates": row.get("indicator_candidates", {}),
             "intervals_utc": row.get("intervals_utc"),
             "missing_five_minute_slots": row.get("missing_five_minute_slots"),
             "errors": source.get("errors", []),
@@ -438,13 +448,13 @@ def main():
         "series_start": SERIES_START.isoformat(),
         "stations": results,
         "errors": errors,
+        "coverage": {"present": sum(sum(type(v) in (int, float) and math.isfinite(v) for v in (s.get("observed") or {}).values()) for s in results.values()),
+                     "expected": len(ACTIVE) * len(WIS_FIELDS)},
     }
     out = OBSERVATIONS / "reports" / now.date().isoformat()
     out.mkdir(parents=True, exist_ok=True)
     path = out / (stamp + ".json")
-    path.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8"
-    )
+    save_text(path, json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
     print("Observation report:", path.relative_to(ROOT))
     print("Complete stations:", sum(s["status"] == "observation_available" for s in results.values()))
     for sid, reading in results.items():
