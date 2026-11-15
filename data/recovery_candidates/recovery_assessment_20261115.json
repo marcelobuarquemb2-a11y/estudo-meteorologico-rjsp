@@ -1,0 +1,117 @@
+{
+  "status": "HISTORICAL_RECOVERY_DIAGNOSTIC_NOT_OFFICIAL",
+  "assessed_at_local": "2026-11-15",
+  "provider": "Open-Meteo Single Runs API",
+  "selected_run_rule": "Consecutive-day calibration against original snapshots, NOT provider timestamped publication logs",
+  "calibration": {
+    "2026-11-14T09:00": {
+      "GFS": {
+        "run_utc": "2026-11-14T06:00",
+        "exact_values": "72/72"
+      },
+      "ICON": {
+        "run_utc": "2026-11-14T06:00",
+        "exact_values": "72/72"
+      },
+      "ECMWF": {
+        "run_utc": "2026-11-14T00:00",
+        "exact_values": "72/72"
+      }
+    },
+    "2026-11-15T09:00": {
+      "GFS": {
+        "run_utc": "2026-11-15T06:00",
+        "exact_values": "72/72"
+      },
+      "ICON": {
+        "run_utc": "2026-11-15T06:00",
+        "exact_values": "72/72"
+      },
+      "ECMWF": {
+        "run_utc": "2026-11-15T00:00",
+        "exact_values": "72/72"
+      }
+    },
+    "2026-11-14T18:00": {
+      "GFS": {
+        "run_utc": "2026-11-14T12:00",
+        "exact_values": "48/48"
+      },
+      "ICON": {
+        "run_utc": "2026-11-14T18:00",
+        "exact_values": "48/48"
+      },
+      "ECMWF": {
+        "run_utc": "2026-11-14T12:00",
+        "exact_values": "48/48"
+      }
+    }
+  },
+  "proposals": [
+    {
+      "nominal_local": "2026-11-11T18:00",
+      "source_status": "missing",
+      "validated_at_nominal": false,
+      "confidence": "inferred_same_hour_adjacent_day",
+      "models": {
+        "GFS": "2026-11-11T12:00",
+        "ICON": "2026-11-11T18:00",
+        "ECMWF": "2026-11-11T12:00"
+      },
+      "missing_forecast_values_for_three_models": 216
+    },
+    {
+      "nominal_local": "2026-11-12T09:00",
+      "source_status": "missing",
+      "validated_at_nominal": false,
+      "confidence": "inferred_same_hour_two_adjacent_days",
+      "models": {
+        "GFS": "2026-11-12T06:00",
+        "ICON": "2026-11-12T06:00",
+        "ECMWF": "2026-11-12T00:00"
+      },
+      "missing_forecast_values_for_three_models": 216
+    },
+    {
+      "nominal_local": "2026-11-13T09:00",
+      "source_status": "missing",
+      "validated_at_nominal": false,
+      "confidence": "inferred_same_hour_two_adjacent_days",
+      "models": {
+        "GFS": "2026-11-13T06:00",
+        "ICON": "2026-11-13T06:00",
+        "ECMWF": "2026-11-13T00:00"
+      },
+      "missing_forecast_values_for_three_models": 216
+    },
+    {
+      "nominal_local": "2026-11-14T18:00",
+      "source_status": "two_inmet_stations_missing_open_meteo_values",
+      "validated_at_nominal": true,
+      "confidence": "historically_reproduced_48_of_48_each_model_at_other_stations",
+      "models": {
+        "GFS": "2026-11-14T12:00",
+        "ICON": "2026-11-14T18:00",
+        "ECMWF": "2026-11-14T12:00"
+      },
+      "missing_forecast_values_for_three_models": 72
+    }
+  ],
+  "counts": {
+    "archived_candidate_cycles": 36,
+    "calibration_cycles": 18,
+    "all_values_available_for_proposed_three_model_runs": 864,
+    "missing_forecast_values_potentially_recovered": 720,
+    "originally_missing_slot_values": 648,
+    "partial_slot_values": 72
+  },
+  "caution": "No proof from historic archive of original publication timestamps for absent slots. Do not replace official real-time captures or label these as exact original vintages until further evidence.",
+  "meteoblue": "Not recovered. Standard history_days may be observation-adjusted, not the original mLM snapshot.",
+  "sources": [
+    "data/recovery_candidates/single_runs_probe_20261115.json",
+    "data/recovery_candidates/single_runs_calibration_09h_20261115.json",
+    "data/2026-11/2026-11-14/182606.json",
+    "data/2026-11/2026-11-14/091636.json",
+    "data/2026-11/2026-11-15/091808.json"
+  ]
+}
