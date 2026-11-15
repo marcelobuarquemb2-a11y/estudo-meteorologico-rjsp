@@ -1,0 +1,102 @@
+name: Probe missing forecast model runs (historical, non-official)
+'on':
+  push:
+    paths:
+      - '.github/workflows/probe_historical_rounds.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: historical-rounds-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query archived model cycles (candidates only)
+        run: |
+          python - <<'PY'
+          import json, time, urllib.parse, urllib.request, urllib.error
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          TZ=ZoneInfo("America/Sao_Paulo")
+          STATIONS=json.loads(Path("stations.json").read_text())
+          SLOTS=["2026-11-11T18:00","2026-11-12T09:00","2026-11-13T09:00","2026-11-14T18:00"]
+          MODELS=["ncep_gfs_global","icon_global","ecmwf_ifs"]
+          VARS=["wind_speed_10m","wind_direction_10m","wind_gusts_10m","precipitation"]
+          output={"status":"CANDIDATES_ONLY","accepted_into_official_study":False,
+                  "availability_at_nominal_verified":False,
+                  "source":"Open-Meteo Single Runs API",
+                  "note":"Model initialization (run) alone DOES NOT prove publication before nominal time",
+                  "attempts":[]}
+          lat=",".join(str(s["lat"]) for s in STATIONS)
+          lon=",".join(str(s["lon"]) for s in STATIONS)
+          for slot_str in SLOTS:
+              nominal=datetime.fromisoformat(slot_str).replace(tzinfo=TZ)
+              utc=nominal.astimezone(timezone.utc)
+              latest=(utc-timedelta(hours=3)).replace(minute=0,second=0,microsecond=0)
+              latest=latest.replace(hour=(latest.hour//6)*6)
+              for model in MODELS:
+                  for k in range(3):
+                      run=latest-timedelta(hours=6*k)
+                      run_str=run.strftime("%Y-%m-%dT%H:%M")
+                      params={"latitude":lat,"longitude":lon,"hourly":",".join(VARS),
+                              "models":model,"run":run_str,"timezone":"America/Sao_Paulo",
+                              "wind_speed_unit":"kn","forecast_days":6}
+                      url="https://single-runs-api.open-meteo.com/v1/forecast?"+urllib.parse.urlencode(params)
+                      item={"nominal_brt":slot_str,"model":model,"run_utc":run_str,
+                            "url":url,"available_at_nominal_verified":False,
+                            "stations":{}}
+                      for attempt in range(2):
+                          try:
+                              req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Weather-Research-HistoricalProbe/1.0"})
+                              with urllib.request.urlopen(req,timeout=25) as r:
+                                  response=json.load(r)
+                              reports=response if isinstance(response,list) else [response]
+                              if len(reports)!=len(STATIONS):
+                                  raise ValueError(f"Expected {len(STATIONS)} stations, got {len(reports)}")
+                              for station,report in zip(STATIONS,reports):
+                                  hourly=report.get("hourly") or {}
+                                  found={}
+                                  for lead in (24,48,72):
+                                      target=(nominal+timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
+                                      times=hourly.get("time") or []
+                                      ix=times.index(target) if target in times else None
+                                      values={}
+                                      for variable in VARS:
+                                          keys=[x for x in hourly if x==variable or x.startswith(variable+"_")]
+                                          arr=hourly.get(keys[0],[]) if keys else []
+                                          values[variable]=arr[ix] if ix is not None and ix<len(arr) else None
+                                      found[str(lead)]={"target_brt":target,"values":values}
+                                  item["stations"][station["id"]]={"requested_coordinates":[station["lat"],station["lon"]],
+                                      "returned_grid":[report.get("latitude"),report.get("longitude")],
+                                      "units":report.get("hourly_units",{}),"targets":found}
+                              item["status"]="retrieved_candidate"
+                              break
+                          except Exception as exc:
+                              item["status"]="api_error"
+                              item["error"]=str(exc)[:500]
+                              if attempt==0: time.sleep(2)
+                      output["attempts"].append(item)
+                      print(slot_str,model,run_str,item["status"],item.get("error",""),flush=True)
+                      time.sleep(0.3)
+          dest=Path("data/recovery_candidates/single_runs_probe_20261115.json")
+          dest.parent.mkdir(parents=True,exist_ok=True)
+          dest.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n")
+          total=sum(x["status"]=="retrieved_candidate" for x in output["attempts"])
+          print("Retrieved model-run candidates:",total,"/",len(output["attempts"]),flush=True)
+          PY
+      - name: Archive candidates separately (no official forecast changes)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/recovery_candidates/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive historical model-run probe candidates (not official)"
+            git pull --rebase origin main
+            git push
+          fi
