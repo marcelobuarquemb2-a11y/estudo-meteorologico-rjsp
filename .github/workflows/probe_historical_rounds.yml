@@ -1,4 +1,4 @@
-name: Probe missing forecast model runs (historical, non-official)
+name: Validate historical run IDs using already archived 09h forecasts
 'on':
   push:
     paths:
@@ -24,7 +24,7 @@ jobs:
           from zoneinfo import ZoneInfo
           TZ=ZoneInfo("America/Sao_Paulo")
           STATIONS=json.loads(Path("stations.json").read_text())
-          SLOTS=["2026-11-11T18:00","2026-11-12T09:00","2026-11-13T09:00","2026-11-14T18:00"]
+          SLOTS=["2026-11-14T09:00","2026-11-15T09:00"]
           MODELS=["ncep_gfs_global","icon_global","ecmwf_ifs"]
           VARS=["wind_speed_10m","wind_direction_10m","wind_gusts_10m","precipitation"]
           output={"status":"CANDIDATES_ONLY","accepted_into_official_study":False,
@@ -83,7 +83,7 @@ jobs:
                       output["attempts"].append(item)
                       print(slot_str,model,run_str,item["status"],item.get("error",""),flush=True)
                       time.sleep(0.3)
-          dest=Path("data/recovery_candidates/single_runs_probe_20261115.json")
+          dest=Path("data/recovery_candidates/single_runs_calibration_09h_20261115.json")
           dest.parent.mkdir(parents=True,exist_ok=True)
           dest.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n")
           total=sum(x["status"]=="retrieved_candidate" for x in output["attempts"])
