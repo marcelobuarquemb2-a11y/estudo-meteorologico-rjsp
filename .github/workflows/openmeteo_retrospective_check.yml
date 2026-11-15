@@ -1,0 +1,143 @@
+name: Open-Meteo sampled retrospective reproducibility (non-official)
+'on':
+  push:
+    paths:
+      - '.github/workflows/openmeteo_retrospective_check.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: openmeteo-retrospective-sample
+  cancel-in-progress: false
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Match actual original snapshots to historical individual model runs
+        run: |
+          python - <<'PY'
+          import json,urllib.request,urllib.parse,urllib.error, time
+          from collections import defaultdict
+          from datetime import datetime,timedelta,timezone
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          TZ=ZoneInfo("America/Sao_Paulo")
+          baseline=json.loads(Path("data/recovery_candidates/meteoblue_retrospective_test_20261115.json").read_text())
+          FILES=baseline["baseline"]
+          STATION_IDS=baseline["stations"]
+          station_index={s["id"]:s for s in json.loads(Path("stations.json").read_text())}
+          STATIONS=[station_index[x] for x in STATION_IDS]
+          MODELS={"GFS":"ncep_gfs_global","ICON":"icon_global","ECMWF":"ecmwf_ifs"}
+          FIELD_MAP={"direction_deg":"wind_direction_10m","mean_kt":"wind_speed_10m",
+                     "gust_kt":"wind_gusts_10m","precip_mm":"precipitation"}
+          report={"purpose":"sampled_reproducibility_diagnostic","status":"CANDIDATE_RUNS_ONLY",
+                  "seed_reference":"same 8 forecast archives and 2 stations used by Meteoblue test",
+                  "original_files":FILES,"station_ids":STATION_IDS,"candidate_run_query":"Open-Meteo Single Runs API",
+                  "run_selection":"maximum exact matches to original archive; diagnostic only; original availability not proven independently",
+                  "original_publication_timestamp_proven":False,"runs":[],"best_match_details":[],"summary":{}}
+          args={"latitude":",".join(str(x["lat"]) for x in STATIONS),
+                "longitude":",".join(str(x["lon"]) for x in STATIONS),
+                "hourly":",".join(FIELD_MAP.values()),"wind_speed_unit":"kn",
+                "timezone":"America/Sao_Paulo","forecast_days":6}
+          def fetch(model,run):
+              query={**args,"models":model,"run":run}
+              url="https://single-runs-api.open-meteo.com/v1/forecast?"+urllib.parse.urlencode(query)
+              last=None
+              for retry in range(2):
+                  try:
+                      req=urllib.request.Request(url,headers={"User-Agent":"RJSP-OpenMeteo-Reproducibility/1.0"})
+                      with urllib.request.urlopen(req, timeout=24) as response:
+                          result=json.load(response)
+                      if not isinstance(result,list):result=[result]
+                      if len(result)!=len(STATIONS):raise ValueError(f"Wrong station count {len(result)}")
+                      if any(x.get("error") for x in result):raise ValueError(str(result)[:150])
+                      return result,None
+                  except Exception as e:
+                      last=str(e)[:200]
+                      if retry==0:time.sleep(1)
+              return None,last
+          for base_path in FILES:
+              old=json.loads(Path(base_path).read_text())
+              nominal=datetime.fromisoformat(old["nominal_issue_at_local"])
+              utc=nominal.astimezone(timezone.utc)
+              last_run=utc.replace(hour=(utc.hour//6)*6,minute=0,second=0,microsecond=0)
+              candidates=[last_run-timedelta(hours=6*i) for i in (0,1,2,3)]
+              for name,model in MODELS.items():
+                  options=[]
+                  for run in candidates:
+                      run_label=run.strftime("%Y-%m-%dT%H:%M")
+                      responses,error=fetch(model,run_label)
+                      comparisons=[]
+                      if responses:
+                          for station,response in zip(STATIONS,responses):
+                              original_forecasts=old["station_results"][station["id"]]["forecasts"]
+                              original_forecasts=[r for r in original_forecasts if r["model"]==name]
+                              hourly=response.get("hourly") or {}
+                              time_index={t:i for i,t in enumerate(hourly.get("time") or [])}
+                              for old_row in original_forecasts:
+                                  target=old_row["target_local"]
+                                  pos=time_index.get(target)
+                                  for old_key,new_key in FIELD_MAP.items():
+                                      vals=hourly.get(new_key) or []
+                                      retrieved=vals[pos] if pos is not None and pos<len(vals) else None
+                                      original=old_row["values"].get(old_key)
+                                      exact=(type(retrieved) in (int,float) and type(original) in (int,float)
+                                             and abs(float(retrieved)-float(original))<1.e-8)
+                                      comparisons.append({"station":station["id"],
+                                          "horizon_h":old_row["day_offset"]*24,"target_brt":target,
+                                          "variable":old_key,"original":original,
+                                          "retrieved":retrieved,"exact":exact})
+                      n=len(comparisons)
+                      matches=sum(c["exact"] for c in comparisons)
+                      options.append({"run_utc":run_label,"status":"retrieved" if responses else "error",
+                                      "error":error,"matches":matches,"compared":n,
+                                      "match_rate":round(matches/n,6) if n else None,
+                                      "retrieved_grids":{station["id"]:[response.get("latitude"),response.get("longitude")]
+                                                         for station,response in zip(STATIONS,responses or [])},
+                                      "comparisons":comparisons})
+                      print(nominal.isoformat(),name,run_label,matches,"/",n,error or "",flush=True)
+                      time.sleep(.1)
+                  rank=sorted(options,key=lambda x:(-x["matches"],-x["compared"],-datetime.fromisoformat(x["run_utc"]).timestamp()))
+                  best=rank[0]
+                  report["runs"].append({"nominal_brt":nominal.isoformat(),"model":name,
+                     "candidates":[{k:v for k,v in o.items() if k!="comparisons"} for o in options],
+                     "best_match_run_utc":best["run_utc"],"best_match_count":best["matches"],
+                     "compared":best["compared"],"has_unique_perfect_match":best["matches"]==best["compared"]
+                        and best["matches"]>0 and sum(o["matches"]==o["compared"] and o["compared"]>0 for o in options)==1})
+                  report["best_match_details"].extend([dict(row,model=name,nominal_brt=nominal.isoformat(),
+                           historical_run_utc=best["run_utc"]) for row in best["comparisons"]])
+          results=report["best_match_details"]
+          report["summary"]={"comparisons":len(results),"exact":sum(r["exact"] for r in results),
+                             "exact_rate":(sum(r["exact"] for r in results)/len(results) if results else None),
+                             "perfect_run_selections":sum(x["has_unique_perfect_match"] for x in report["runs"]),
+                             "total_nominal_model_combinations":len(report["runs"]),"models":{}}
+          for model in MODELS:
+              sub=[r for r in results if r["model"]==model]
+              report["summary"]["models"][model]={"compared":len(sub),"exact":sum(x["exact"] for x in sub),
+                        "perfect_run_count":sum(x["has_unique_perfect_match"] for x in report["runs"] if x["model"]==model),
+                        "variable_breakdown":{}}
+              for metric in FIELD_MAP:
+                  z=[x for x in sub if x["variable"]==metric]
+                  report["summary"]["models"][model]["variable_breakdown"][metric]={
+                    "compared":len(z),"exact":sum(x["exact"] for x in z)}
+          dest=Path("data/recovery_candidates/openmeteo_retrospective_test_20261115.json")
+          dest.parent.mkdir(parents=True,exist_ok=True)
+          dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("SUMMARY "+json.dumps(report["summary"]),flush=True)
+          PY
+      - name: Archive test only (do not modify official collection)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/recovery_candidates/
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive Open-Meteo historical exact-run sampling comparison"
+            git pull --rebase origin main
+            git push
+          fi
