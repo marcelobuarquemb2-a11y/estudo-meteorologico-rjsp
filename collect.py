@@ -34,8 +34,12 @@ def save_json_atomic(path, report):
 
 def meteoblue_collection_complete(report, nominal_issue, targets):
     """Meteoblue coverage must not depend on an unrelated Open-Meteo outage."""
-    if collection_complete(report, nominal_issue, targets):
-        return True  # Backward-compatible fully validated original capture.
+    # Legacy offline fixtures have no source-level timestamps; real captures
+    # must always validate the actual Meteoblue acquisition times.
+    if collection_complete(report, nominal_issue, targets) and all(
+        not site.get("sources") for site in report.get("station_results", {}).values()
+    ):
+        return True
     if (
         not report.get("official_series_eligible")
         or report.get("official_series_start_local") != SERIES_START.isoformat()
@@ -296,6 +300,10 @@ def main():
     for st in STATIONS:
         item=result["station_results"][st["id"]]
         if item.get("status") or st["lat"] is None or st["lon"] is None:
+            continue
+        if official and not within_slot(dt.datetime.now(TZ), nominal_issue):
+            item["errors"].append("Open-Meteo skipped: capture window already closed")
+            checkpoint()
             continue
         params={"latitude":st["lat"],"longitude":st["lon"],"hourly":",".join(VARS),
                 "models":",".join(MODELS),"wind_speed_unit":"kn",
