@@ -59,6 +59,12 @@ jobs:
       - name: Join observations with archived forecast vintages
         if: always()
         run: python compare_forecasts.py
+      - name: Update recovery-aware pairs without changing official scores
+        if: always()
+        run: |
+          if [ -f data/recovered_forecasts/index.json ]; then
+            python recover_forecast_history.py --pairs-only
+          fi
       - name: Preserve audit evidence, including unavailable sources
         if: always()
         run: |
