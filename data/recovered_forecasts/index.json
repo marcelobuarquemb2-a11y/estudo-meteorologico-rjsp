@@ -1,0 +1,21 @@
+{
+  "description": "Historical runs recovered; original operational forecast archives remain unchanged",
+  "record_type": "historical_forecast_recovery_index",
+  "publication_at_nominal_proven_for_missing_slots": false,
+  "slots": [
+    "data/recovered_forecasts/2026-11-11/1800.json",
+    "data/recovered_forecasts/2026-11-12/0900.json",
+    "data/recovered_forecasts/2026-11-13/0900.json",
+    "data/recovered_forecasts/2026-11-14/1800.json"
+  ],
+  "counts": {
+    "retrieved_values": 864,
+    "slots": 4,
+    "vintage_inferred_publication_unverified": 3,
+    "snapshot_matched": 1
+  },
+  "classification": {
+    "snapshot_matched": "Matched original snapshot values exactly for retained stations/models; archive still obtained later",
+    "vintage_inferred_publication_unverified": "Historical model run exists, but no timestamped proof of availability in original slot"
+  }
+}
