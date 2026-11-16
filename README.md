@@ -108,3 +108,26 @@ Esta ressalva permanece no metadado de auditoria, sem excluir automaticamente
 os dados retroativos da análise expandida aprovada.
 
 Fonte auditável: `data/recovery_candidates/openmeteo_retrospective_test_20261115.json`.
+
+
+## Resilience of the existing GitHub Meteoblue collection (16/11/2026)
+
+The GitHub Actions schedule remains the active platform; no cloud migration is enabled.
+Meteoblue is queried **before** Open-Meteo to prevent unrelated provider timeouts
+from consuming the narrow forecast capture window. Meteoblue numerical coverage
+and on-window acquisition timestamps are evaluated independently, while original
+Open-Meteo collection continues in parallel during validation.
+
+Each provider response is saved atomically to a *local incremental checkpoint*.
+When the final original forecast snapshot is successfully written, this temporary
+checkpoint is removed. If the Python collection exits unexpectedly but the workflow
+reaches its always-run archival step, any remaining checkpoint is committed for
+diagnosis/replay; a sudden runner loss before archival is still a GitHub limitation.
+Scheduled attempts also create a compact diagnostic in
+`data/collection_diagnostics/YYYY-MM-DD/` with nominal slot, actual start,
+GitHub run ID, late-window/complete/partial status and Meteoblue coverage.
+The workflow retries Git push conflicts up to five times.
+
+No late (>30 min) provider response is accepted as an official Meteoblue capture.
+This change does not extend the scientific window and does not modify the
+D+1 retrospective collection of ICON/GFS/ECMWF.
