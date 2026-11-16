@@ -41,21 +41,29 @@ def archive_path(issue):
     return RECOVERED / issue.strftime("%Y-%m-%d") / f"{issue:%H%M}.json"
 
 def original_comparison(issue, station_id, model, lead):
-    """Best existing real-time snapshot for the same nominal slot."""
+    """Use the most complete retained capture, not every attempt in the window.
+
+    The ICON cycle changed between 18:14 and 18:26 on 14 November.
+    The 18:26 capture has more data and is the reference for the recovery.
+    """
     folder = ROOT / "data" / issue.strftime("%Y-%m") / issue.strftime("%Y-%m-%d")
-    found = []
+    candidates=[]
     for file in folder.glob("*.json"):
-        report = read(file)
-        nominal = report.get("nominal_issue_at_local")
-        if not nominal or datetime.fromisoformat(nominal) != issue:
+        report=read(file)
+        nominal=report.get("nominal_issue_at_local")
+        if not nominal or datetime.fromisoformat(nominal)!=issue:
             continue
         if not report.get("official_series_eligible"):
             continue
-        station = report.get("station_results", {}).get(station_id, {})
-        for row in station.get("forecasts", []):
-            if row.get("model") == model and row.get("day_offset") == lead:
-                found.append((file, row, station))
-    return found
+        richness=report.get("collection_summary",{}).get("forecast_values_present",0)
+        consulted=datetime.fromisoformat(report["consulted_at"])
+        candidates.append((-richness,abs((consulted-issue).total_seconds()),str(file),report))
+    if not candidates:
+        return []
+    _,_,file,report=min(candidates)
+    station=report.get("station_results",{}).get(station_id,{})
+    return [(Path(file),row,station) for row in station.get("forecasts",[])
+            if row.get("model")==model and row.get("day_offset")==lead]
 
 def build_archives():
     probe = read(CANDIDATES)
