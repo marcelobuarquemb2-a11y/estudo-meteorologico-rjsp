@@ -194,17 +194,28 @@ def select_group(issue, model, stations, original, existing, fetcher):
         url = API + "?" + urllib.parse.urlencode(params)
         try:
             data = extract(fetcher(params), issue, model, stations)
-            present, matches = 0, 0
+            present, matches, compared_present = 0, 0, 0
+            differences = []
             for sid, site in data.items():
                 for row in site["forecasts"]:
                     for field, value in row["values"].items():
                         present += int(valid_value(field, value))
                         previous = reference.get((sid, row["target_local"], field))
+                        compared_present += int(numeric(value) and previous is not None)
                         matches += int(numeric(value) and previous is not None and abs(value - previous) < 1e-8)
-            options.append((matches, present, run, data))
+                        if numeric(value) and previous is not None and abs(value - previous) >= 1e-8:
+                            differences.append({"station_id": sid, "target_local": row["target_local"],
+                                                "variable": field, "snapshot": previous, "retrieved": value})
+            accepted = (not reference or has_previous or
+                        (matches > 0 and (run == policy_run or compared_present == len(reference))
+                         and all(model == "GFS" and d["variable"] == "gust_kt" for d in differences)))
+            if accepted:
+                options.append((matches, present, run, data, differences))
             requests.append({"run_utc": run, "url": url, "values_present": present,
-                             "snapshot_matches": matches, "snapshot_compared": len(reference)})
-            if present == len(stations) * len(HORIZON_HOURS) * len(FIELDS) and (
+                             "snapshot_matches": matches, "snapshot_compared": len(reference),
+                             "selection_accepted": accepted,
+                             "snapshot_difference_details": differences})
+            if accepted and present == len(stations) * len(HORIZON_HOURS) * len(FIELDS) and (
                     not reference or matches == len(reference) or has_previous):
                 break
         except Exception as exc:
@@ -215,11 +226,13 @@ def select_group(issue, model, stations, original, existing, fetcher):
     # Prefer reproducibility, then completeness. A tie retains the calibrated
     # policy instead of silently choosing a newer, potentially unavailable run.
     best = max(options, key=lambda x: (x[0], x[1], x[2] == policy_run))
-    matches, present, run, data = best
+    matches, present, run, data, differences = best
     return (run, data), {"requests": requests, "errors": failures,
+                        "selection_accepted": True,
                         "selection_basis": "snapshot_correspondence" if reference else POLICY,
                         "snapshot_matches": matches, "snapshot_compared": len(reference),
                         "snapshot_differences": len(reference) - matches,
+                        "snapshot_difference_details": differences,
                         "original_snapshot_file": original[2] if original else None}
 
 
@@ -236,6 +249,27 @@ def collect_day(reference_date, *, root=ROOT, now=None, fetcher=fetch, originals
     report_path = root / "data/daily_recovery" / str(reference_date) / "status.json"
     report = read(report_path, {"reference_date": str(reference_date), "attempts": []})
     archives = {issue: read(archive_path(root, issue), empty_archive(issue, stations)) for issue in issues}
+    # The first live run exposed an unsafe fallback following a network timeout.
+    # Retain that evidence separately, remove only the unvalidated model group,
+    # and let the next normal attempt obtain the intended historical cycle.
+    for issue, payload in archives.items():
+        for model, evidence in list(payload.get("model_acquisition", {}).items()):
+            if evidence.get("snapshot_differences", 0) and not evidence.get("selection_accepted"):
+                rejected = root / "data/daily_recovery" / str(reference_date) / "rejected_runs" / f"{issue:%H%M}_{model}.json"
+                save(rejected, {"reason": "Run not validated against retained snapshot after provider timeout",
+                                "issue_local": issue.isoformat(), "model": model,
+                                "model_run_utc": payload.get("model_runs_utc", {}).get(model),
+                                "evidence": evidence,
+                                "station_results": {sid: {"forecasts": rows_for(payload, sid, model)}
+                                                    for sid in payload["station_results"]}})
+                for station in payload["station_results"].values():
+                    for row in station.get("forecasts", []):
+                        if row.get("model") == model:
+                            row["values"] = {field: None for field in FIELDS}
+                            row.pop("run_utc", None)
+                payload["model_runs_utc"][model] = run_label(issue, model)
+                del payload["model_acquisition"][model]
+                save(archive_path(root, issue), payload)
     expected_group = len(stations) * len(HORIZON_HOURS) * len(FIELDS)
     expected = len(issues) * len(MODELS) * expected_group
 
