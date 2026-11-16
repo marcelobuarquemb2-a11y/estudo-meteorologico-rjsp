@@ -257,12 +257,43 @@
         }
       ],
       "unreadable_original_archives": []
+    },
+    {
+      "number": 2,
+      "started_at_local": "2026-11-16T09:19:47.430494-03:00",
+      "github_run_id": "43865555531",
+      "groups": [
+        {
+          "issue_local": "2026-11-15T18:00:00-03:00",
+          "model": "GFS",
+          "requests": [
+            {
+              "run_utc": "2026-11-15T12:00",
+              "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+              "values_present": 72,
+              "snapshot_matches": 72,
+              "snapshot_compared": 72,
+              "selection_accepted": true,
+              "snapshot_difference_details": []
+            }
+          ],
+          "errors": [],
+          "selection_accepted": true,
+          "selection_basis": "snapshot_correspondence",
+          "snapshot_matches": 72,
+          "snapshot_compared": 72,
+          "snapshot_differences": 0,
+          "snapshot_difference_details": [],
+          "original_snapshot_file": "data/2026-11/2026-11-15/181638.json"
+        }
+      ],
+      "unreadable_original_archives": []
     }
   ],
   "record_type": "daily_retrospective_collection_status",
-  "updated_at_local": "2026-11-16T09:13:02.506592-03:00",
+  "updated_at_local": "2026-11-16T09:19:47.430494-03:00",
   "status": "complete",
-  "attempt_count": 1,
+  "attempt_count": 2,
   "maximum_attempts": 10,
   "retry_interval_minutes": 20,
   "start_hour_brt": 9,

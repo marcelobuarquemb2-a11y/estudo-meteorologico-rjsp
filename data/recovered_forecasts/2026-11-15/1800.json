@@ -11,7 +11,7 @@
   "run_selection_policy": "rjsp_calibrated_reference_cycles_v1",
   "model_runs_utc": {
     "ICON": "2026-11-15T12:00",
-    "GFS": "2026-11-15T18:00",
+    "GFS": "2026-11-15T12:00",
     "ECMWF": "2026-11-15T12:00"
   },
   "model_acquisition": {
@@ -34,46 +34,6 @@
       "snapshot_differences": 0,
       "original_snapshot_file": "data/2026-11/2026-11-15/181638.json"
     },
-    "GFS": {
-      "retrieved_at_local": "2026-11-16T09:13:02.506592-03:00",
-      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
-      "requests": [
-        {
-          "run_utc": "2026-11-15T18:00",
-          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T18%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
-          "values_present": 72,
-          "snapshot_matches": 8,
-          "snapshot_compared": 72
-        },
-        {
-          "run_utc": "2026-11-15T06:00",
-          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T06%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
-          "values_present": 72,
-          "snapshot_matches": 6,
-          "snapshot_compared": 72
-        },
-        {
-          "run_utc": "2026-11-15T00:00",
-          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T00%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
-          "values_present": 72,
-          "snapshot_matches": 6,
-          "snapshot_compared": 72
-        }
-      ],
-      "errors": [
-        {
-          "run_utc": "2026-11-15T12:00",
-          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
-          "error": "URLError",
-          "message": "<urlopen error _ssl.c:994: The handshake operation timed out>"
-        }
-      ],
-      "selection_basis": "snapshot_correspondence",
-      "snapshot_matches": 8,
-      "snapshot_compared": 72,
-      "snapshot_differences": 64,
-      "original_snapshot_file": "data/2026-11/2026-11-15/181638.json"
-    },
     "ECMWF": {
       "retrieved_at_local": "2026-11-16T09:13:02.506592-03:00",
       "selection_policy": "rjsp_calibrated_reference_cycles_v1",
@@ -91,6 +51,29 @@
       "snapshot_matches": 72,
       "snapshot_compared": 72,
       "snapshot_differences": 0,
+      "original_snapshot_file": "data/2026-11/2026-11-15/181638.json"
+    },
+    "GFS": {
+      "retrieved_at_local": "2026-11-16T09:19:47.430494-03:00",
+      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
+      "requests": [
+        {
+          "run_utc": "2026-11-15T12:00",
+          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-15T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+          "values_present": 72,
+          "snapshot_matches": 72,
+          "snapshot_compared": 72,
+          "selection_accepted": true,
+          "snapshot_difference_details": []
+        }
+      ],
+      "errors": [],
+      "selection_accepted": true,
+      "selection_basis": "snapshot_correspondence",
+      "snapshot_matches": 72,
+      "snapshot_compared": 72,
+      "snapshot_differences": 0,
+      "snapshot_difference_details": [],
       "original_snapshot_file": "data/2026-11/2026-11-15/181638.json"
     }
   },
@@ -173,14 +156,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 239,
-            "mean_kt": 1.1,
-            "gust_kt": 1.9,
-            "precip_mm": 0.5
+            "direction_deg": 130,
+            "mean_kt": 1.5,
+            "gust_kt": 2.3,
+            "precip_mm": 0.6
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -190,14 +173,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 131,
-            "mean_kt": 2.1,
-            "gust_kt": 3.7,
-            "precip_mm": 0.1
+            "direction_deg": 104,
+            "mean_kt": 1.6,
+            "gust_kt": 5.2,
+            "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -207,14 +190,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 50,
+            "direction_deg": 28,
             "mean_kt": 3.3,
-            "gust_kt": 5.4,
-            "precip_mm": 4.0
+            "gust_kt": 7.2,
+            "precip_mm": 0.1
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -347,14 +330,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 238,
-            "mean_kt": 1.8,
-            "gust_kt": 4.1,
-            "precip_mm": 0.3
+            "direction_deg": 191,
+            "mean_kt": 4.0,
+            "gust_kt": 2.7,
+            "precip_mm": 0.5
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -364,14 +347,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 167,
-            "mean_kt": 2.6,
-            "gust_kt": 4.9,
+            "direction_deg": 180,
+            "mean_kt": 0.2,
+            "gust_kt": 3.5,
             "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -381,14 +364,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 56,
-            "mean_kt": 3.5,
+            "direction_deg": 21,
+            "mean_kt": 1.7,
             "gust_kt": 1.9,
-            "precip_mm": 0.1
+            "precip_mm": 1.5
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -521,14 +504,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 223,
-            "mean_kt": 4.0,
-            "gust_kt": 2.9,
-            "precip_mm": 0.1
+            "direction_deg": 118,
+            "mean_kt": 7.5,
+            "gust_kt": 10.9,
+            "precip_mm": 0.4
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -538,14 +521,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 112,
-            "mean_kt": 7.8,
-            "gust_kt": 9.1,
+            "direction_deg": 100,
+            "mean_kt": 7.9,
+            "gust_kt": 8.9,
             "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -555,14 +538,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 268,
-            "mean_kt": 5.3,
-            "gust_kt": 4.5,
-            "precip_mm": 1.1
+            "direction_deg": 245,
+            "mean_kt": 5.6,
+            "gust_kt": 7.6,
+            "precip_mm": 2.9
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -695,14 +678,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 158,
-            "mean_kt": 3.6,
-            "gust_kt": 5.8,
-            "precip_mm": 0.2
+            "direction_deg": 135,
+            "mean_kt": 4.7,
+            "gust_kt": 10.7,
+            "precip_mm": 0.8
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -712,14 +695,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 113,
-            "mean_kt": 5.5,
-            "gust_kt": 10.3,
+            "direction_deg": 109,
+            "mean_kt": 5.3,
+            "gust_kt": 9.1,
             "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -729,14 +712,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 233,
-            "mean_kt": 1.9,
-            "gust_kt": 2.7,
-            "precip_mm": 1.3
+            "direction_deg": 229,
+            "mean_kt": 5.4,
+            "gust_kt": 9.5,
+            "precip_mm": 3.2
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -869,14 +852,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 158,
-            "mean_kt": 3.6,
-            "gust_kt": 4.3,
-            "precip_mm": 0.2
+            "direction_deg": 135,
+            "mean_kt": 4.7,
+            "gust_kt": 9.5,
+            "precip_mm": 0.8
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -886,14 +869,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 113,
-            "mean_kt": 5.5,
+            "direction_deg": 109,
+            "mean_kt": 5.3,
             "gust_kt": 10.7,
             "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -903,14 +886,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 233,
-            "mean_kt": 1.9,
-            "gust_kt": 1.4,
-            "precip_mm": 1.3
+            "direction_deg": 229,
+            "mean_kt": 5.4,
+            "gust_kt": 9.5,
+            "precip_mm": 3.2
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -1043,14 +1026,14 @@
           "target_local": "2026-11-16T18:00",
           "valid_at_local": "2026-11-16T18:00",
           "values": {
-            "direction_deg": 158,
-            "mean_kt": 3.6,
-            "gust_kt": 5.8,
-            "precip_mm": 0.2
+            "direction_deg": 135,
+            "mean_kt": 4.7,
+            "gust_kt": 10.7,
+            "precip_mm": 0.8
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -1060,14 +1043,14 @@
           "target_local": "2026-11-17T18:00",
           "valid_at_local": "2026-11-17T18:00",
           "values": {
-            "direction_deg": 113,
-            "mean_kt": 5.5,
-            "gust_kt": 10.3,
+            "direction_deg": 109,
+            "mean_kt": 5.3,
+            "gust_kt": 9.1,
             "precip_mm": 0.0
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "GFS",
@@ -1077,14 +1060,14 @@
           "target_local": "2026-11-18T18:00",
           "valid_at_local": "2026-11-18T18:00",
           "values": {
-            "direction_deg": 233,
-            "mean_kt": 1.9,
-            "gust_kt": 2.7,
-            "precip_mm": 1.3
+            "direction_deg": 229,
+            "mean_kt": 5.4,
+            "gust_kt": 9.5,
+            "precip_mm": 3.2
           },
-          "run_utc": "2026-11-15T18:00",
           "provenance": "daily_retrospective",
-          "original_publication_at_slot_verified": false
+          "original_publication_at_slot_verified": false,
+          "run_utc": "2026-11-15T12:00"
         },
         {
           "model": "ECMWF",
@@ -1140,5 +1123,5 @@
       ]
     }
   },
-  "last_retrieved_at_local": "2026-11-16T09:13:02.506592-03:00"
+  "last_retrieved_at_local": "2026-11-16T09:19:47.430494-03:00"
 }
