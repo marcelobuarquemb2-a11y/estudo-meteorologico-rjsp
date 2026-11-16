@@ -1,0 +1,87 @@
+name: Daily previous-day ICON GFS ECMWF collection
+'on':
+  push:
+    branches: [main]
+    paths:
+      - 'collect_previous_day.py'
+      - 'test_previous_day_collection.py'
+      - '.github/workflows/coleta_retroativa_diaria.yml'
+  schedule:
+    # 09:00, 09:20, ... 11:40, 12:00 America/Sao_Paulo (UTC-3).
+    # Each event is one opportunity; completed dates make no provider calls.
+    - cron: '0,20,40 12,13,14 * * *'
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+    inputs:
+      reference_date:
+        description: 'Reference day YYYY-MM-DD; blank means yesterday in Brasilia'
+        required: false
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: rjsp-daily-retrospective
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test daily collection and existing acquisition
+        run: python -m unittest -q test_previous_day_collection test_forecast_retries test_observation_retries
+      - name: Collect previous-day model runs
+        id: collect
+        env:
+          REFERENCE_DATE: ${{ inputs.reference_date }}
+        run: |
+          if [ -n "$REFERENCE_DATE" ]; then
+            python collect_previous_day.py --date "$REFERENCE_DATE"
+          else
+            python collect_previous_day.py
+          fi
+      - name: Preserve complete and partial results with bounded push retries
+        if: always() && steps.collect.outputs.changed == 'true'
+        id: archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p data/recovered_forecasts data/daily_recovery
+          git add data/recovered_forecasts/ data/daily_recovery/
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Archive previous-day retrospective forecast collection"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+              git rebase --abort
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          exit 1
+      - name: Refresh derived pairs on the latest archived source data
+        if: always() && steps.archive.outcome == 'success'
+        run: |
+          # Forecasts are already committed and pushed. Only the reproducible
+          # derived pair file is discarded/rebuilt if another job updates main.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            python recover_forecast_history.py --pairs-only
+            git add data/comparisons/recovered_pairs_status.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Refresh recovery-aware pairs after daily collection"
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 3))
+          done
+          exit 1
