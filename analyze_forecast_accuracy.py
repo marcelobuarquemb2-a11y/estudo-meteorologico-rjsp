@@ -2,8 +2,8 @@
 """Accuracy by model, lead, variable and station, after the 11 Nov collection change.
 
 Uses unchanged official snapshots + separately recovered historical model runs.
-The direction test follows the USER-APPROVED circular ±25° criterion, not the
-legacy octant-or-<30° predicate still present in compare_forecasts.py.
+The direction test follows the USER-APPROVED same-octant OR circular <30°
+criterion, consistent with the current compare_forecasts.py rule.
 """
 import csv
 import json
@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from compare_forecasts import MODEL_NAMES, forecast_archives, measured_by_time
-from study_config import ROOT, STATIONS, TZ, SLOT_HOURS
+from study_config import ROOT, STATIONS, TZ, SLOT_HOURS, direction_octant
 
 ISSUE_START=datetime(2026, 11, 11, 12, tzinfo=TZ)
 TARGET_END=datetime(2026, 11, 15, 18, tzinfo=TZ)
@@ -35,7 +35,8 @@ def number(value):
 def calc_hit(field, forecast, actual):
     if field=="direction_deg":
         circular=abs((forecast-actual+180)%360-180)
-        return (circular<=25.0, round(circular,6))
+        same_octant=direction_octant(forecast)==direction_octant(actual)
+        return (same_octant or circular<30.0, round(circular,6))
     if field in ("mean_kt","gust_kt"):
         difference=abs(forecast-actual)
         return (difference<=2.0,round(difference,6))
@@ -180,7 +181,7 @@ def main():
         "source":"Operational archives and separately recovered model cycles; actuals from verified stations",
         "source_files":["data/comparisons/status.json","data/comparisons/recovered_pairs_status.json",
                         "data/recovered_forecasts/index.json"],
-        "direction_rule":"min(abs(pred-actual),360-abs(pred-actual)) <=25 degrees; NO octant override",
+        "direction_rule":"Same octant (45 degrees sectors centered on N, NE, E, SE, S, SW, W, NW) OR circular angular difference strictly <30 degrees. Boundary 30 is error unless octants equal.",
         "mean_kt_rule":"abs(pred-actual) <=2 kt",
         "gust_kt_rule":"abs(pred-actual) <=2 kt",
         "precip_mm_rule":"(pred >0.2 mm/h)==(actual>0.2 mm/h); 0.2 is no rain",
