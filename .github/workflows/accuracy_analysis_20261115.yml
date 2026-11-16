@@ -1,0 +1,62 @@
+name: Accuracy by model, horizon, indicator and station
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/accuracy_analysis_20261115.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rjsp-accuracy-analysis-20261115
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check syntax and octant rule
+        run: |
+          python -m py_compile analyze_forecast_accuracy.py
+          python - <<'PY'
+          from analyze_forecast_accuracy import calc_hit
+          assert calc_hit("direction_deg",25,65)[0] is True  # same NE octant, >30deg
+          assert calc_hit("direction_deg",10,35)[0] is True  # neighboring octants, 25deg
+          assert calc_hit("direction_deg",10,40)[0] is False # 30deg strictly excluded
+          assert calc_hit("direction_deg",355,5)[0] is True  # circular
+          assert calc_hit("mean_kt",5,7)[0] is True
+          assert calc_hit("gust_kt",8,10.001)[0] is False
+          assert calc_hit("precip_mm",0.2,0.2)[0] is True
+          assert calc_hit("precip_mm",0.2,0.20001)[0] is False
+          print("All scoring boundary tests passed")
+          PY
+      - name: Evaluate all complete forecast x actual pairs
+        run: python analyze_forecast_accuracy.py
+      - name: Verify scored dimensions and confirmed/inferred accounting
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path("data/comparisons/accuracy_postchange_20261115.json").read_text())
+          assert j["expected_records"]==3168
+          assert j["overall"]["complete_pairs"]==j["overall"]["confirmed_pairs"]+j["overall"]["provisional_pairs"]
+          for row in j["summary"]:
+              assert row["complete_pairs"]==row["confirmed_pairs"]+row["provisional_pairs"]
+              assert row["hits"]==row["confirmed_hits"]+row["provisional_hits"]
+              assert row["hits"]<=row["complete_pairs"]<=row["expected"]
+          print("OK",j["overall"])
+          PY
+      - name: Archive reproducible evaluation output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/comparisons/accuracy_postchange_20261115.json data/comparisons/accuracy_pairs_postchange_20261115.csv data/comparisons/accuracy_summary_postchange_20261115.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive post-change forecast accuracy by station, model, lead and indicator"
+            git pull --rebase origin main
+            git push
+          fi
