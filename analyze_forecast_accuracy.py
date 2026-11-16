@@ -141,7 +141,9 @@ def main():
                             ("ALL",lead,field,sid),("ALL",lead,field,"TOTAL"),
                             ("ALL","ALL",field,sid),("ALL","ALL",field,"TOTAL"),
                             (model,lead,"ALL",sid),(model,lead,"ALL","TOTAL"),
-                            (model,"ALL","ALL",sid),(model,"ALL","ALL","TOTAL")
+                            (model,"ALL","ALL",sid),(model,"ALL","ALL","TOTAL"),
+                            ("ALL",lead,"ALL",sid),("ALL",lead,"ALL","TOTAL"),
+                            ("ALL","ALL","ALL",sid),("ALL","ALL","ALL","TOTAL")
                         ]:
                             agg=counters[key]
                             agg["expected"]+=1
