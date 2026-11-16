@@ -4,6 +4,7 @@ name: Incorporate recovered historical model-run data (flagged)
     branches: [main]
     paths:
       - '.github/workflows/incorporate_historical_recovery.yml'
+      - 'recover_forecast_history.py'
   workflow_dispatch:
 permissions:
   contents: write
