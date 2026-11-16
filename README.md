@@ -49,6 +49,47 @@ como dados utilizáveis na avaliação de acerto, distinguindo seu método de ob
 A coleta retroativa no dia seguinte é o procedimento definido para esses três modelos;
 a Meteoblue continua dependendo da coleta dentro da janela original.
 
+## Coleta diária D+1 — ativação em 16/11/2026
+
+O workflow `coleta_retroativa_diaria.yml` recupera as previsões de ICON, GFS e
+ECMWF correspondentes às referências 09h, 12h, 15h e 18h do dia anterior, nas
+seis estações, para 24h, 48h e 72h: **864 valores esperados por dia**.
+
+São dez oportunidades programadas, de **09h00 a 12h00 BRT**, a cada 20 minutos.
+Cada execução consulta somente os conjuntos ainda incompletos. Após 100% de
+cobertura, as demais oportunidades encerram sem consultar os provedores.
+O limite é dez tentativas por data de referência. O início efetivo ainda está
+sujeito ao agendador GitHub Actions; a recuperação histórica não depende de
+executar dentro da janela de consulta original.
+
+`collect_previous_day.py` consulta rodadas individuais na Single Runs API.
+Quando há captura original elegível, seleciona a rodada que melhor reproduz
+suas previsões, sem usar actuals para essa escolha. Nas janelas sem captura,
+aplica a regra de ciclos calibrada no estudo (`rjsp_calibrated_reference_cycles_v1`):
+
+| Referência BRT | ICON UTC | GFS UTC | ECMWF UTC |
+|---|---|---|---|
+| 09h | 06Z | 06Z | 00Z |
+| 12h | 06Z | 06Z | 06Z |
+| 15h | 12Z | 12Z | 06Z |
+| 18h | 12Z | 12Z | 12Z |
+
+A rodada, coordenadas solicitadas e retornadas, unidades, horários-alvo,
+correspondência com snapshots e erros são preservados. A escolha não presume
+prova de publicação histórica no nominal; esse metadado continua distinto da
+aceitação da coleta retroativa no estudo. Valores válidos já recuperados são
+preservados nas novas tentativas, usando a mesma rodada ao completar um conjunto.
+
+Resultados: `data/recovered_forecasts/AAAA-MM-DD/HHMM.json`.
+Estado e tentativas: `data/daily_recovery/AAAA-MM-DD/status.json`.
+Os pares são atualizados em `data/comparisons/recovered_pairs_status.json`.
+As capturas originais são mantidas, e a coleta anterior continua em paralelo
+durante a validação desta ativação. Meteoblue e actuals mantêm seus agendamentos.
+
+Uma alteração do código no main executa uma primeira coleta real. Também é
+possível usar workflow_dispatch, informando opcionalmente a data de referência,
+ou executar `python collect_previous_day.py --date AAAA-MM-DD`.
+
 **Evidência disponível:** comparação amostral de 8 arquivos de coleta × 2 estações × 3
 modelos × 3 horizontes × 4 variáveis: **570/576 valores idênticos (98,96%)**.
 ICON: **192/192**; ECMWF: **192/192**; GFS: **186/192**.
