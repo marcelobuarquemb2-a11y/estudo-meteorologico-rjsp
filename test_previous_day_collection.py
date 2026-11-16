@@ -198,6 +198,73 @@ class PreviousDayTests(unittest.TestCase):
         self.assertEqual(paired["summary"]["available_pairs"], 0)
         self.assertTrue(report["complete"])
 
+    def test_failed_expected_cycle_does_not_accept_a_different_nonmatching_run(self):
+        issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
+        snapshot = daily.empty_archive(issue, STATIONS)
+        for station in snapshot["station_results"].values():
+            for row in station["forecasts"]:
+                if row["model"] == "GFS":
+                    row["values"] = {"direction_deg": 180, "mean_kt": 1, "gust_kt": 1, "precip_mm": 1}
+        original = (None, issue, "original.json", snapshot["station_results"])
+        def unavailable(params):
+            if params["run"] == "2026-11-15T12:00":
+                raise TimeoutError("expected cycle temporarily unavailable")
+            return self.response(params)
+        selected, evidence = daily.select_group(issue, "GFS", STATIONS, original,
+                                                daily.empty_archive(issue, STATIONS), unavailable)
+        self.assertIsNone(selected)
+        self.assertTrue(all(not r["selection_accepted"] for r in evidence["requests"]))
+
+    def test_only_the_documented_gfs_gust_difference_is_accepted(self):
+        issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
+        for model in ("GFS", "ICON", "ECMWF"):
+            snapshot = daily.empty_archive(issue, STATIONS)
+            for station in snapshot["station_results"].values():
+                for row in station["forecasts"]:
+                    if row["model"] == model:
+                        row["values"] = {"direction_deg": 90, "mean_kt": 0, "gust_kt": 1, "precip_mm": 0}
+            original = (None, issue, "original.json", snapshot["station_results"])
+            selected, _ = daily.select_group(issue, model, STATIONS, original,
+                                             daily.empty_archive(issue, STATIONS), self.response)
+            self.assertEqual(selected is not None, model == "GFS")
+
+    def test_sparse_alternative_cycle_cannot_lock_retry_to_an_unverified_run(self):
+        issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
+        snapshot = daily.empty_archive(issue, STATIONS)
+        for station in snapshot["station_results"].values():
+            for row in station["forecasts"]:
+                if row["model"] == "GFS":
+                    row["values"] = {"direction_deg": 90, "mean_kt": 0, "gust_kt": 0, "precip_mm": 0}
+        original = (None, issue, "original.json", snapshot["station_results"])
+        def sparse(params):
+            if params["run"] == "2026-11-15T12:00": raise TimeoutError()
+            response = self.response(params)
+            for report in response:
+                for field in ("wind_speed_10m", "wind_direction_10m", "wind_gusts_10m"):
+                    report["hourly"][field] = [None] * len(report["hourly"]["time"])
+            return response
+        selected, _ = daily.select_group(issue, "GFS", STATIONS, original,
+                                         daily.empty_archive(issue, STATIONS), sparse)
+        self.assertIsNone(selected)
+
+    def test_unsafe_first_version_result_is_quarantined_and_retried(self):
+        self.collect()
+        issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
+        path = daily.archive_path(self.root, issue)
+        payload = daily.read(path)
+        payload["model_acquisition"]["GFS"].update({"snapshot_compared": 72, "snapshot_matches": 8,
+                                                  "snapshot_differences": 64})
+        payload["model_acquisition"]["GFS"].pop("selection_accepted", None)
+        payload["model_runs_utc"]["GFS"] = "2026-11-15T18:00"
+        daily.save(path, payload)
+        fetcher = Mock(side_effect=self.response)
+        report = self.collect(fetcher)
+        self.assertTrue(report["complete"])
+        self.assertEqual(report["attempt_count"], 2)
+        self.assertEqual(fetcher.call_count, 1)
+        self.assertTrue((self.root / "data/daily_recovery/2026-11-15/rejected_runs/1800_GFS.json").exists())
+        self.assertEqual(daily.read(path)["model_runs_utc"]["GFS"], "2026-11-15T12:00")
+
     def test_realtime_sources_remain_untouched(self):
         original = self.root / "data/2026-11/2026-11-15/090000.json"
         original.parent.mkdir(parents=True)
