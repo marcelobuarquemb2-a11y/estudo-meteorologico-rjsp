@@ -268,6 +268,56 @@ class ForecastRetryTests(unittest.TestCase):
         self.assertTrue(chosen[2].endswith("090000.json"))
 
 
+    def test_meteoblue_is_complete_when_open_meteo_fails(self):
+        def only_meteoblue(endpoint, params):
+            if "open-meteo.com" in endpoint:
+                raise TimeoutError("unrelated upstream failure")
+            return self.response(endpoint, params)
+        with patch.object(collect, "fetch", side_effect=only_meteoblue):
+            collect.main()
+        folder = self.root / "data" / "2026-11" / "2026-11-11"
+        archived = json.loads(next(folder.glob("*.json")).read_text())
+        self.assertTrue(collect.meteoblue_collection_complete(archived, self.issue, self.targets))
+        self.assertFalse(collect.collection_complete(archived, self.issue, self.targets))
+        self.assertEqual(sum(
+            collect.values_present(row["values"])
+            for site in archived["station_results"].values()
+            for row in site["forecasts"] if row["model"].startswith("Meteoblue")
+        ), 72)
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=10)
+        with patch.object(collect, "fetch") as fetch:
+            collect.main()
+        fetch.assert_not_called()
+
+    def test_meteoblue_queried_first_and_checkpoint_survives_unexpected_exit(self):
+        calls = []
+        def interrupted(endpoint, params):
+            calls.append(endpoint)
+            if len(calls) == 2:
+                raise KeyboardInterrupt("interrupted runner")
+            return self.response(endpoint, params)
+        with patch.object(collect, "fetch", side_effect=interrupted):
+            with self.assertRaises(KeyboardInterrupt):
+                collect.main()
+        self.assertIn("meteoblue", calls[0])
+        checkpoints = list((self.root / "data" / "collection_checkpoints").rglob("*.json"))
+        self.assertEqual(len(checkpoints), 1)
+        saved = json.loads(checkpoints[0].read_text())
+        self.assertIn("meteoblue_basic-1h", saved["station_results"][STATIONS[0]["id"]]["sources"])
+
+    def test_late_scheduled_job_preserves_diagnostic_without_querying(self):
+        FrozenDateTime.current = self.issue + dt.timedelta(minutes=37)
+        with patch.object(collect, "fetch") as fetch:
+            with self.assertRaises(SystemExit):
+                collect.main()
+        fetch.assert_not_called()
+        reports = list((self.root / "data" / "collection_diagnostics").rglob("*.json"))
+        self.assertEqual(len(reports), 1)
+        saved = json.loads(reports[0].read_text())
+        self.assertEqual(saved["status"], "missed_window")
+        self.assertEqual(saved["nominal_issue_at_local"], self.issue.isoformat())
+
+
 if __name__ == "__main__":
     unittest.main()
 
