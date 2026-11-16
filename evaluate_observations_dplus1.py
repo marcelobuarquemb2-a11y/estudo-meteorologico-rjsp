@@ -142,6 +142,7 @@ def collect(day, now, fetch_wis2=None, fetch_sma=None):
     targets = targets_for(day)
     output = TRIAL / day.isoformat()
     raw = output / "raw" / now.strftime("%Y%m%dT%H%M%S%f")
+    raw.mkdir(parents=True, exist_ok=True)
     original = same_day_originals(day)
     recovered = {}
     errors = []
