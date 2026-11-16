@@ -4,6 +4,7 @@ name: Accuracy by model, horizon, indicator and station
     branches: [main]
     paths:
       - '.github/workflows/accuracy_analysis_20261115.yml'
+      - 'analyze_forecast_accuracy.py'
   workflow_dispatch:
 permissions:
   contents: write
