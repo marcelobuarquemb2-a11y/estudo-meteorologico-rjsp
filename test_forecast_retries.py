@@ -118,7 +118,11 @@ class ForecastRetryTests(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 collect.main()
         fetch.assert_not_called()
-        self.assertFalse((self.root / "data").exists())
+        # Late attempts now leave a diagnostic, but no forecast archive.
+        self.assertFalse((self.root / "data" / "2026-11").exists())
+        diagnostics = list((self.root / "data" / "collection_diagnostics").rglob("*.json"))
+        self.assertEqual(len(diagnostics), 1)
+        self.assertEqual(json.loads(diagnostics[0].read_text())["status"], "missed_window")
 
     def test_late_attempt_is_harmless_after_a_complete_capture(self):
         self.save_report("090000.json", self.report)
