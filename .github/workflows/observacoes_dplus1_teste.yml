@@ -1,5 +1,6 @@
 name: Independent D+1 observations parallel trial
 'on':
+  pull_request:
   push:
     branches: [main]
     paths:
@@ -35,6 +36,7 @@ jobs:
       - name: Check independent-trial logic without network
         run: python -m unittest -q test_observations_dplus1
       - name: Query both actuals providers independently and compare with original
+        if: github.event_name != 'pull_request'
         env:
           REFERENCE_DATE: ${{ inputs.reference_date }}
         run: |
@@ -44,7 +46,7 @@ jobs:
             python evaluate_observations_dplus1.py
           fi
       - name: Preserve raw evidence and results even when a source fails
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
