@@ -40,3 +40,30 @@ O relatório operacional `data/comparisons/status.json` permanece inalterado.
 
 A rotina de observações atualiza os pares recuperados com novos actuals.
 Para atualização manual: `python recover_forecast_history.py --pairs-only`.
+
+## Conclusão metodológica adotada em 15/11/2026 — confiabilidade da recuperação histórica
+
+O estudo passa a **aceitar as previsões retroativamente recuperadas** de ICON, GFS e ECMWF
+como dados utilizáveis na avaliação de acerto, distinguindo seu método de obtenção
+(`coleta_original` / `coleta_retroativa`) e preservando as identificações das rodadas.
+A coleta retroativa no dia seguinte é o procedimento definido para esses três modelos;
+a Meteoblue continua dependendo da coleta dentro da janela original.
+
+**Evidência disponível:** comparação amostral de 8 arquivos de coleta × 2 estações × 3
+modelos × 3 horizontes × 4 variáveis: **570/576 valores idênticos (98,96%)**.
+ICON: **192/192**; ECMWF: **192/192**; GFS: **186/192**.
+Em 23 das 24 combinações coleta × modelo houve reprodução integral.
+As únicas **6 divergências** ocorreram na variável rajadas (`wind_gusts_10m`) do GFS,
+na coleta de 14/11/2026 às 15h BRT, em Forte de Copacabana e Ilha Rasa, nas
+antecedências de 24h, 48h e 72h. A anomalia será tratada como localizada e monitorada;
+não será generalizada a ICON ou ECMWF.
+
+**Limitação científica mantida:** as rodadas históricas desse teste foram identificadas
+pela melhor correspondência com capturas originais conhecidas. Portanto, 98,96%
+mede **reprodutibilidade amostral**, não a capacidade já demonstrada de selecionar
+autonomamente a rodada disponível no horário perdido. Nas janelas sem captura,
+a disponibilidade exata da rodada inferida permanece sem comprovação independente.
+Esta ressalva permanece no metadado de auditoria, sem excluir automaticamente
+os dados retroativos da análise expandida aprovada.
+
+Fonte auditável: `data/recovery_candidates/openmeteo_retrospective_test_20261115.json`.
