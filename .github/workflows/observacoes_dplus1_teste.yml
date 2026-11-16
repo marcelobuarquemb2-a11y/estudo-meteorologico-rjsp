@@ -1,0 +1,64 @@
+name: Independent D+1 observations parallel trial
+'on':
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - 'evaluate_observations_dplus1.py'
+      - 'test_observations_dplus1.py'
+      - '.github/workflows/observacoes_dplus1_teste.yml'
+  schedule:
+    # Daily D+1 independent test at 10, 11, 12 and 13 BRT; no re-query after success.
+    - cron: '0 13,14,15,16 * * *'
+  workflow_dispatch:
+    inputs:
+      reference_date:
+        description: 'Day of station measurements (YYYY-MM-DD), empty = yesterday BRT'
+        required: false
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: rjsp-actuals-dplus1-trial
+  cancel-in-progress: false
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check independent-trial logic without network
+        run: python -m unittest -q test_observations_dplus1
+      - name: Query both actuals providers independently and compare with original
+        if: github.event_name != 'pull_request'
+        env:
+          REFERENCE_DATE: ${{ inputs.reference_date }}
+        run: |
+          if [ -n "$REFERENCE_DATE" ]; then
+            python evaluate_observations_dplus1.py --reference-date "$REFERENCE_DATE"
+          else
+            python evaluate_observations_dplus1.py
+          fi
+      - name: Preserve raw evidence and results even when a source fails
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/observations/dplus1_tests/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Archive independent D+1 actuals comparison"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+              git rebase --abort
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          exit 1
