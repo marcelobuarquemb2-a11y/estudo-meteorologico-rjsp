@@ -1,0 +1,23 @@
+name: Meteoblue GitHub acquisition resilience tests
+'on':
+  pull_request:
+    paths:
+      - 'collect.py'
+      - 'test_forecast_retries.py'
+      - 'normalize_collection.py'
+      - '.github/workflows/coleta.yml'
+      - '.github/workflows/test_meteoblue_resilience.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run regression checks (no provider requests)
+        run: python -m unittest -q test_forecast_retries test_previous_day_collection test_observation_retries

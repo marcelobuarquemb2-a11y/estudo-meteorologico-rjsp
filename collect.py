@@ -24,6 +24,72 @@ SCHEDULE_HOURS = {
     "45 11 * * *": 9, "45 14 * * *": 12, "45 17 * * *": 15, "45 20 * * *": 18,
 }
 
+def save_json_atomic(path, report):
+    """Checkpoint and audit writes are atomic within the GitHub runner."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
+def meteoblue_collection_complete(report, nominal_issue, targets):
+    """Meteoblue coverage must not depend on an unrelated Open-Meteo outage."""
+    # Legacy offline fixtures have no source-level timestamps; real captures
+    # must always validate the actual Meteoblue acquisition times.
+    if collection_complete(report, nominal_issue, targets) and all(
+        not site.get("sources") for site in report.get("station_results", {}).values()
+    ):
+        return True
+    if (
+        not report.get("official_series_eligible")
+        or report.get("official_series_start_local") != SERIES_START.isoformat()
+        or local_time(report["nominal_issue_at_local"]) != nominal_issue
+        or not within_slot(local_time(report["consulted_at"]), nominal_issue)
+    ):
+        return False
+    meteoblue_model = next(model for model in MODEL_NAMES if model.startswith("Meteoblue"))
+    for station in STATIONS:
+        if not station.get("enabled", True):
+            continue
+        site = report.get("station_results", {}).get(station["id"], {})
+        if (site.get("lat"), site.get("lon")) != (station["lat"], station["lon"]):
+            return False
+        for package in ("meteoblue_basic-1h", "meteoblue_wind-3h"):
+            source = site.get("sources", {}).get(package, {})
+            try:
+                acquired = dt.datetime.fromisoformat(source["retrieved_at"]).astimezone(TZ)
+                if (not within_slot(acquired, nominal_issue)
+                        or source["raw"]["metadata"]["utc_timeoffset"] != -3):
+                    return False
+            except (KeyError, TypeError, ValueError, AttributeError):
+                return False
+        found = {
+            row.get("target_local")
+            for row in site.get("forecasts", [])
+            if row.get("model") == meteoblue_model
+            and row.get("target_local") in targets
+            and values_present(row.get("values") or {}) == len(VARS)
+            and row.get("valid_at_local")
+            and within_slot(local_time(row["valid_at_local"]), local_time(row["target_local"]))
+        }
+        if not set(targets).issubset(found):
+            return False
+    return True
+
+
+def meteoblue_capture_state(nominal_issue, targets):
+    """Best existing complete Meteoblue snapshot plus nominal refresh state."""
+    _, nominal_attempted = capture_state(nominal_issue, targets)
+    folder = ROOT / "data" / nominal_issue.strftime("%Y-%m") / nominal_issue.strftime("%Y-%m-%d")
+    for path in sorted(folder.glob("*.json")):
+        try:
+            report = json.loads(path.read_text(encoding="utf-8"))
+            if meteoblue_collection_complete(report, nominal_issue, targets):
+                return path, nominal_attempted
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+            continue
+    return None, nominal_attempted
+
 
 def collection_complete(report, nominal_issue, targets):
     if (
@@ -125,18 +191,41 @@ def main():
         for lead in HORIZON_HOURS
     ]
     explicit_push = requested_push_capture(event, nominal_issue)
+    diagnostic = {
+        "record_type": "forecast_schedule_diagnostic",
+        "nominal_issue_at_local": nominal_issue.isoformat(),
+        "started_at_local": now.isoformat(),
+        "schedule_event": cron or None,
+        "trigger_event": event or None,
+        "nominal_offset_minutes": round((now - nominal_issue).total_seconds() / 60, 3),
+        "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+        "status": "started",
+    }
+    diagnostic_path = (ROOT / "data/collection_diagnostics" / now.strftime("%Y-%m-%d")
+                       / (now.strftime("%H%M%S%f") + ".json"))
+
+    def audit(status, **details):
+        if event not in ("schedule", "workflow_dispatch") and not explicit_push:
+            return
+        diagnostic.update(status=status, **details)
+        diagnostic["updated_at_local"] = dt.datetime.now(TZ).isoformat()
+        save_json_atomic(diagnostic_path, diagnostic)
+
+    audit("started")
     official = (
         (scheduled_slot is not None or event == "workflow_dispatch" or explicit_push)
         and nominal_issue >= SERIES_START and within_slot(now, nominal_issue)
     )
     if scheduled_slot is not None or official:
-        previous, nominal_attempted = capture_state(nominal_issue, targets)
+        previous, nominal_attempted = meteoblue_capture_state(nominal_issue, targets)
         if previous is not None and (
             not official or not needs_query(now, nominal_issue, True, nominal_attempted)
         ):
-            print("Complete official capture already archived:", previous.relative_to(ROOT))
+            audit("skipped_complete_meteoblue", existing_archive=str(previous.relative_to(ROOT)))
+            print("Complete Meteoblue capture already archived:", previous.relative_to(ROOT))
             return
     if scheduled_slot is not None and not official:
+        audit("missed_window")
         raise SystemExit("Scheduled capture missed the permitted time window: " + now.isoformat())
     if event == "push" and not explicit_push:
         print("Deployment verified; forecast queries wait for a scheduled acquisition")
@@ -158,52 +247,99 @@ def main():
         "station_results": {},
         "note": "Raw forecasts only; no observations or skill scores",
     }
+    # A local checkpoint is refreshed after every source response. The workflow
+    # archives it on recoverable process failure, then deletes it after the final
+    # immutable forecast snapshot has been written.
+    checkpoint_path = (ROOT / "data/collection_checkpoints" / now.strftime("%Y-%m-%d")
+                       / (now.strftime("%H%M%S%f") + ".json"))
+
+    def checkpoint():
+        save_json_atomic(checkpoint_path, result)
+
     key=os.environ.get("METEOBLUE_API_KEY")
     for st in STATIONS:
         item={"name":st["name"],"lat":st["lat"],"lon":st["lon"],"sources":{},"errors":[],
               "coordinate_status":st.get("coordinate_status"),
               "forecast_acquisition_validated":st.get("forecast_acquisition_validated",False)}
         result["station_results"][st["id"]]=item
-        if st.get("enabled",True) is False:
+        if not st.get("enabled",True):
             item["status"]="excluded_from_official_series"
-            continue
-        if st["lat"] is None or st["lon"] is None:
+        elif st["lat"] is None or st["lon"] is None:
             item["errors"].append("Coordinates not independently verified")
+    checkpoint()
+
+    # Protect the time-sensitive Meteoblue observations from Open-Meteo timeouts.
+    # Each source response is preserved before the next external request begins.
+    for st in STATIONS:
+        item=result["station_results"][st["id"]]
+        if item.get("status") or st["lat"] is None or st["lon"] is None:
+            continue
+        if not key:
+            item["errors"].append("Meteoblue secret not configured")
+            checkpoint()
+            continue
+        for package in ("basic-1h","wind-3h"):
+            if official and not within_slot(dt.datetime.now(TZ), nominal_issue):
+                item["errors"].append("Meteoblue "+package+" skipped: window already closed")
+                checkpoint()
+                continue
+            try:
+                raw=fetch("https://my.meteoblue.com/packages/"+package,
+                          {"lat":st["lat"],"lon":st["lon"],"asl":0,"tz":"America/Sao_Paulo",
+                           "format":"json","apikey":key})
+                item["sources"]["meteoblue_"+package]={
+                    "retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
+                    "raw":raw,"model_run":raw.get("metadata",{}).get("modelrun_utc"),
+                    "mlm_provenance":"not verified","target_times":targets}
+            except Exception as e:
+                item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
+            checkpoint()
+
+    # Keep the original Open-Meteo process running in parallel during validation.
+    # It is no longer allowed to delay the Meteoblue requests.
+    for st in STATIONS:
+        item=result["station_results"][st["id"]]
+        if item.get("status") or st["lat"] is None or st["lon"] is None:
+            continue
+        if official and not within_slot(dt.datetime.now(TZ), nominal_issue):
+            item["errors"].append("Open-Meteo skipped: capture window already closed")
+            checkpoint()
             continue
         params={"latitude":st["lat"],"longitude":st["lon"],"hourly":",".join(VARS),
                 "models":",".join(MODELS),"wind_speed_unit":"kn",
                 "timezone":"America/Sao_Paulo","forecast_days":5}
         try:
             raw=fetch("https://api.open-meteo.com/v1/forecast",params)
-            item["sources"]["open_meteo"]={"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
+            item["sources"]["open_meteo"]={
+                "retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
                 "raw":raw,"target_times":targets,"model_run":"not reported explicitly"}
         except Exception as e:
             item["errors"].append("Open-Meteo "+type(e).__name__)
-        if not key:
-            item["errors"].append("Meteoblue secret not configured")
-            continue
-        for package in ("basic-1h","wind-3h"):
-            try:
-                raw=fetch("https://my.meteoblue.com/packages/"+package,
-                          {"lat":st["lat"],"lon":st["lon"],"asl":0,"tz":"America/Sao_Paulo",
-                           "format":"json","apikey":key})
-                item["sources"]["meteoblue_"+package]={"retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
-                    "raw":raw,"model_run":raw.get("metadata",{}).get("modelrun_utc"),
-                    "mlm_provenance":"not verified","target_times":targets}
-            except Exception as e:
-                item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
+        checkpoint()
     # Preserve raw API responses and generate normalized, audited forecast records.
     from normalize_collection import normalize_collection
     normalize_collection(result)
     out=ROOT/"data"/now.strftime("%Y-%m")/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
     path=out/(now.strftime("%H%M%S")+".json")
-    path.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    save_json_atomic(path, result)
+    # The fully archived snapshot supersedes the local incremental checkpoint.
+    checkpoint_path.unlink(missing_ok=True)
     print("Audit artifact:",path.relative_to(ROOT))
     print("Sources with numeric responses:",sum(len(x["sources"]) for x in result["station_results"].values()))
     print("Stations awaiting verified coordinates:",sum(x["lat"] is None for x in result["station_results"].values()))
-    if official and not collection_complete(result, nominal_issue, targets) and completed_capture(nominal_issue, targets) is None:
-        raise SystemExit("Incomplete official capture archived; later scheduled attempts can retry")
+    mb_count = sum(
+        values_present(row.get("values") or {})
+        for station in result["station_results"].values()
+        for row in station.get("forecasts", [])
+        if str(row.get("model", "")).startswith("Meteoblue")
+    )
+    result_complete = meteoblue_collection_complete(result, nominal_issue, targets)
+    audit("complete_meteoblue" if result_complete else "partial_meteoblue",
+          meteoblue_values_present=mb_count, meteoblue_values_expected=len(STATIONS)*len(targets)*len(VARS),
+          archive=str(path.relative_to(ROOT)))
+    if official and not result_complete and meteoblue_capture_state(nominal_issue, targets)[0] is None:
+        raise SystemExit("Incomplete Meteoblue capture archived; later attempts can retry")
 
 if __name__=="__main__":
     main()
