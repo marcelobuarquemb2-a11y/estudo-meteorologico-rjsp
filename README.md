@@ -18,3 +18,25 @@ Fontes: Open-Meteo (ICON, GFS, ECMWF) e Meteoblue (basic-1h, wind-3h; identifica
 
 A série oficial começa em 07/11/2026 às 15h de Brasília. A primeira comparação possível com os três horizontes é a da observação de 10/11/2026 às 15h, após a publicação das medições.
 
+## Recuperação retrospectiva de previsões (sem reescrever coletas originais)
+
+As rodadas de ICON, GFS e ECMWF recuperadas pela Open-Meteo Single Runs API
+ficam em `data/recovered_forecasts/`, incluindo modelo, rodada UTC, estação, variável,
+antecedência e horário-alvo. `recover_forecast_history.py` transforma os registros brutos
+de `data/recovery_candidates/`; nenhuma coleta original em `data/YYYY-MM/DD/` é alterada.
+
+**Uma rodada histórica não comprova, por si só, que já estava publicada no horário-alvo.**
+
+- `snapshot_matched`: rodada confirmada por correspondência exata com valores coletados
+  dentro da janela original. Pode complementar campos faltantes da mesma coleta.
+- `vintage_inferred_publication_unverified`: rodada inferida por observações em outros dias;
+  não há comprovação direta da sua disponibilidade no horário nominal perdido.
+
+Em `data/comparisons/recovered_pairs_status.json`, cada campo é rotulado
+`original_capture`, `recovered_snapshot_matched` ou `recovered_inferred`.
+`available_pairs` inclui pares provisórios; `eligible_pairs` conta apenas os
+pares com previsão original ou recuperação confirmada contra snapshot.
+O relatório operacional `data/comparisons/status.json` permanece inalterado.
+
+A rotina de observações atualiza os pares recuperados com novos actuals.
+Para atualização manual: `python recover_forecast_history.py --pairs-only`.
