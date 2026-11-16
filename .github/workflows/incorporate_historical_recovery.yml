@@ -1,0 +1,56 @@
+name: Incorporate recovered historical model-run data (flagged)
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/incorporate_historical_recovery.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rjsp-historical-recovery-write
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate script syntax
+        run: python -m py_compile recover_forecast_history.py
+      - name: Generate archived historical values and recovery-aware pair base
+        run: python recover_forecast_history.py
+      - name: Verify recovered archive remains separate from original captures
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path("data/recovered_forecasts")
+          index=json.loads((base/"index.json").read_text())
+          assert index["counts"]["slots"]==4
+          assert index["counts"]["retrieved_values"]==864
+          assert index["counts"]["snapshot_matched"]==1
+          assert index["counts"]["vintage_inferred_publication_unverified"]==3
+          for path in index["slots"]:
+              x=json.loads(Path(path).read_text())
+              assert not x["official_series_eligible"]
+              assert not x["historical_round_publication_verified"]
+              assert len(x["station_results"])==6
+          pair=json.loads(Path("data/comparisons/recovered_pairs_status.json").read_text())
+          assert len(pair["by_slot"])==4
+          assert pair["summary"]["eligible_pairs"]<=pair["summary"]["available_pairs"]
+          print("PASS: four traceable records, 864 values, official original captures untouched")
+          PY
+      - name: Commit recovered history to the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/recovered_forecasts/ data/comparisons/recovered_pairs_status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Incorporate historically recovered forecasts with provenance flags"
+            git pull --rebase origin main
+            git push
+          fi
