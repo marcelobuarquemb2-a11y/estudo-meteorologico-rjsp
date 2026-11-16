@@ -167,7 +167,7 @@ def main():
     assert main_total["expected"]==expected
     # Preserve any changed observation availability rather than forcing stale old dashboard metrics.
     summary=[]
-    for (model,lead,field,sid),v in sorted(counters.items()):
+    for (model,lead,field,sid),v in sorted(counters.items(), key=lambda item: tuple(str(part) for part in item[0])):
         row={"model":model,"lead_h":lead,"variable":field,"station":sid,
              "station_name":SITE_NAMES.get(sid,"Todas as estações"),
              **v,
