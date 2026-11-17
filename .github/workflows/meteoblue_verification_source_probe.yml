@@ -1,0 +1,90 @@
+name: Meteoblue verification source inspection
+'on':
+  push:
+    branches: [diagnostic/meteoblue-run-selector-20261117]
+    paths: ['.github/workflows/meteoblue_verification_source_probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect public verification source and image metadata
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import io,json,os,re,struct,zlib
+          import urllib.error,urllib.parse,urllib.request
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          OUT=Path("diagnostic-results"); OUT.mkdir(exist_ok=True)
+          TZ=ZoneInfo("America/Sao_Paulo")
+          secret=os.environ.get("METEOBLUE_API_KEY","")
+          report={"started_at_brt":dt.datetime.now(TZ).isoformat(),"scope":"Forecast archive markers and numeric forecast payloads only; no comparison with observed weather.","requests":[]}
+          def clean(s):
+           s=str(s)
+           if secret:s=s.replace(secret,"[REDACTED]")
+           s=re.sub(r"(?i)(apikey(?:%3[dD]|[\"']?\s*[:=]\s*[\"']?))[a-z0-9_-]{8,}",r"\1[REDACTED]",s)
+           return s
+          def get(url,label,binary=False):
+           row={"label":label,"url_without_query":url.split("?")[0],"queried_at_brt":dt.datetime.now(TZ).isoformat()}
+           body=None
+           try:
+            req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Forecast-Recovery-Research/1.0"})
+            with urllib.request.urlopen(req,timeout=25) as resp:
+             body=resp.read(9000000)
+             row.update(http_status=resp.status,content_type=resp.headers.get("Content-Type"),bytes=len(body))
+            if not binary:(OUT/(label+".txt")).write_text(clean(body.decode("utf-8","replace")))
+           except urllib.error.HTTPError as ex:
+            row.update(http_status=ex.code,error=clean(ex.read().decode("utf-8","replace"))[:500])
+           except Exception as ex:row.update(error_type=type(ex).__name__,error=clean(ex)[:300])
+           report["requests"].append(row)
+           return body,row
+          url="https://www.meteoblue.com/en/weather/forecast/verificationshort/paraty_brazil_3455036"
+          body,row=get(url,"public_verificationshort")
+          if body:
+           text=body.decode("utf-8","replace")
+           row["image_api_paths"]=sorted(set(re.findall(r'https?://my\.meteoblue\.com/images/[A-Za-z0-9_/-]+',text)))
+           row["embedded_json_blocks"]=[{"type":a,"bytes":len(b),"archive_marker":bool(re.search(r'modelrun|issuance|lead.?time|forecast.?run|as.?of',b,re.I))} for a,b in re.findall(r'<script[^>]*type=["\x27]([^"\x27]+)["\x27][^>]*>(.*?)</script>',text,re.S)]
+           row["numeric_forecast_markers_found"]=bool(re.search(r'json_data|Highcharts\.chart|forecast.?run|forecast.?lead|issuance',text,re.I))
+           scripts=re.findall(r'<script[^>]+src=["\x27]([^"\x27]+)',text,re.I)
+           scripts=[urllib.parse.urljoin(url,s) for s in scripts]
+           scripts=[s for s in scripts if urllib.parse.urlparse(s).hostname in ("static.meteoblue.com","www.meteoblue.com") and re.search(r"verif|history|forecast|homepage",s,re.I)]
+           row["relevant_scripts"]=[s.split("?")[0] for s in scripts]
+           for i,s in enumerate(scripts[:4]):
+            b,r=get(s,"verification_script_"+str(i))
+            if b:
+             t=b.decode("utf-8","replace")
+             r["archive_data_routes"]=sorted(set(re.findall(r'["\x27]([^"\x27\s]{0,150}(?:verif|issuance|modelrun|forecast.?run|history.?data)[^"\x27\s]{0,150})["\x27]',t,re.I)))[:25]
+          if secret:
+           params={"lat":-23.223612,"lon":-44.726944,"asl":0,"tz":"America/Sao_Paulo","history_days":3,"format":"png","apikey":secret}
+           b,r=get("https://my.meteoblue.com/images/meteogram_verify?"+urllib.parse.urlencode(params),"verification_png_metadata",True)
+           if b and b.startswith(b"\x89PNG\r\n\x1a\n"):
+            off=8;chunks=[];texts=[]
+            while off+12<=len(b):
+             n=struct.unpack(">I",b[off:off+4])[0];kind=b[off+4:off+8].decode("latin1");data=b[off+8:off+8+n];off+=n+12
+             chunks.append({"type":kind,"bytes":n})
+             if kind=="tEXt":
+              key,sep,value=data.partition(b"\0");texts.append({"key":key.decode("latin1"),"value":clean(value.decode("latin1"))[:250]})
+             elif kind in ("zTXt","iTXt"):
+              key=data.partition(b"\0")[0];texts.append({"key":key.decode("latin1"),"compressed_or_international_text":True,"bytes":n})
+             if kind=="IEND":break
+            r["png_chunks"]=chunks;r["png_text_metadata"]=texts
+          report["finished_at_brt"]=dt.datetime.now(TZ).isoformat()
+          (OUT/"verification_source_inspection_20261117.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("VERIFICATION_SOURCE_REPORT_JSON="+json.dumps(report,ensure_ascii=False),flush=True)
+          
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-verification-source-20261117
+          path: diagnostic-results/
+          retention-days: 30
