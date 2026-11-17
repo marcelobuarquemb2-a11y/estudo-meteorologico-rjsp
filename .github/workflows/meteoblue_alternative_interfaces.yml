@@ -1,0 +1,157 @@
+name: Meteoblue alternative interfaces research
+'on':
+  push:
+    branches:
+      - diagnostic/meteoblue-run-selector-20261117
+    paths:
+      - '.github/workflows/meteoblue_alternative_interfaces.yml'
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect API schemas and interactive forecast archive candidates
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          
+          TZ = ZoneInfo("America/Sao_Paulo")
+          secret = os.environ.get("METEOBLUE_API_KEY", "")
+          outdir = Path("diagnostic-results")
+          outdir.mkdir(exist_ok=True)
+          report = {"purpose":"alternative_interfaces_and_metadata_probe",
+                    "started_at_brt":dt.datetime.now(TZ).isoformat(),
+                    "schemas":[], "interactive_requests":[]}
+          
+          def clean(value):
+              value = str(value)
+              return value.replace(secret,"[REDACTED]") if secret else value
+          
+          def read(url, name):
+              result = {"name":name, "queried_at_brt":dt.datetime.now(TZ).isoformat()}
+              try:
+                  req = urllib.request.Request(url, headers={"User-Agent":"RJSP-Alternative-Interfaces-Research/1.0"})
+                  with urllib.request.urlopen(req,timeout=25) as response:
+                      result["http_status"] = response.status
+                      result["content_type"] = response.headers.get("Content-Type")
+                      body = response.read(12000000)
+                  text = clean(body.decode("utf-8","replace"))
+                  result["response_bytes"] = len(body)
+                  result["body_file"] = str(outdir/(name+".txt"))
+                  Path(result["body_file"]).write_text(text)
+                  return result, text
+              except urllib.error.HTTPError as exc:
+                  result["http_status"] = exc.code
+                  result["error"] = clean(exc.read().decode("utf-8","replace"))[:1000]
+              except Exception as exc:
+                  result["error_type"] = type(exc).__name__
+                  result["error"] = clean(exc)[:600]
+              return result, None
+          
+          def resolve(spec, obj):
+              if "$ref" in obj and obj["$ref"].startswith("#/"):
+                  value = spec
+                  for part in obj["$ref"][2:].split("/"):
+                      value = value.get(part,{})
+                  return value
+              return obj
+          
+          for name,url in [
+              ("forecast_openapi","https://my.meteoblue.com/packages/openapi.json"),
+              ("images_openapi","https://my.meteoblue.com/images/openapi.json"),
+              ("maps_openapi","https://maps-api.meteoblue.com/v1/map/openapi.json"),
+              ("time_openapi","https://maps-api.meteoblue.com/v1/time/openapi.json")]:
+              result,text = read(url,name)
+              if text:
+                  try:
+                      spec = json.loads(text)
+                      result["title"] = spec.get("info",{}).get("title")
+                      result["paths"] = list(spec.get("paths",{}))
+                      result["temporal_parameters"] = []
+                      for path,path_data in spec.get("paths",{}).items():
+                          for method,operation in path_data.items():
+                              if method not in ("get","post") or not isinstance(operation,dict):
+                                  continue
+                              params = list(path_data.get("parameters",[]))+list(operation.get("parameters",[]))
+                              for param in params:
+                                  p = resolve(spec,param)
+                                  if re.search(r"run|date|time|start|end|history|forecast|format|update",p.get("name",""),re.I):
+                                      result["temporal_parameters"].append({"path":path,"method":method,
+                                          "name":p.get("name"),"description":p.get("description",""),
+                                          "schema":p.get("schema")})
+                      result["modelrun_field_definitions"] = []
+                      def walk(value,path=""):
+                          if isinstance(value,dict):
+                              for key,v in value.items():
+                                  if key in ("modelrun_utc","modelrun_updatetime_utc"):
+                                      result["modelrun_field_definitions"].append({"path":path+"."+key,"definition":v})
+                                  walk(v,path+"."+key)
+                          elif isinstance(value,list):
+                              for n,v in enumerate(value):
+                                  walk(v,path+"."+str(n))
+                      walk(spec)
+                  except Exception as exc:
+                      result["parse_error"] = type(exc).__name__
+                      result["preview"] = text[:400]
+              report["schemas"].append(result)
+          
+          if secret:
+              params={"lat":-23.223612,"lon":-44.726944,"asl":0,
+                      "tz":"America/Sao_Paulo","format":"highchartshtml","apikey":secret}
+              tests=[
+                  ("verify_interactive","https://my.meteoblue.com/images/meteogram_verify",dict(params,history_days=3)),
+                  ("meteogram_old_version_interactive","https://my.meteoblue.com/images/meteogram",
+                   dict(params,forecast_days=4,modelrun_utc="2026-11-16 18:25")),
+              ]
+              for name,endpoint,p in tests:
+                  result,text = read(endpoint+"?"+urllib.parse.urlencode(p),name)
+                  if text:
+                      result["chart_configs"] = []
+                      decoder=json.JSONDecoder()
+                      for match in re.finditer(r"Highcharts\\.chart\\s*\\(",text):
+                          start=text.find("{",match.end())
+                          if start<0:
+                              continue
+                          try:
+                              config,end=decoder.raw_decode(text[start:])
+                          except Exception:
+                              continue
+                          series = []
+                          for item in config.get("series",[]):
+                              data=item.get("data",[])
+                              series.append({"name":item.get("name"),"type":item.get("type"),
+                                  "data_count":len(data),"first":data[:3],"last":data[-3:],
+                                  "pointStart":item.get("pointStart"),"pointInterval":item.get("pointInterval")})
+                          result["chart_configs"].append({"title":config.get("title"),"subtitle":config.get("subtitle"),
+                              "series":series})
+                      result["embedded_run_markers"] = list(set(re.findall(r".{0,70}(?:modelrun|modelRun|lastModelRun|forecastRun|issueTime).{0,120}",text,re.I)))[:15]
+                      result["body_preview"] = text[:600]
+                  report["interactive_requests"].append(result)
+          
+          report["finished_at_brt"]=dt.datetime.now(TZ).isoformat()
+          path=outdir/"alternative_interfaces_report_20261117.json"
+          path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("ALT_INTERFACES_REPORT_JSON="+json.dumps(report,ensure_ascii=False),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-alternative-interfaces-20261117
+          path: diagnostic-results/
+          retention-days: 30
