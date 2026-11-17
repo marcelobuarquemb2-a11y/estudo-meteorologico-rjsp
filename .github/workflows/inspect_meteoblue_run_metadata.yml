@@ -1,0 +1,89 @@
+name: Inspect Meteoblue run metadata (one-off diagnostic)
+'on':
+  push:
+    branches: ['diagnostics/meteoblue-run-metadata-20261117']
+    paths: ['.github/workflows/inspect_meteoblue_run_metadata.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read current forecast and history metadata
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.parse, urllib.error
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          from pathlib import Path
+          tz = ZoneInfo('America/Sao_Paulo')
+          key = os.environ.get('METEOBLUE_API_KEY')
+          if not key:
+              raise SystemExit('Configured Meteoblue API credential unavailable')
+          out = {'purpose': 'one_off_run_metadata_diagnostic', 'station': 'ilha_rasa',
+                 'latitude': -23.0634, 'longitude': -43.146168,
+                 'started_at_brt': datetime.now(tz).isoformat(), 'requests': []}
+          for history_days in (None, 4):
+              for package in ('basic-1h', 'wind-3h'):
+                  params = {'lat': out['latitude'], 'lon': out['longitude'], 'asl': 0,
+                            'tz': 'America/Sao_Paulo', 'format': 'json', 'apikey': key}
+                  if history_days is not None:
+                      params['history_days'] = history_days
+                  entry = {'package': package, 'history_days': history_days,
+                           'request_started_at_brt': datetime.now(tz).isoformat()}
+                  try:
+                      request = urllib.request.Request(
+                          'https://my.meteoblue.com/packages/' + package + '?' + urllib.parse.urlencode(params),
+                          headers={'User-Agent': 'RJSP-Run-Metadata-Diagnostic/1.0'})
+                      with urllib.request.urlopen(request, timeout=45) as response:
+                          payload = json.load(response)
+                      if payload.get('error') or not isinstance(payload.get('metadata'), dict):
+                          raise ValueError('Provider returned an invalid forecast payload')
+                      entry['retrieved_at_brt'] = datetime.now(tz).isoformat()
+                      entry['metadata'] = payload['metadata']
+                      entry['units'] = payload.get('units', {})
+                      data_key = 'data_1h' if package == 'basic-1h' else 'data_3h'
+                      data = payload.get(data_key, {})
+                      times = data.get('time', [])
+                      entry['data_range'] = {'count': len(times), 'first': times[0] if times else None,
+                                             'last': times[-1] if times else None}
+                      entry['selected_values'] = []
+                      for index, target in enumerate(times):
+                          if target[11:16] in ('09:00', '12:00', '15:00', '18:00'):
+                              entry['selected_values'].append({'valid_time_brt': target,
+                                **{field: data.get(field, [])[index]
+                                   for field in ('winddirection', 'windspeed', 'gust', 'precipitation')
+                                   if index < len(data.get(field, []))}})
+                      for field in ('modelrun_utc', 'modelrun_updatetime_utc'):
+                          value = entry['metadata'].get(field)
+                          if value:
+                              parsed = datetime.fromisoformat(value)
+                              if parsed.tzinfo is None:
+                                  parsed = parsed.replace(tzinfo=timezone.utc)
+                              entry[field + '_as_brt'] = parsed.astimezone(tz).isoformat()
+                  except urllib.error.HTTPError as exc:
+                      entry['error'] = {'type': type(exc).__name__, 'http_status': exc.code}
+                  except Exception as exc:
+                      entry['error'] = {'type': type(exc).__name__}
+                  out['requests'].append(entry)
+                  print(json.dumps({k: v for k, v in entry.items() if k != 'selected_values'}, ensure_ascii=False), flush=True)
+          out['finished_at_brt'] = datetime.now(tz).isoformat()
+          path = Path('meteoblue_run_metadata_20261117.json')
+          path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('Saved sanitized metadata diagnostic:', path.name, flush=True)
+          if any('error' in request for request in out['requests']):
+              raise SystemExit(1)
+          PY
+      - name: Preserve metadata diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meteoblue-run-metadata-20261117
+          path: meteoblue_run_metadata_20261117.json
+          retention-days: 30
