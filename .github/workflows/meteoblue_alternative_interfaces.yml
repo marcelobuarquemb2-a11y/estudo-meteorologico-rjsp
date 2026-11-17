@@ -124,7 +124,7 @@ jobs:
                   if text:
                       result["chart_configs"] = []
                       decoder=json.JSONDecoder()
-                      for match in re.finditer(r"Highcharts\\.chart\\s*\\(",text):
+                      for match in re.finditer(r"Highcharts\.chart\s*\(",text):
                           start=text.find("{",match.end())
                           if start<0:
                               continue
