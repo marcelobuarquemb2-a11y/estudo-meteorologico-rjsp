@@ -1,0 +1,124 @@
+name: Meteoblue numeric verification forecast series probe
+'on':
+  push:
+    branches:
+      - diagnostic/meteoblue-run-selector-20261117
+    paths:
+      - '.github/workflows/meteoblue_verification_numeric_probe.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect forecast series in alternative numerical chart format
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          
+          TZ=ZoneInfo("America/Sao_Paulo")
+          OUT=Path("diagnostic-results")
+          OUT.mkdir(exist_ok=True)
+          secret=os.environ.get("METEOBLUE_API_KEY","")
+          report={"purpose":"numeric_forecast_series_from_verification_interface",
+                  "started_at_brt":dt.datetime.now(TZ).isoformat(),"requests":[]}
+          def clean(value):
+              s=str(value)
+              return s.replace(secret,"[REDACTED]") if secret else s
+          def point_label(point):
+              if isinstance(point,dict):
+                  return point.get("name",point.get("x"))
+              if isinstance(point,(list,tuple)) and point:
+                  return point[0]
+              return None
+          if not secret:
+              report["error"]="METEOBLUE_API_KEY unavailable"
+          else:
+              variants=[("highcharts","highcharts"),("json","json")]
+              for name,format_name in variants:
+                  params={"lat":-23.223612,"lon":-44.726944,"asl":0,
+                          "tz":"America/Sao_Paulo","history_days":3,
+                          "format":format_name,"apikey":secret}
+                  row={"format":name,"queried_at_brt":dt.datetime.now(TZ).isoformat()}
+                  try:
+                      url="https://my.meteoblue.com/images/meteogram_verify?"+urllib.parse.urlencode(params)
+                      req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Forecast-Recovery-Research/1.0"})
+                      with urllib.request.urlopen(req,timeout=30) as response:
+                          row["http_status"]=response.status
+                          row["content_type"]=response.headers.get("Content-Type")
+                          text=clean(response.read(12000000).decode("utf-8","replace"))
+                      (OUT/("verification_"+name+".txt")).write_text(text)
+                      row["bytes"]=len(text)
+                      try:
+                          payload=json.loads(text)
+                      except ValueError:
+                          payload=None
+                      if isinstance(payload,(dict,list)):
+                          row["top_level_keys"]=list(payload)[:40] if isinstance(payload,dict) else None
+                          row["series"]=[]
+                          row["issuance_markers"]=[]
+                          def scan(obj,path="root"):
+                              if isinstance(obj,dict):
+                                  for key,value in obj.items():
+                                      if re.search(r"modelrun|model_run|issued|lead.?time|lead.?hour|initiali|as.?of|forecast.?run",key,re.I):
+                                          row["issuance_markers"].append({"path":path+"."+key,"value":value if not isinstance(value,(dict,list)) else "<object>"})
+                                      if key=="series" and isinstance(value,list):
+                                          for s in value:
+                                              if not isinstance(s,dict):
+                                                  continue
+                                              data=s.get("data",[])
+                                              series_name=s.get("name","")
+                                              forecast_only=bool(re.search(r"forecast|predict|model",series_name,re.I) and not re.search(r"observ|measur|actual|report",series_name,re.I))
+                                              item={"name":series_name,"data_count":len(data),
+                                                    "first_time":point_label(data[0]) if data else None,
+                                                    "last_time":point_label(data[-1]) if data else None,
+                                                    "type":s.get("type"),"custom":s.get("custom"),
+                                                    "forecast_label_identified":forecast_only}
+                                              if forecast_only:
+                                                  item["forecast_targets"]=[p for p in data if isinstance(p,dict) and
+                                                      any(t in str(p.get("name","")) for t in ["2026-11-17 15:00","2026-11-18 15:00","2026-11-19 15:00"])]
+                                              row["series"].append(item)
+                                      elif key!="data":
+                                          scan(value,path+"."+key)
+                              elif isinstance(obj,list):
+                                  for i,value in enumerate(obj[:20]):
+                                      scan(value,path+"."+str(i))
+                          scan(payload)
+                          if isinstance(payload,dict) and payload.get("error"):
+                              row["api_error"]=clean(payload.get("error_message"))
+                      else:
+                          row["body_preview"]=text[:250]
+                  except urllib.error.HTTPError as exc:
+                      row["http_status"]=exc.code
+                      row["api_error"]=clean(exc.read().decode("utf-8","replace"))[:700]
+                  except Exception as exc:
+                      row["error_type"]=type(exc).__name__
+                      row["api_error"]=clean(exc)[:500]
+                  report["requests"].append(row)
+                  if row.get("http_status") in (401,403):
+                      break
+          report["finished_at_brt"]=dt.datetime.now(TZ).isoformat()
+          (OUT/"verification_numeric_probe_20261117.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("VERIFY_NUMERIC_REPORT_JSON="+json.dumps(report,ensure_ascii=False),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-verification-numeric-20261117
+          path: diagnostic-results/
+          retention-days: 30
