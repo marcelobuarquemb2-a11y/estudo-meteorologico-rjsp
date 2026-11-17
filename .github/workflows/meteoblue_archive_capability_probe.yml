@@ -1,0 +1,174 @@
+name: Meteoblue archive endpoint capability probe
+'on':
+  push:
+    branches:
+      - diagnostic/meteoblue-run-selector-20261117
+    paths:
+      - '.github/workflows/meteoblue_archive_capability_probe.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check available domains and archived run access
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import hashlib
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          
+          TZ = ZoneInfo("America/Sao_Paulo")
+          BASELINE = Path("data/2026-11/2026-11-16/152533.json")
+          REQUESTED_UTC = "2026-11-16 18:25"
+          REQUESTED_ISO = "2026-11-16T18:25:00Z"
+          REQUESTED_EPOCH = int(dt.datetime(2026,11,16,18,25,tzinfo=dt.timezone.utc).timestamp())
+          CONVERSION = 1.9438444924
+          TARGETS = ["2026-11-17 15:00", "2026-11-18 15:00", "2026-11-19 15:00"]
+          VARIANTS = [
+              ("control_no_selector", {}),
+              ("modelrun_utc_original_format", {"modelrun_utc": REQUESTED_UTC}),
+              ("modelrun_utc_iso_z", {"modelrun_utc": REQUESTED_ISO}),
+              ("modelrun_utc_unix_seconds", {"modelrun_utc": REQUESTED_EPOCH}),
+              ("both_metadata_fields", {"modelrun_utc": REQUESTED_UTC, "modelrun_updatetime_utc": REQUESTED_UTC}),
+              ("modelrun_utc_plus_history", {"modelrun_utc": REQUESTED_UTC, "history_days": 1}),
+              ("modelrun_utc_nominal_15h", {"modelrun_utc": "2026-11-16 18:00"}),
+              ("modelrun_alias", {"modelrun": REQUESTED_UTC}),
+              ("run_iso_alias", {"run": REQUESTED_ISO}),
+              ("run_date_alias", {"run": "2026-11-16"}),
+              ("asof_alias", {"asof": REQUESTED_ISO}),
+              ("impossible_date_control", {"modelrun_utc": "1900-01-01 00:00"}),
+              ("control_no_selector_after", {}),
+          ]
+          
+          def brt(value):
+              if value is None:
+                  return None
+              try:
+                  if isinstance(value,(int,float)):
+                      parsed = dt.datetime.fromtimestamp(value,dt.timezone.utc)
+                  else:
+                      parsed = dt.datetime.fromisoformat(str(value))
+                  if parsed.tzinfo is None:
+                      parsed = parsed.replace(tzinfo=dt.timezone.utc)
+                  return parsed.astimezone(TZ).isoformat(timespec="minutes")
+              except (ValueError,TypeError,OverflowError):
+                  return None
+          
+          def safe(value):
+              return str(value).replace(secret, "[REDACTED]")[:700]
+          
+          def call(endpoint, params):
+              result = {"queried_at_brt":dt.datetime.now(TZ).isoformat()}
+              try:
+                  url = endpoint + "?" + urllib.parse.urlencode(dict(params, apikey=secret))
+                  req = urllib.request.Request(url,headers={"User-Agent":"RJSP-Historical-Selector-Matrix/1.0"})
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      result["http_status"] = response.status
+                      result["raw_response"] = json.load(response)
+                  payload = result["raw_response"]
+                  if isinstance(payload,dict) and payload.get("error"):
+                      result["api_error"] = safe(payload.get("error_message","API error"))
+              except urllib.error.HTTPError as exc:
+                  result["http_status"] = exc.code
+                  try:
+                      result["api_error"] = safe(exc.read().decode("utf-8","replace"))
+                  except Exception:
+                      result["api_error"] = "HTTP error"
+              except Exception as exc:
+                  result["error_type"] = type(exc).__name__
+                  result["api_error"] = safe(exc)
+              result["finished_at_brt"] = dt.datetime.now(TZ).isoformat()
+              return result
+          
+          def frame(raw, package):
+              table = raw.get("data_1h" if package=="basic-1h" else "data_3h",{})
+              index = {str(t).replace("T"," ")[:16]:i for i,t in enumerate(table.get("time",[]))}
+              variables = ("winddirection","windspeed","precipitation") if package=="basic-1h" else ("gust",)
+              out = {}
+              for target in TARGETS:
+                  i = index.get(target)
+                  values = {}
+                  for variable in variables:
+                      arr = table.get(variable,[])
+                      v = arr[i] if i is not None and i<len(arr) else None
+                      if v is not None and variable in ("windspeed","gust"):
+                          unit = raw.get("units",{}).get("windspeed","ms-1")
+                          factor = {"ms-1":CONVERSION,"m/s":CONVERSION,"km/h":1/1.852,"kmh-1":1/1.852,"kn":1}.get(unit)
+                          v = round(v*factor,3) if factor else None
+                      values[variable] = v
+                  out[target] = values
+              return out
+          
+          def flat(frame_dict):
+              return [v for values in frame_dict.values() for v in values.values()]
+          
+          secret = os.environ.get("METEOBLUE_API_KEY","")
+          params = {"lat":-23.223612,"lon":-44.726944}
+          report = {"purpose":"nonofficial_archive_endpoint_probe","started_at_brt":dt.datetime.now(TZ).isoformat(),
+                    "domain_catalog":None,"archive_requests":[]}
+          if not secret:
+              report["error"]="METEOBLUE_API_KEY unavailable"
+          else:
+              catalog = call("https://my.meteoblue.com/meta/domains/fullList",params)
+              payload = catalog.get("raw_response")
+              catalog["domains_count"] = len(payload) if isinstance(payload,list) else None
+              entries = payload if isinstance(payload,list) else []
+              catalog["domain_names"] = [x.get("name") for x in entries if isinstance(x,dict)]
+              catalog["mlm_candidates"] = [x for x in entries if isinstance(x,dict) and
+                  any(k in json.dumps(x).lower() for k in ["mlm","learning multimodel","learning multi model"])]
+              report["domain_catalog"] = catalog
+              candidates = [
+                  ("documented_raw_model_control","IFSHRES_HOURLY72","2026-11-16"),
+                  ("documented_raw_model_datetime","IFSHRES_HOURLY72","2026-11-16T18:25:00Z"),
+                  ("original_basic_package_as_domain","basic-1h","2026-11-16"),
+                  ("original_wind_package_as_domain","wind-3h","2026-11-16"),
+              ]
+              for candidate in catalog["mlm_candidates"][:3]:
+                  if candidate.get("name"):
+                      candidates.append(("advertised_mlm_domain",candidate["name"],"2026-11-16"))
+              for label,domain,run in candidates:
+                  result = call("https://my.meteoblue.com/archive/run/point",dict(params,domain=domain,run=run))
+                  result["test"] = label
+                  result["domain"] = domain
+                  result["requested_date_brt"] = "2026-11-16" if len(run)==10 else brt(run)
+                  raw = result.get("raw_response",{})
+                  if isinstance(raw,dict):
+                      result["returned_keys"] = list(raw)
+                      meta = raw.get("meta",raw.get("metadata",{}))
+                      result["returned_metadata"] = {k:v for k,v in meta.items() if "run" not in k.lower() and "time" not in k.lower()}
+                      result["returned_run_brt"] = brt(meta.get("run",meta.get("modelrun_utc")))
+                      result["returned_update_brt"] = brt(meta.get("modelrun_updatetime_utc"))
+                      result["returned_variable_count"] = len(raw.get("data",[])) if isinstance(raw.get("data"),list) else None
+                  report["archive_requests"].append(result)
+          report["finished_at_brt"] = dt.datetime.now(TZ).isoformat()
+          out = Path("diagnostic-results/meteoblue_archive_endpoint_probe_20261117.json")
+          out.parent.mkdir(exist_ok=True)
+          out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          public = dict(report)
+          if public["domain_catalog"]:
+              public["domain_catalog"] = {k:v for k,v in public["domain_catalog"].items() if k!="raw_response"}
+          public["archive_requests"] = [{k:v for k,v in x.items() if k!="raw_response"} for x in report["archive_requests"]]
+          print("ARCHIVE_PROBE_JSON="+json.dumps(public,ensure_ascii=False),flush=True)
+          with open(os.environ.get("GITHUB_STEP_SUMMARY","/tmp/archive-probe-summary"),"a") as f:
+              f.write("# Meteoblue archive endpoint probe\n\n```json\n"+json.dumps(public,ensure_ascii=False,indent=2)+"\n```\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-archive-capability-20261117
+          path: diagnostic-results/
+          retention-days: 30
