@@ -1,0 +1,167 @@
+name: Meteoblue forecast frame persistence audit
+'on':
+  push:
+    branches:
+      - diagnostic/meteoblue-run-selector-20261117
+    paths:
+      - '.github/workflows/meteoblue_frame_persistence_audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare the same future forecast frame across later captures
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          
+          TZ=ZoneInfo("America/Sao_Paulo")
+          START=dt.datetime(2026,11,11,12,tzinfo=TZ)
+          STATIONS=("inmet_a619_paraty","inmet_a628_angra","inmet_a602_marambaia",
+                    "inmet_a652_copacabana","ilha_rasa","ilha_fiscal")
+          FIELDS=("direction_deg","mean_kt","gust_kt","precip_mm")
+          FACTOR=1.9438444924
+          OUT=Path("diagnostic-results")
+          OUT.mkdir(exist_ok=True)
+          
+          def wind_factor(raw):
+              unit=raw.get("units",{}).get("windspeed","ms-1")
+              return {"ms-1":FACTOR,"m/s":FACTOR,"km/h":1/1.852,"kmh-1":1/1.852,"kn":1,"kt":1}.get(unit)
+          
+          def raw_value(station,target,field):
+              key="meteoblue_wind-3h" if field=="gust_kt" else "meteoblue_basic-1h"
+              raw=station.get("sources",{}).get(key,{}).get("raw",{})
+              data=raw.get("data_3h" if field=="gust_kt" else "data_1h",{})
+              times=[str(t).replace("T"," ")[:16] for t in data.get("time",[])]
+              target=target.replace("T"," ")[:16]
+              if target not in times:
+                  return None
+              i=times.index(target)
+              variable={"direction_deg":"winddirection","mean_kt":"windspeed","gust_kt":"gust","precip_mm":"precipitation"}[field]
+              values=data.get(variable,[])
+              value=values[i] if i<len(values) else None
+              if value is None:
+                  return None
+              if field in ("mean_kt","gust_kt"):
+                  factor=wind_factor(raw)
+                  if factor is None:
+                      return None
+                  return round(value*factor,3)
+              return value
+          
+          def original_cells(record):
+              cells=[]
+              for sid in STATIONS:
+                  station=record.get("station_results",{}).get(sid,{})
+                  for row in station.get("forecasts",[]):
+                      if row.get("source")!="Meteoblue":
+                          continue
+                      for field in FIELDS:
+                          value=row.get("values",{}).get(field)
+                          if value is not None:
+                              cells.append({"station_id":sid,"station":station.get("name",sid),
+                                            "target_brt":row["target_local"],"field":field,"original":value})
+              return cells
+          
+          def new_bin():
+              return {"snapshot_pairs":0,"whole_frames_available":0,"whole_frames_identical":0,
+                      "fields":{k:{"both":0,"identical":0} for k in FIELDS},"examples":[]}
+          
+          candidates=defaultdict(list)
+          errors=[]
+          for path in sorted(Path("data/2026-11").glob("2026-11-*/*.json")):
+              try:
+                  record=json.loads(path.read_text())
+                  nominal=dt.datetime.fromisoformat(record["nominal_issue_at_local"])
+                  consulted=dt.datetime.fromisoformat(record["consulted_at"])
+                  if nominal<START or record.get("official_series_eligible") is False:
+                      continue
+                  if abs((consulted-nominal).total_seconds())>1800:
+                      continue
+                  cells=original_cells(record)
+                  if len(cells)!=72:
+                      continue
+                  # Check that the extraction from raw responses agrees with recorded values.
+                  for cell in cells:
+                      value=raw_value(record["station_results"][cell["station_id"]],cell["target_brt"],cell["field"])
+                      if value is None or abs(value-cell["original"])>0.002:
+                          raise ValueError("Raw-source extraction inconsistent with archived forecast values")
+                  candidates[nominal].append({"path":str(path),"nominal":nominal,"consulted":consulted,
+                                             "record":record,"cells":cells})
+              except Exception as exc:
+                  errors.append({"path":str(path),"error":type(exc).__name__+": "+str(exc)})
+          
+          selected=[]
+          for nominal,rows in candidates.items():
+              selected.append(min(rows,key=lambda r:(abs((r["consulted"]-nominal).total_seconds()),r["consulted"])))
+          selected.sort(key=lambda r:r["consulted"])
+          bins={}
+          details=[]
+          for i,old in enumerate(selected):
+              for new in selected[i+1:]:
+                  hours=(new["consulted"]-old["consulted"]).total_seconds()/3600
+                  if hours>27:
+                      break
+                  nominal_hours=(new["nominal"]-old["nominal"]).total_seconds()/3600
+                  label=str(round(nominal_hours,3))+"h"
+                  bucket=bins.setdefault(label,new_bin())
+                  bucket["snapshot_pairs"]+=1
+                  same=0
+                  available=0
+                  mismatches=[]
+                  for cell in old["cells"]:
+                      value=raw_value(new["record"].get("station_results",{}).get(cell["station_id"],{}),
+                                      cell["target_brt"],cell["field"])
+                      if value is None:
+                          continue
+                      available+=1
+                      field=cell["field"]
+                      bucket["fields"][field]["both"]+=1
+                      equal=abs(value-cell["original"])<=0.002
+                      if equal:
+                          same+=1
+                          bucket["fields"][field]["identical"]+=1
+                      elif len(mismatches)<3:
+                          mismatches.append(dict(cell,later=value))
+                  full=available==72
+                  whole=full and same==72
+                  bucket["whole_frames_available"]+=int(full)
+                  bucket["whole_frames_identical"]+=int(whole)
+                  result={"original_file":old["path"],"later_file":new["path"],
+                          "original_consulted_brt":old["consulted"].isoformat(),
+                          "later_consulted_brt":new["consulted"].isoformat(),
+                          "nominal_slot_gap_hours":nominal_hours,"actual_gap_hours":round(hours,4),
+                          "values_both":available,"identical":same,"whole_frame_identical":whole,
+                          "example_mismatches":mismatches}
+                  details.append(result)
+                  if len(bucket["examples"])<2 or old["nominal"].date()==dt.date(2026,11,16):
+                      bucket["examples"].append(result)
+          
+          for bucket in bins.values():
+              for field,counts in bucket["fields"].items():
+                  counts["identity_rate"]=round(counts["identical"]/counts["both"],5) if counts["both"] else None
+          summary={"selected_complete_snapshots":len(selected),"first":selected[0]["nominal"].isoformat() if selected else None,
+                   "last":selected[-1]["nominal"].isoformat() if selected else None,
+                   "snapshot_pairs":len(details),"whole_identical_pairs":sum(d["whole_frame_identical"] for d in details),
+                   "note":"Pairwise data identity; not forecast accuracy. Pairs overlap and are not independent statistical trials."}
+          report={"purpose":"same_forecast_frame_persistence_audit","timezone":"America/Sao_Paulo",
+                  "summary":summary,"bins":bins,"errors":errors,"details":details}
+          (OUT/"meteoblue_forecast_frame_persistence_20261117.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("FRAME_PERSISTENCE_REPORT_JSON="+json.dumps({"summary":summary,"bins":bins,"errors":errors},ensure_ascii=False),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-frame-persistence-20261117
+          path: diagnostic-results/
+          retention-days: 30
