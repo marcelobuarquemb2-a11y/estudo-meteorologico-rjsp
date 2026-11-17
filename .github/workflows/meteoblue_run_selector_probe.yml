@@ -1,4 +1,4 @@
-name: Meteoblue historical update selector diagnostic
+name: Meteoblue modelrun selector matrix diagnostic
 'on':
   push:
     branches:
@@ -14,18 +14,19 @@ concurrency:
 jobs:
   compare:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Request yesterday update and compare mean wind
+      - name: Try modelrun filters and alternative run selectors
         env:
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
         run: |
           python - <<'PY'
           import datetime as dt
+          import hashlib
           import json
           import os
           import urllib.error
@@ -37,144 +38,176 @@ jobs:
           TZ = ZoneInfo("America/Sao_Paulo")
           BASELINE = Path("data/2026-11/2026-11-16/152533.json")
           REQUESTED_UTC = "2026-11-16 18:25"
+          REQUESTED_ISO = "2026-11-16T18:25:00Z"
+          REQUESTED_EPOCH = int(dt.datetime(2026,11,16,18,25,tzinfo=dt.timezone.utc).timestamp())
           CONVERSION = 1.9438444924
+          TARGETS = ["2026-11-17 15:00", "2026-11-18 15:00", "2026-11-19 15:00"]
+          VARIANTS = [
+              ("control_no_selector", {}),
+              ("modelrun_utc_original_format", {"modelrun_utc": REQUESTED_UTC}),
+              ("modelrun_utc_iso_z", {"modelrun_utc": REQUESTED_ISO}),
+              ("modelrun_utc_unix_seconds", {"modelrun_utc": REQUESTED_EPOCH}),
+              ("both_metadata_fields", {"modelrun_utc": REQUESTED_UTC, "modelrun_updatetime_utc": REQUESTED_UTC}),
+              ("modelrun_utc_plus_history", {"modelrun_utc": REQUESTED_UTC, "history_days": 1}),
+              ("modelrun_utc_nominal_15h", {"modelrun_utc": "2026-11-16 18:00"}),
+              ("modelrun_alias", {"modelrun": REQUESTED_UTC}),
+              ("run_iso_alias", {"run": REQUESTED_ISO}),
+              ("run_date_alias", {"run": "2026-11-16"}),
+              ("asof_alias", {"asof": REQUESTED_ISO}),
+              ("impossible_date_control", {"modelrun_utc": "1900-01-01 00:00"}),
+              ("control_no_selector_after", {}),
+          ]
           
           def brt(value):
-              if not value:
+              if value is None:
                   return None
               try:
-                  parsed = dt.datetime.fromisoformat(value)
+                  if isinstance(value,(int,float)):
+                      parsed = dt.datetime.fromtimestamp(value,dt.timezone.utc)
+                  else:
+                      parsed = dt.datetime.fromisoformat(str(value))
                   if parsed.tzinfo is None:
                       parsed = parsed.replace(tzinfo=dt.timezone.utc)
                   return parsed.astimezone(TZ).isoformat(timespec="minutes")
-              except ValueError:
+              except (ValueError,TypeError,OverflowError):
                   return None
           
-          def safe_text(value, secret):
-              return str(value).replace(secret, "[REDACTED]")[:600]
+          def safe(value):
+              return str(value).replace(secret, "[REDACTED]")[:700]
           
-          def request(station, secret, selector=True):
-              params = {"lat":station["lat"], "lon":station["lon"], "asl":0,
-                        "tz":"America/Sao_Paulo", "format":"json", "apikey":secret}
-              if selector:
-                  params["modelrun_updatetime_utc"] = REQUESTED_UTC
-              url = "https://my.meteoblue.com/packages/basic-1h?" + urllib.parse.urlencode(params)
-              record = {"requested_modelrun_updatetime_brt":brt(REQUESTED_UTC) if selector else None,
-                        "selector_sent":selector, "queried_at_brt":dt.datetime.now(TZ).isoformat()}
+          def call(endpoint, params):
+              result = {"queried_at_brt":dt.datetime.now(TZ).isoformat()}
               try:
-                  req = urllib.request.Request(url, headers={"User-Agent":"RJSP-Run-Selector-Diagnostic/1.0"})
-                  with urllib.request.urlopen(req, timeout=45) as response:
-                      record["http_status"] = response.status
-                      payload = json.load(response)
-                  record["raw_response"] = payload
-                  record["response_error"] = bool(payload.get("error"))
-                  metadata = payload.get("metadata", {})
-                  record["modelrun_brt"] = brt(metadata.get("modelrun_utc"))
-                  record["modelrun_updatetime_brt"] = brt(metadata.get("modelrun_updatetime_utc"))
-                  record["requested_update_returned"] = (record["modelrun_updatetime_brt"] == brt(REQUESTED_UTC))
-                  if payload.get("error"):
-                      record["error_message"] = safe_text(payload.get("error_message", "API error"), secret)
+                  url = endpoint + "?" + urllib.parse.urlencode(dict(params, apikey=secret))
+                  req = urllib.request.Request(url,headers={"User-Agent":"RJSP-Historical-Selector-Matrix/1.0"})
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      result["http_status"] = response.status
+                      result["raw_response"] = json.load(response)
+                  payload = result["raw_response"]
+                  if isinstance(payload,dict) and payload.get("error"):
+                      result["api_error"] = safe(payload.get("error_message","API error"))
               except urllib.error.HTTPError as exc:
-                  record["http_status"] = exc.code
+                  result["http_status"] = exc.code
                   try:
-                      record["error_message"] = safe_text(exc.read().decode("utf-8", "replace"), secret)
+                      result["api_error"] = safe(exc.read().decode("utf-8","replace"))
                   except Exception:
-                      record["error_message"] = "HTTP error"
+                      result["api_error"] = "HTTP error"
               except Exception as exc:
-                  record["error_type"] = type(exc).__name__
-                  record["error_message"] = safe_text(exc, secret)
-              record["finished_at_brt"] = dt.datetime.now(TZ).isoformat()
-              return record
+                  result["error_type"] = type(exc).__name__
+                  result["api_error"] = safe(exc)
+              result["finished_at_brt"] = dt.datetime.now(TZ).isoformat()
+              return result
           
-          def extract(raw, target):
-              data = raw.get("data_1h", {})
-              normalized = [str(t).replace("T", " ")[:16] for t in data.get("time", [])]
-              target = target.replace("T", " ")[:16]
-              if target not in normalized:
-                  return None
-              index = normalized.index(target)
-              values = data.get("windspeed", [])
-              if index >= len(values) or values[index] is None:
-                  return None
-              speed = values[index]
-              unit = raw.get("units", {}).get("windspeed", "ms-1")
-              factor = {"ms-1":CONVERSION, "m/s":CONVERSION, "kmh-1":1/1.852,
-                        "km/h":1/1.852, "kn":1, "kt":1, "knots":1}.get(unit)
-              return round(speed * factor, 3) if factor is not None else None
+          def frame(raw, package):
+              table = raw.get("data_1h" if package=="basic-1h" else "data_3h",{})
+              index = {str(t).replace("T"," ")[:16]:i for i,t in enumerate(table.get("time",[]))}
+              variables = ("winddirection","windspeed","precipitation") if package=="basic-1h" else ("gust",)
+              out = {}
+              for target in TARGETS:
+                  i = index.get(target)
+                  values = {}
+                  for variable in variables:
+                      arr = table.get(variable,[])
+                      v = arr[i] if i is not None and i<len(arr) else None
+                      if v is not None and variable in ("windspeed","gust"):
+                          unit = raw.get("units",{}).get("windspeed","ms-1")
+                          factor = {"ms-1":CONVERSION,"m/s":CONVERSION,"km/h":1/1.852,"kmh-1":1/1.852,"kn":1}.get(unit)
+                          v = round(v*factor,3) if factor else None
+                      values[variable] = v
+                  out[target] = values
+              return out
           
+          def flat(frame_dict):
+              return [v for values in frame_dict.values() for v in values.values()]
+          
+          secret = os.environ.get("METEOBLUE_API_KEY","")
           baseline = json.loads(BASELINE.read_text())
-          report = {"purpose":"user_requested_run_selector_diagnostic_nonofficial",
-                    "baseline":str(BASELINE), "requested_update_brt":brt(REQUESTED_UTC),
-                    "started_at_brt":dt.datetime.now(TZ).isoformat(),
-                    "request_endpoint":"https://my.meteoblue.com/packages/basic-1h",
-                    "selector_parameter":"modelrun_updatetime_utc",
-                    "selector_documented_in_forecast_openapi":False,
-                    "comparison_tolerance_knots":0.002, "stations":[], "controls":[]}
-          secret = os.environ.get("METEOBLUE_API_KEY")
+          station = baseline["station_results"]["inmet_a619_paraty"]
+          base_params = {"lat":station["lat"],"lon":station["lon"],"asl":0,"tz":"America/Sao_Paulo","format":"json"}
+          report = {"purpose":"nonofficial_historical_selector_matrix","baseline":str(BASELINE),
+                    "station":"Paraty","requested_modelrun_brt":brt(REQUESTED_UTC),
+                    "target_times_brt":TARGETS,"started_at_brt":dt.datetime.now(TZ).isoformat(),
+                    "original":{},"requests":[],"domain_discovery":None}
           if not secret:
-              report["error"] = "METEOBLUE_API_KEY unavailable"
+              report["error"]="METEOBLUE_API_KEY unavailable"
           else:
-              for sid, station in baseline["station_results"].items():
-                  source = station["sources"]["meteoblue_basic-1h"]
-                  original_meta = source["raw"]["metadata"]
-                  response = request(station, secret)
-                  result = {"station_id":sid, "station":station["name"],
-                            "baseline_modelrun_brt":brt(original_meta.get("modelrun_utc")),
-                            "baseline_modelrun_updatetime_brt":brt(original_meta.get("modelrun_updatetime_utc")),
-                            "baseline_retrieved_at_brt":brt(source.get("retrieved_at")),
-                            "request":response, "comparisons":[]}
-                  result["baseline_matches_requested_update"] = (
-                      result["baseline_modelrun_updatetime_brt"] == brt(REQUESTED_UTC))
-                  for row in station.get("forecasts", []):
-                      if row.get("source") != "Meteoblue":
-                          continue
-                      original = row.get("values", {}).get("mean_kt")
-                      current = extract(response.get("raw_response", {}), row["target_local"])
-                      difference = round(current-original, 3) if current is not None and original is not None else None
-                      item = {"target_brt":row["target_local"], "nominal_lead_hours":row["day_offset"]*24,
-                              "original_mean_kt":original, "returned_mean_kt":current,
-                              "difference_kt":difference,
-                              "values_match":abs(difference)<=0.002 if difference is not None else None,
-                              "same_requested_update_verified":bool(response.get("requested_update_returned") and result["baseline_matches_requested_update"])}
-                      result["comparisons"].append(item)
-                  report["stations"].append(result)
-                  if sid == "inmet_a619_paraty":
-                      control = request(station, secret, selector=False)
-                      control["station_id"] = sid
-                      control["mean_kt_by_target"] = {
-                          row["target_local"]:extract(control.get("raw_response", {}), row["target_local"])
-                          for row in station.get("forecasts", []) if row.get("source")=="Meteoblue"}
-                      report["controls"].append(control)
+              for package in ("basic-1h","wind-3h"):
+                  source = station["sources"]["meteoblue_"+package]
+                  old = frame(source["raw"],package)
+                  report["original"][package] = {
+                      "modelrun_brt":brt(source["raw"]["metadata"].get("modelrun_utc")),
+                      "modelrun_updatetime_brt":brt(source["raw"]["metadata"].get("modelrun_updatetime_utc")),
+                      "frame":old}
+                  control = None
+                  for variant,extra in VARIANTS:
+                      result = call("https://my.meteoblue.com/packages/"+package,dict(base_params,**extra))
+                      result["variant"] = variant
+                      result["package"] = package
+                      result["selector_query_parameters"] = extra
+                      raw = result.get("raw_response",{})
+                      if isinstance(raw,dict):
+                          metadata = raw.get("metadata",{})
+                          result["modelrun_brt"] = brt(metadata.get("modelrun_utc"))
+                          result["modelrun_updatetime_brt"] = brt(metadata.get("modelrun_updatetime_utc"))
+                          result["matches_requested_modelrun"] = result["modelrun_brt"]==brt(REQUESTED_UTC)
+                          result["matches_requested_update"] = result["modelrun_updatetime_brt"]==brt(REQUESTED_UTC)
+                          result["frame"] = frame(raw,package)
+                          old_values = flat(old)
+                          new_values = flat(result["frame"])
+                          valid = [(a,b) for a,b in zip(old_values,new_values) if a is not None and b is not None]
+                          result["values_available"] = len(valid)
+                          result["values_expected"] = len(old_values)
+                          result["values_matching_original"] = sum(abs(a-b)<=0.002 for a,b in valid)
+                          result["whole_original_frame_matches"] = len(valid)==len(old_values) and all(abs(a-b)<=0.002 for a,b in valid)
+                          if variant=="control_no_selector" and not result.get("api_error"):
+                              control = result["frame"]
+                          result["same_frame_as_unfiltered_control"] = bool(control is not None and result["frame"]==control)
+                          result["time_range"] = {}
+                          for data_key in ("data_1h","data_3h"):
+                              times = raw.get(data_key,{}).get("time",[])
+                              if times:
+                                  result["time_range"][data_key] = {"first":times[0],"last":times[-1],"count":len(times)}
+                      report["requests"].append(result)
+                      public = {k:v for k,v in result.items() if k not in ("raw_response","selector_query_parameters")}
+                      print("MATRIX_RESULT_JSON="+json.dumps(public,ensure_ascii=False),flush=True)
+              # Discover whether an archive-oriented or mLM domain is advertised by the provider.
+              discovered = call("https://my.meteoblue.com/meta/domains/list",{})
+              payload = discovered.get("raw_response")
+              discovered["payload_type"] = type(payload).__name__
+              if isinstance(payload,(dict,list)):
+                  text = json.dumps(payload,ensure_ascii=False)
+                  discovered["mentions_mlm"] = "mlm" in text.lower()
+                  discovered["mentions_archive"] = "archive" in text.lower()
+                  discovered["payload_preview"] = text[:6000]
+              report["domain_discovery"] = discovered
           
-          comparisons = [r for s in report["stations"] for r in s["comparisons"]]
+          r = report["requests"]
           report["summary"] = {
-              "stations_queried":len(report["stations"]),
-              "stations_returning_requested_update":sum(s["request"].get("requested_update_returned",False) for s in report["stations"]),
-              "baseline_stations_matching_requested_update":sum(s["baseline_matches_requested_update"] for s in report["stations"]),
-              "wind_values_with_both_sides":sum(r["difference_kt"] is not None for r in comparisons),
-              "wind_values_matching_within_tolerance":sum(r["values_match"] is True for r in comparisons),
-              "wind_values_compared_with_requested_update_verified":sum(r["same_requested_update_verified"] and r["difference_kt"] is not None for r in comparisons)}
+              "requests":len(r),"variants_per_package":len(VARIANTS),
+              "http_200":sum(x.get("http_status")==200 for x in r),
+              "requests_returning_requested_modelrun":sum(x.get("matches_requested_modelrun",False) for x in r),
+              "requests_returning_requested_update":sum(x.get("matches_requested_update",False) for x in r),
+              "requests_reproducing_whole_original_frame":sum(x.get("whole_original_frame_matches",False) for x in r),
+              "requests_equal_to_unfiltered_control":sum(x.get("same_frame_as_unfiltered_control",False) for x in r),
+              "errors":[{"package":x["package"],"variant":x["variant"],"error":x.get("api_error")} for x in r if x.get("api_error")]}
           report["finished_at_brt"] = dt.datetime.now(TZ).isoformat()
-          out = Path("diagnostic-results/meteoblue_run_selector_20261117.json")
+          out = Path("diagnostic-results/meteoblue_selector_matrix_20261117.json")
           out.parent.mkdir(exist_ok=True)
-          out.write_text(json.dumps(report, ensure_ascii=False, indent=2)+"\n")
-          summary = dict(report)
-          summary["stations"] = []
-          for station in report["stations"]:
-              s = dict(station)
-              s["request"] = {k:v for k,v in s["request"].items() if k!="raw_response"}
-              summary["stations"].append(s)
-          summary["controls"] = [{k:v for k,v in control.items() if k!="raw_response"} for control in report["controls"]]
-          print("SELECTOR_REPORT_JSON="+json.dumps(summary, ensure_ascii=False), flush=True)
-          with open(os.environ.get("GITHUB_STEP_SUMMARY", "/tmp/meteoblue-selector-summary"), "a") as f:
-              f.write("# Meteoblue requested-update diagnostic\n\nAll displayed dates are Brasilia time.\n\n")
-              f.write("```json\n"+json.dumps(summary, ensure_ascii=False, indent=2)+"\n```\n")
+          out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          public = dict(report)
+          public["requests"] = [{k:v for k,v in x.items() if k not in ("raw_response","selector_query_parameters")} for x in r]
+          if public["domain_discovery"]:
+              public["domain_discovery"] = {k:v for k,v in public["domain_discovery"].items() if k!="raw_response"}
+          print("MATRIX_REPORT_JSON="+json.dumps(public,ensure_ascii=False),flush=True)
+          with open(os.environ.get("GITHUB_STEP_SUMMARY","/tmp/selector-matrix-summary"),"a") as f:
+              f.write("# Historical selector matrix\n\nAll displayed run times are Brasilia time.\n\n")
+              f.write("```json\n"+json.dumps(public,ensure_ascii=False,indent=2)+"\n```\n")
           PY
       - name: Preserve diagnostic responses
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: meteoblue-run-selector-20261117
+          name: meteoblue-selector-matrix-20261117
           path: diagnostic-results/
           if-no-files-found: error
           retention-days: 30
