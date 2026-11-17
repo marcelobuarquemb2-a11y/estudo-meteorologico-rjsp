@@ -1,0 +1,1239 @@
+{
+  "purpose": "Additional alternatives for recovery of as-issued Meteoblue forecast frames",
+  "timezone_for_display": "America/Sao_Paulo",
+  "persistence": {
+    "summary": {
+      "selected_complete_snapshots": 20,
+      "first": "2026-11-11T12:00:00-03:00",
+      "last": "2026-11-17T15:00:00-03:00",
+      "snapshot_pairs": 61,
+      "whole_identical_pairs": 0,
+      "note": "Pairwise data identity; not forecast accuracy. Pairs overlap and are not independent statistical trials."
+    },
+    "bins": {
+      "3.0h": {
+        "snapshot_pairs": 13,
+        "whole_frames_available": 13,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 234,
+            "identical": 31,
+            "identity_rate": 0.13248
+          },
+          "mean_kt": {
+            "both": 234,
+            "identical": 39,
+            "identity_rate": 0.16667
+          },
+          "gust_kt": {
+            "both": 234,
+            "identical": 80,
+            "identity_rate": 0.34188
+          },
+          "precip_mm": {
+            "both": 234,
+            "identical": 201,
+            "identity_rate": 0.85897
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-11/122147.json",
+            "later_file": "data/2026-11/2026-11-11/152428.json",
+            "original_consulted_brt": "2026-11-11T12:21:47.091800-03:00",
+            "later_consulted_brt": "2026-11-11T15:24:28.962916-03:00",
+            "nominal_slot_gap_hours": 3,
+            "actual_gap_hours": 3.045,
+            "values_both": 72,
+            "identical": 29,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "direction_deg",
+                "original": 162,
+                "later": 168
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "mean_kt",
+                "original": 2.138,
+                "later": 2.41
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "gust_kt",
+                "original": 8.417,
+                "later": 8.572
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-12/122912.json",
+            "later_file": "data/2026-11/2026-11-12/152454.json",
+            "original_consulted_brt": "2026-11-12T12:29:12.100404-03:00",
+            "later_consulted_brt": "2026-11-12T15:24:54.550178-03:00",
+            "nominal_slot_gap_hours": 3,
+            "actual_gap_hours": 2.9285,
+            "values_both": 72,
+            "identical": 30,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "mean_kt",
+                "original": 4.568,
+                "later": 4.276
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "direction_deg",
+                "original": 187,
+                "later": 193
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "mean_kt",
+                "original": 3.771,
+                "later": 3.849
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-16/152533.json",
+            "later_file": "data/2026-11/2026-11-16/182640.json",
+            "original_consulted_brt": "2026-11-16T15:25:33.459125-03:00",
+            "later_consulted_brt": "2026-11-16T18:26:40.753656-03:00",
+            "nominal_slot_gap_hours": 3,
+            "actual_gap_hours": 3.0187,
+            "values_both": 72,
+            "identical": 16,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "direction_deg",
+                "original": 135,
+                "later": 138
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "mean_kt",
+                "original": 3.227,
+                "later": 3.207
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "gust_kt",
+                "original": 6.998,
+                "later": 6.609
+              }
+            ]
+          }
+        ]
+      },
+      "24.0h": {
+        "snapshot_pairs": 15,
+        "whole_frames_available": 15,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 270,
+            "identical": 3,
+            "identity_rate": 0.01111
+          },
+          "mean_kt": {
+            "both": 270,
+            "identical": 2,
+            "identity_rate": 0.00741
+          },
+          "gust_kt": {
+            "both": 270,
+            "identical": 6,
+            "identity_rate": 0.02222
+          },
+          "precip_mm": {
+            "both": 270,
+            "identical": 176,
+            "identity_rate": 0.65185
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-11/122147.json",
+            "later_file": "data/2026-11/2026-11-12/122912.json",
+            "original_consulted_brt": "2026-11-11T12:21:47.091800-03:00",
+            "later_consulted_brt": "2026-11-12T12:29:12.100404-03:00",
+            "nominal_slot_gap_hours": 24,
+            "actual_gap_hours": 24.1236,
+            "values_both": 72,
+            "identical": 18,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "direction_deg",
+                "original": 162,
+                "later": 114
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "mean_kt",
+                "original": 2.138,
+                "later": 0.855
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T12:00",
+                "field": "gust_kt",
+                "original": 8.417,
+                "later": 6.862
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-11/152428.json",
+            "later_file": "data/2026-11/2026-11-12/152454.json",
+            "original_consulted_brt": "2026-11-11T15:24:28.962916-03:00",
+            "later_consulted_brt": "2026-11-12T15:24:54.550178-03:00",
+            "nominal_slot_gap_hours": 24,
+            "actual_gap_hours": 24.0071,
+            "values_both": 72,
+            "identical": 7,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "direction_deg",
+                "original": 61,
+                "later": 60
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "mean_kt",
+                "original": 2.449,
+                "later": 2.585
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "gust_kt",
+                "original": 7.853,
+                "later": 7.231
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-16/152533.json",
+            "later_file": "data/2026-11/2026-11-17/152533.json",
+            "original_consulted_brt": "2026-11-16T15:25:33.459125-03:00",
+            "later_consulted_brt": "2026-11-17T15:25:33.332985-03:00",
+            "nominal_slot_gap_hours": 24,
+            "actual_gap_hours": 24,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "direction_deg",
+                "original": 135,
+                "later": 113
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "mean_kt",
+                "original": 3.227,
+                "later": 3.81
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "gust_kt",
+                "original": 6.998,
+                "later": 7.289
+              }
+            ]
+          }
+        ]
+      },
+      "21.0h": {
+        "snapshot_pairs": 12,
+        "whole_frames_available": 12,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 216,
+            "identical": 6,
+            "identity_rate": 0.02778
+          },
+          "mean_kt": {
+            "both": 216,
+            "identical": 1,
+            "identity_rate": 0.00463
+          },
+          "gust_kt": {
+            "both": 216,
+            "identical": 1,
+            "identity_rate": 0.00463
+          },
+          "precip_mm": {
+            "both": 216,
+            "identical": 148,
+            "identity_rate": 0.68519
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-11/152428.json",
+            "later_file": "data/2026-11/2026-11-12/122912.json",
+            "original_consulted_brt": "2026-11-11T15:24:28.962916-03:00",
+            "later_consulted_brt": "2026-11-12T12:29:12.100404-03:00",
+            "nominal_slot_gap_hours": 21,
+            "actual_gap_hours": 21.0786,
+            "values_both": 72,
+            "identical": 7,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "direction_deg",
+                "original": 61,
+                "later": 62
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "mean_kt",
+                "original": 2.449,
+                "later": 1.963
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-12T15:00",
+                "field": "gust_kt",
+                "original": 7.853,
+                "later": 7.6
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-12/152454.json",
+            "later_file": "data/2026-11/2026-11-13/122045.json",
+            "original_consulted_brt": "2026-11-12T15:24:54.550178-03:00",
+            "later_consulted_brt": "2026-11-13T12:20:45.103494-03:00",
+            "nominal_slot_gap_hours": 21,
+            "actual_gap_hours": 20.9307,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T15:00",
+                "field": "direction_deg",
+                "original": 191,
+                "later": 212
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T15:00",
+                "field": "mean_kt",
+                "original": 3.557,
+                "later": 3.324
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T15:00",
+                "field": "precip_mm",
+                "original": 1.3,
+                "later": 1.4
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-16/152533.json",
+            "later_file": "data/2026-11/2026-11-17/122748.json",
+            "original_consulted_brt": "2026-11-16T15:25:33.459125-03:00",
+            "later_consulted_brt": "2026-11-17T12:27:48.764609-03:00",
+            "nominal_slot_gap_hours": 21,
+            "actual_gap_hours": 21.0376,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "direction_deg",
+                "original": 135,
+                "later": 120
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "mean_kt",
+                "original": 3.227,
+                "later": 3.11
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T15:00",
+                "field": "gust_kt",
+                "original": 6.998,
+                "later": 7.289
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-16/182640.json",
+            "later_file": "data/2026-11/2026-11-17/152533.json",
+            "original_consulted_brt": "2026-11-16T18:26:40.753656-03:00",
+            "later_consulted_brt": "2026-11-17T15:25:33.332985-03:00",
+            "nominal_slot_gap_hours": 21,
+            "actual_gap_hours": 20.9813,
+            "values_both": 72,
+            "identical": 17,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "direction_deg",
+                "original": 122,
+                "later": 94
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "mean_kt",
+                "original": 2.78,
+                "later": 2.624
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "gust_kt",
+                "original": 5.851,
+                "later": 6.123
+              }
+            ]
+          }
+        ]
+      },
+      "6.0h": {
+        "snapshot_pairs": 6,
+        "whole_frames_available": 6,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 108,
+            "identical": 2,
+            "identity_rate": 0.01852
+          },
+          "mean_kt": {
+            "both": 108,
+            "identical": 1,
+            "identity_rate": 0.00926
+          },
+          "gust_kt": {
+            "both": 108,
+            "identical": 15,
+            "identity_rate": 0.13889
+          },
+          "precip_mm": {
+            "both": 108,
+            "identical": 82,
+            "identity_rate": 0.75926
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-12/122912.json",
+            "later_file": "data/2026-11/2026-11-12/182608.json",
+            "original_consulted_brt": "2026-11-12T12:29:12.100404-03:00",
+            "later_consulted_brt": "2026-11-12T18:26:08.049958-03:00",
+            "nominal_slot_gap_hours": 6,
+            "actual_gap_hours": 5.9489,
+            "values_both": 72,
+            "identical": 10,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "direction_deg",
+                "original": 192,
+                "later": 201
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "mean_kt",
+                "original": 4.568,
+                "later": 4.043
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "gust_kt",
+                "original": 9.136,
+                "later": 11.896
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-13/122045.json",
+            "later_file": "data/2026-11/2026-11-13/182557.json",
+            "original_consulted_brt": "2026-11-13T12:20:45.103494-03:00",
+            "later_consulted_brt": "2026-11-13T18:25:57.254844-03:00",
+            "nominal_slot_gap_hours": 6,
+            "actual_gap_hours": 6.0867,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "direction_deg",
+                "original": 192,
+                "later": 191
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "mean_kt",
+                "original": 4.218,
+                "later": 4.16
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "gust_kt",
+                "original": 6.609,
+                "later": 7.678
+              }
+            ]
+          }
+        ]
+      },
+      "27.0h": {
+        "snapshot_pairs": 5,
+        "whole_frames_available": 5,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 90,
+            "identical": 3,
+            "identity_rate": 0.03333
+          },
+          "mean_kt": {
+            "both": 90,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "gust_kt": {
+            "both": 90,
+            "identical": 2,
+            "identity_rate": 0.02222
+          },
+          "precip_mm": {
+            "both": 90,
+            "identical": 67,
+            "identity_rate": 0.74444
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-12/122912.json",
+            "later_file": "data/2026-11/2026-11-13/152312.json",
+            "original_consulted_brt": "2026-11-12T12:29:12.100404-03:00",
+            "later_consulted_brt": "2026-11-13T15:23:12.143587-03:00",
+            "nominal_slot_gap_hours": 27,
+            "actual_gap_hours": 26.9,
+            "values_both": 72,
+            "identical": 19,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "direction_deg",
+                "original": 192,
+                "later": 188
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T12:00",
+                "field": "mean_kt",
+                "original": 4.568,
+                "later": 3.888
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "direction_deg",
+                "original": 187,
+                "later": 191
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-13/122045.json",
+            "later_file": "data/2026-11/2026-11-14/150915.json",
+            "original_consulted_brt": "2026-11-13T12:20:45.103494-03:00",
+            "later_consulted_brt": "2026-11-14T15:09:15.391660-03:00",
+            "nominal_slot_gap_hours": 27,
+            "actual_gap_hours": 26.8084,
+            "values_both": 72,
+            "identical": 15,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "direction_deg",
+                "original": 192,
+                "later": 184
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "mean_kt",
+                "original": 4.218,
+                "later": 4.743
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T12:00",
+                "field": "gust_kt",
+                "original": 6.609,
+                "later": 8.942
+              }
+            ]
+          }
+        ]
+      },
+      "18.0h": {
+        "snapshot_pairs": 6,
+        "whole_frames_available": 6,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 108,
+            "identical": 1,
+            "identity_rate": 0.00926
+          },
+          "mean_kt": {
+            "both": 108,
+            "identical": 1,
+            "identity_rate": 0.00926
+          },
+          "gust_kt": {
+            "both": 108,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "precip_mm": {
+            "both": 108,
+            "identical": 77,
+            "identity_rate": 0.71296
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-12/182608.json",
+            "later_file": "data/2026-11/2026-11-13/122045.json",
+            "original_consulted_brt": "2026-11-12T18:26:08.049958-03:00",
+            "later_consulted_brt": "2026-11-13T12:20:45.103494-03:00",
+            "nominal_slot_gap_hours": 18,
+            "actual_gap_hours": 17.9103,
+            "values_both": 72,
+            "identical": 15,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T18:00",
+                "field": "direction_deg",
+                "original": 233,
+                "later": 355
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T18:00",
+                "field": "mean_kt",
+                "original": 2.585,
+                "later": 1.205
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-13T18:00",
+                "field": "gust_kt",
+                "original": 7.056,
+                "later": 6.726
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-13/152312.json",
+            "later_file": "data/2026-11/2026-11-14/091636.json",
+            "original_consulted_brt": "2026-11-13T15:23:12.143587-03:00",
+            "later_consulted_brt": "2026-11-14T09:16:36.068679-03:00",
+            "nominal_slot_gap_hours": 18,
+            "actual_gap_hours": 17.89,
+            "values_both": 72,
+            "identical": 14,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T15:00",
+                "field": "direction_deg",
+                "original": 184,
+                "later": 176
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T15:00",
+                "field": "mean_kt",
+                "original": 2.78,
+                "later": 3.654
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T15:00",
+                "field": "gust_kt",
+                "original": 6.026,
+                "later": 7.97
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-16/182640.json",
+            "later_file": "data/2026-11/2026-11-17/122748.json",
+            "original_consulted_brt": "2026-11-16T18:26:40.753656-03:00",
+            "later_consulted_brt": "2026-11-17T12:27:48.764609-03:00",
+            "nominal_slot_gap_hours": 18,
+            "actual_gap_hours": 18.0189,
+            "values_both": 72,
+            "identical": 17,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "direction_deg",
+                "original": 122,
+                "later": 96
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "mean_kt",
+                "original": 2.78,
+                "later": 2.508
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-17T18:00",
+                "field": "gust_kt",
+                "original": 5.851,
+                "later": 6.123
+              }
+            ]
+          }
+        ]
+      },
+      "15.0h": {
+        "snapshot_pairs": 2,
+        "whole_frames_available": 2,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 36,
+            "identical": 1,
+            "identity_rate": 0.02778
+          },
+          "mean_kt": {
+            "both": 36,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "gust_kt": {
+            "both": 36,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "precip_mm": {
+            "both": 36,
+            "identical": 21,
+            "identity_rate": 0.58333
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-13/182557.json",
+            "later_file": "data/2026-11/2026-11-14/091636.json",
+            "original_consulted_brt": "2026-11-13T18:25:57.254844-03:00",
+            "later_consulted_brt": "2026-11-14T09:16:36.068679-03:00",
+            "nominal_slot_gap_hours": 15,
+            "actual_gap_hours": 14.8441,
+            "values_both": 72,
+            "identical": 10,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T18:00",
+                "field": "direction_deg",
+                "original": 191,
+                "later": 193
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T18:00",
+                "field": "mean_kt",
+                "original": 1.458,
+                "later": 0.933
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-14T18:00",
+                "field": "gust_kt",
+                "original": 3.79,
+                "later": 5.443
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-14/181435.json",
+            "later_file": "data/2026-11/2026-11-15/091808.json",
+            "original_consulted_brt": "2026-11-14T18:14:35.752528-03:00",
+            "later_consulted_brt": "2026-11-15T09:18:08.195437-03:00",
+            "nominal_slot_gap_hours": 15,
+            "actual_gap_hours": 15.059,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T18:00",
+                "field": "direction_deg",
+                "original": 93,
+                "later": 65
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T18:00",
+                "field": "mean_kt",
+                "original": 3.674,
+                "later": 4.84
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T18:00",
+                "field": "gust_kt",
+                "original": 7.775,
+                "later": 9.836
+              }
+            ]
+          }
+        ]
+      },
+      "9.0h": {
+        "snapshot_pairs": 2,
+        "whole_frames_available": 2,
+        "whole_frames_identical": 0,
+        "fields": {
+          "direction_deg": {
+            "both": 36,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "mean_kt": {
+            "both": 36,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "gust_kt": {
+            "both": 36,
+            "identical": 0,
+            "identity_rate": 0
+          },
+          "precip_mm": {
+            "both": 36,
+            "identical": 22,
+            "identity_rate": 0.61111
+          }
+        },
+        "examples": [
+          {
+            "original_file": "data/2026-11/2026-11-14/091636.json",
+            "later_file": "data/2026-11/2026-11-14/181435.json",
+            "original_consulted_brt": "2026-11-14T09:16:36.068679-03:00",
+            "later_consulted_brt": "2026-11-14T18:14:35.752528-03:00",
+            "nominal_slot_gap_hours": 9,
+            "actual_gap_hours": 8.9666,
+            "values_both": 72,
+            "identical": 12,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T09:00",
+                "field": "direction_deg",
+                "original": 117,
+                "later": 104
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T09:00",
+                "field": "mean_kt",
+                "original": 3.577,
+                "later": 3.674
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-15T09:00",
+                "field": "gust_kt",
+                "original": 6.94,
+                "later": 9.35
+              }
+            ]
+          },
+          {
+            "original_file": "data/2026-11/2026-11-15/091808.json",
+            "later_file": "data/2026-11/2026-11-15/181638.json",
+            "original_consulted_brt": "2026-11-15T09:18:08.195437-03:00",
+            "later_consulted_brt": "2026-11-15T18:16:38.749852-03:00",
+            "nominal_slot_gap_hours": 9,
+            "actual_gap_hours": 8.9752,
+            "values_both": 72,
+            "identical": 10,
+            "whole_frame_identical": false,
+            "example_mismatches": [
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-16T09:00",
+                "field": "direction_deg",
+                "original": 189,
+                "later": 201
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-16T09:00",
+                "field": "mean_kt",
+                "original": 3.81,
+                "later": 3.052
+              },
+              {
+                "station_id": "inmet_a619_paraty",
+                "station": "Paraty",
+                "target_brt": "2026-11-16T09:00",
+                "field": "gust_kt",
+                "original": 10.497,
+                "later": 6.415
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "errors": [
+      {
+        "path": "data/2026-11/2026-11-04/154248.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-04/183917.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-05/094848.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-05/124703.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-05/153916.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-05/183341.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/094553.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/123653.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/134721.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/145906.json",
+        "error": "JSONDecodeError: Extra data: line 28742 column 2 (char 703453)"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/150000.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-06/183133.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-07/093314.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      },
+      {
+        "path": "data/2026-11/2026-11-07/123340.json",
+        "error": "KeyError: 'nominal_issue_at_local'"
+      }
+    ]
+  },
+  "public_archives": {
+    "public_page": "https://www.meteoblue.com/en/weather/week/paraty_brazil_3455036",
+    "public_page_coordinate_difference": "City forecast coordinates differ from station coordinates; no geographic substitution used.",
+    "date_query_and_modelrun_query": "HTTP 200; normalized visible forecast page text identical to unfiltered page.",
+    "wayback_availability": {
+      "timestamp_utc": "20261116180000",
+      "archived_snapshots": {}
+    },
+    "broader_wayback_cdx": "Request timed out; no claim of exhaustive Wayback coverage.",
+    "commoncrawl_latest_collection_seen": {
+      "id": "CC-MAIN-2026-43",
+      "crawl_range": "2026-10-05/2026-10-18"
+    },
+    "inspected_at_brt": "2026-11-17T18:27:00-03:00"
+  },
+  "numeric_verification": {
+    "purpose": "numeric_forecast_series_from_verification_interface",
+    "started_at_brt": "2026-11-17T18:31:48.918841-03:00",
+    "requests": [
+      {
+        "format": "highcharts",
+        "queried_at_brt": "2026-11-17T18:31:48.918860-03:00",
+        "http_status": 415,
+        "api_error": "\"Output format not available for this diagram.\""
+      },
+      {
+        "format": "json",
+        "queried_at_brt": "2026-11-17T18:31:49.494665-03:00",
+        "http_status": 422,
+        "api_error": "2 validation errors:\n  {'type': 'enum', 'loc': ('query', 'format', 'str-enum[FormatOutputImage]'), 'msg': \"Input should be 'png' or 'webp'\", 'input': 'json', 'ctx': {'expected': \"'png' or 'webp'\"}}\n  {'type': 'enum', 'loc': ('query', 'format', 'str-enum[FormatOutputInteractive]'), 'msg': \"Input should be 'highcharts' or 'highchartshtml'\", 'input': 'json', 'ctx': {'expected': \"'highcharts' or 'highchartshtml'\"}}\n\n  File \"<makefun-gen-44>\", line 307, in meteogram_verify\n    GET /images/meteogram_verify"
+      }
+    ],
+    "finished_at_brt": "2026-11-17T18:31:49.798411-03:00"
+  },
+  "verification_source": {
+    "started_at_brt": "2026-11-17T18:42:33.816095-03:00",
+    "scope": "Forecast archive markers and numeric forecast payloads only; no comparison with observed weather.",
+    "requests": [
+      {
+        "label": "public_verificationshort",
+        "url_without_query": "https://www.meteoblue.com/en/weather/forecast/verificationshort/paraty_brazil_3455036",
+        "queried_at_brt": "2026-11-17T18:42:33.816110-03:00",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 75312,
+        "image_api_paths": [],
+        "embedded_json_blocks": [
+          {
+            "type": "module",
+            "bytes": 0,
+            "archive_marker": false
+          }
+        ],
+        "numeric_forecast_markers_found": false,
+        "relevant_scripts": []
+      },
+      {
+        "label": "verification_png_metadata",
+        "url_without_query": "https://my.meteoblue.com/images/meteogram_verify",
+        "queried_at_brt": "2026-11-17T18:42:34.464847-03:00",
+        "http_status": 200,
+        "content_type": "image/png",
+        "bytes": 74295,
+        "png_chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "tEXt",
+            "bytes": 16
+          },
+          {
+            "type": "tEXt",
+            "bytes": 65
+          },
+          {
+            "type": "PLTE",
+            "bytes": 768
+          },
+          {
+            "type": "tRNS",
+            "bytes": 256
+          },
+          {
+            "type": "pHYs",
+            "bytes": 9
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 7516
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "png_text_metadata": [
+          {
+            "key": "Author",
+            "value": "meteoblue"
+          },
+          {
+            "key": "License",
+            "value": "CC BY-ND: https://creativecommons.org/licenses/by-nd/4.0/"
+          }
+        ]
+      }
+    ],
+    "finished_at_brt": "2026-11-17T18:42:35.740209-03:00"
+  },
+  "evidence_runs": {
+    "frame_persistence": 44181783998,
+    "public_archives": 44180060350,
+    "numeric_verification": 44180737177,
+    "verification_source": 44182601725
+  },
+  "official_reports": {
+    "checked_at_brt": "2026-11-17T18:46:08.012500-03:00",
+    "dashboard_url": "https://www.meteoblue.com/pub/verification/reports/reports_dashboard_external.html",
+    "reports_count": 30,
+    "first_available_month": "2026-01",
+    "last_available_month": "2026-10",
+    "available_variables": [
+      {
+        "key": "temperature",
+        "label": "Temperature"
+      },
+      {
+        "key": "dewpoint",
+        "label": "Dew Point"
+      },
+      {
+        "key": "wind",
+        "label": "Wind Speed"
+      }
+    ],
+    "report_inspected": "https://www.meteoblue.com/pub/verification/reports/wind_2026_10_external.html",
+    "report_html_bytes": 4800826,
+    "linked_files": [
+      "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css",
+      "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js",
+      "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js",
+      "https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092"
+    ],
+    "image_count": 30,
+    "contains_fetch_call": false,
+    "csv_file_links": [],
+    "issuance_marker_count": 0,
+    "conclusion": "The dashboard links monthly aggregate HTML/PDF reports through October 2026. The inspected wind report embeds static images and tables and does not link hourly as-issued forecast records. It cannot provide the requested 16 November forecast frame.",
+    "scope": "Inspected public dashboard and its latest listed wind report, not every possible Meteoblue internal archive."
+  }
+}
