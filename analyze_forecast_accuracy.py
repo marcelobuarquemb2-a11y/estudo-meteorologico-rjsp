@@ -106,7 +106,7 @@ def main():
                     for field in FIELDS:
                         forecast=(original_item or {}).get("values",{}).get(field)
                         source_class="original_capture" if number(forecast) else "missing_forecast"
-                        forecast_file=orig_file if number(forecast) else None
+                        forecast_file=(original_item or {}).get("selected_forecast_source", orig_file) if number(forecast) else None
                         run_utc=None
                         if not number(forecast) and rec_item:
                             fallback=rec_item.get("values",{}).get(field)
@@ -211,3 +211,4 @@ def main():
 
 if __name__=="__main__":
     main()
+

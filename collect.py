@@ -186,6 +186,11 @@ def main():
         nominal_issue = min(candidates, key=lambda slot: abs(now - slot))
     else:
         nominal_issue = top_of_hour.replace(hour=scheduled_slot)
+    early_worker = os.environ.get("FORECAST_EARLY_WORKER") == "1"
+    if early_worker:
+        nominal_issue = local_time(os.environ["FORECAST_NOMINAL_ISSUE_AT_LOCAL"])
+        if nominal_issue.hour not in SLOT_HOURS or any((nominal_issue.minute, nominal_issue.second, nominal_issue.microsecond)):
+            raise ValueError("Invalid explicit early-worker reference")
     targets = [
         (nominal_issue + dt.timedelta(hours=lead)).strftime("%Y-%m-%dT%H:%M")
         for lead in HORIZON_HOURS
@@ -216,15 +221,15 @@ def main():
         (scheduled_slot is not None or event == "workflow_dispatch" or explicit_push)
         and nominal_issue >= SERIES_START and within_slot(now, nominal_issue)
     )
-    if scheduled_slot is not None or official:
+    if scheduled_slot is not None or official or early_worker:
         previous, nominal_attempted = meteoblue_capture_state(nominal_issue, targets)
         if previous is not None and (
-            not official or not needs_query(now, nominal_issue, True, nominal_attempted)
+            early_worker or not official or not needs_query(now, nominal_issue, True, nominal_attempted)
         ):
             audit("skipped_complete_meteoblue", existing_archive=str(previous.relative_to(ROOT)))
             print("Complete Meteoblue capture already archived:", previous.relative_to(ROOT))
             return
-    if scheduled_slot is not None and not official:
+    if (scheduled_slot is not None or early_worker) and not official:
         audit("missed_window")
         raise SystemExit("Scheduled capture missed the permitted time window: " + now.isoformat())
     if event == "push" and not explicit_push:
@@ -295,9 +300,11 @@ def main():
                 item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
             checkpoint()
 
+    # The early worker only handles time-sensitive Meteoblue. The existing
+    # workflow and D+1 recovery retain their Open-Meteo paths.
     # Keep the original Open-Meteo process running in parallel during validation.
     # It is no longer allowed to delay the Meteoblue requests.
-    for st in STATIONS:
+    for st in (() if early_worker else STATIONS):
         item=result["station_results"][st["id"]]
         if item.get("status") or st["lat"] is None or st["lon"] is None:
             continue
@@ -321,7 +328,7 @@ def main():
     normalize_collection(result)
     out=ROOT/"data"/now.strftime("%Y-%m")/now.strftime("%Y-%m-%d")
     out.mkdir(parents=True,exist_ok=True)
-    path=out/(now.strftime("%H%M%S")+".json")
+    path=out/(now.strftime("%H%M%S%f" if early_worker else "%H%M%S")+".json")
     save_json_atomic(path, result)
     # The fully archived snapshot supersedes the local incremental checkpoint.
     checkpoint_path.unlink(missing_ok=True)
@@ -343,4 +350,5 @@ def main():
 
 if __name__=="__main__":
     main()
+
 

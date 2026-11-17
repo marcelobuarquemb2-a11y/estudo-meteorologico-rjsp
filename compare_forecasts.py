@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Match official forecast vintages and measured observations at each valid local hour."""
+from copy import deepcopy
 from datetime import datetime, timedelta
 from decimal import Decimal
 import json
@@ -48,7 +49,11 @@ def read_archive(path, unreadable):
 
 
 def forecast_archives(unreadable):
+    # Import at call time to reuse the source-level eligibility validator without
+    # a module-load cycle (collect imports MODEL_NAMES from this module).
+    from collect import meteoblue_collection_complete
     by_issue = {}
+    meteoblue_by_issue = {}
     first_window = SERIES_START - SLOT_TOLERANCE
     start_day = first_window.date().isoformat()
     for path in (ROOT / "data").glob("????-??/????-??-??/*.json"):
@@ -74,6 +79,32 @@ def forecast_archives(unreadable):
         rank = (-present, abs(consulted - issue), consulted, source)
         if issue not in by_issue or rank < by_issue[issue][0]:
             by_issue[issue] = (rank, consulted, source, report["station_results"])
+        targets = [(issue + timedelta(hours=h)).strftime("%Y-%m-%dT%H:%M") for h in HORIZON_HOURS]
+        if meteoblue_collection_complete(report, issue, targets):
+            mb_rank = (abs(consulted - issue), consulted, source)
+            if issue not in meteoblue_by_issue or mb_rank < meteoblue_by_issue[issue][0]:
+                meteoblue_by_issue[issue] = (mb_rank, consulted, source, report["station_results"])
+    # Select one complete Meteoblue frame per nominal issue independently of
+    # Open-Meteo coverage. Raw retries remain audit files, never extra samples.
+    for issue, (_, mb_consulted, mb_source, mb_sites) in meteoblue_by_issue.items():
+        rank, consulted, source, sites = by_issue[issue]
+        sites = deepcopy(sites)
+        for station_id, mb_site in mb_sites.items():
+            site = sites.setdefault(station_id, deepcopy(mb_site))
+            site["forecasts"] = [row for row in site.get("forecasts", [])
+                                 if not str(row.get("model", "")).startswith("Meteoblue")]
+            selected_keys = set()
+            for original in mb_site.get("forecasts", []):
+                if str(original.get("model", "")).startswith("Meteoblue"):
+                    key = (original.get("model"), original.get("target_local"))
+                    if key in selected_keys:
+                        continue
+                    selected_keys.add(key)
+                    row = deepcopy(original)
+                    row["selected_forecast_consulted_at_local"] = mb_consulted.isoformat()
+                    row["selected_forecast_source"] = mb_source
+                    site["forecasts"].append(row)
+        by_issue[issue] = (rank, consulted, source, sites)
     return by_issue
 
 
@@ -137,16 +168,18 @@ def main():
                     if not within_slot(forecast_valid, valid):
                         continue
                     values = row["values"]
+                    row_consulted = local_time(row.get("selected_forecast_consulted_at_local", consulted.isoformat()))
+                    row_source = row.get("selected_forecast_source", path)
                     rows.append({
                         "station_id": sid,
                         "valid_local": valid.isoformat(),
-                        "forecast_consulted_at_local": consulted.isoformat(),
+                        "forecast_consulted_at_local": row_consulted.isoformat(),
                         "forecast_valid_at_local": forecast_valid.isoformat(),
                         "observed_at_local": observed_at.isoformat() if observed_at else None,
                         "model": row["model"],
                         "nominal_horizon_hours": hours,
-                        "actual_lead_hours": round((forecast_valid - consulted).total_seconds() / 3600, 3),
-                        "forecast_source": path,
+                        "actual_lead_hours": round((forecast_valid - row_consulted).total_seconds() / 3600, 3),
+                        "forecast_source": row_source,
                         "observation_source": observation_source,
                         "forecast": {key: values.get(key) for key in FIELDS},
                         "observed": actual,
@@ -187,3 +220,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

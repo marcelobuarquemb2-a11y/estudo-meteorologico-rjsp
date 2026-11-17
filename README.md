@@ -131,3 +131,44 @@ The workflow retries Git push conflicts up to five times.
 No late (>30 min) provider response is accepted as an official Meteoblue capture.
 This change does not extend the scientific window and does not modify the
 D+1 retrospective collection of ICON/GFS/ECMWF.
+
+
+
+## Coleta Meteoblue com início antecipado (17/11/2026)
+
+A rotina `meteoblue_early.py` mantém a janela original de ±30 minutos e os alvos
+nominais de 24/48/72 horas. Os novos disparos do GitHub são em H−73 minutos
+(principal) e H−53 minutos (reserva), fora dos minutos cheios. Para 09h BRT:
+07h47 e 08h07. Para 12h: 10h47 e 11h07. Para 15h: 13h47 e 14h07. Para 18h:
+16h47 e 17h07. O processo iniciado cedo aguarda até H−30 sem consultar a API.
+Se iniciar atrasado dentro da janela, consulta imediatamente. Se o pacote
+permanecer parcial, publica os dados e aguarda cinco minutos antes da próxima
+tentativa, limitada ao fechamento H+30. A conclusão exige um pacote validado
+com 72 valores (seis estações × três alvos × quatro indicadores) e confirmação
+do envio ao repositório. A janela de aquisição original nunca é ampliada.
+
+### Duplicidade e rastreabilidade
+
+- Principal e reserva usam o mesmo grupo de concorrência por hora nominal,
+  sem cancelar uma execução ativa. A reserva faz checkout atualizado ao iniciar.
+- Antes de consultar, a rotina atualiza o repositório e procura uma captura
+  Meteoblue completa para a mesma data e referência, nas coordenadas vigentes.
+  Se encontrar, encerra sem nova consulta. Uma captura parcial não bloqueia a reserva.
+- O coletor repete a verificação imediatamente antes de consultar. Os snapshots
+  antecipados usam nomes com microssegundos para evitar sobrescrita entre rotinas.
+- A rotina anterior permanece como backup, podendo produzir outra captura bruta.
+  A seleção em `compare_forecasts.forecast_archives` escolhe somente um frame
+  Meteoblue completo por referência, independentemente da cobertura Open-Meteo:
+  menor distância ao horário nominal, depois horário de consulta e nome do arquivo.
+  Essa escolha preserva um frame completo, sem combinar pacotes de tentativas diferentes.
+  A chave estação × modelo × alvo × indicador aparece uma única vez na série.
+- Cada linha selecionada guarda o arquivo e o horário de consulta correspondentes.
+  Capturas brutas repetidas permanecem exclusivamente como trilha de auditoria.
+- Cada tentativa publica os arquivos antes de declarar sucesso. Se o envio falhar
+  após as repetições, o workflow tenta preservar os dados como artefato por 30 dias.
+  Isso não é uma garantia contra falha abrupta do runner antes do upload.
+
+O agendamento continua sujeito a atraso ou descarte no GitHub. A antecipação e
+as tentativas locais reduzem essa exposição, sem oferecer garantia de pontualidade.
+ICON/GFS/ECMWF mantêm a recuperação D+1. A rotina anterior de coleta e os actuals
+permanecem ativos. Este workflow não envia notificações neste chat.

@@ -1,0 +1,85 @@
+name: Early Meteoblue collection
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'meteoblue_early.py'
+      - 'test_meteoblue_early.py'
+      - 'collect.py'
+      - '.github/workflows/meteoblue_early.yml'
+  schedule:
+    # Brasilia: principal H-73 min, reserve H-53 min. UTC = BRT+3.
+    - cron: '47 10 * * *'
+    - cron: '7 11 * * *'
+    - cron: '47 13 * * *'
+    - cron: '7 14 * * *'
+    - cron: '47 16 * * *'
+    - cron: '7 17 * * *'
+    - cron: '47 19 * * *'
+    - cron: '7 20 * * *'
+  workflow_dispatch:
+    inputs:
+      slot_hour:
+        description: Nominal reference hour in Brasilia
+        type: choice
+        options: ['9', '12', '15', '18']
+        required: true
+permissions:
+  contents: write
+  actions: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest -q test_forecast_retries test_meteoblue_early
+  collect:
+    if: github.event_name != 'push'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    # Main and reserve for one nominal hour cannot query simultaneously.
+    # Other slots and the existing workflow are not blocked by the early wait.
+    concurrency:
+      group: meteoblue-early-${{ (github.event.schedule == '47 10 * * *' || github.event.schedule == '7 11 * * *') && '9' || (github.event.schedule == '47 13 * * *' || github.event.schedule == '7 14 * * *') && '12' || (github.event.schedule == '47 16 * * *' || github.event.schedule == '7 17 * * *') && '15' || (github.event.schedule == '47 19 * * *' || github.event.schedule == '7 20 * * *') && '18' || inputs.slot_hour }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record workflow creation time
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          created=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
+          echo "GITHUB_RUN_CREATED_AT=$created" >> "$GITHUB_ENV"
+      - name: Wait for window and collect with internal retries
+        env:
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          MANUAL_SLOT_HOUR: ${{ inputs.slot_hour }}
+        run: |
+          if [ -n "$MANUAL_SLOT_HOUR" ]; then
+            python meteoblue_early.py --slot-hour "$MANUAL_SLOT_HOUR"
+          else
+            python meteoblue_early.py
+          fi
+      - name: Preserve data if publishing or runner execution fails
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@v4
+        with:
+          name: early-meteoblue-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data/20*/20*/*.json
+            data/collection_checkpoints/
+            data/collection_diagnostics/
+            data/early_collection_diagnostics/
+          retention-days: 30
+          if-no-files-found: warn
