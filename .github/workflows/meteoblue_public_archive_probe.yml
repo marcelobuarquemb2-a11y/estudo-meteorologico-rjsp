@@ -1,0 +1,125 @@
+name: Meteoblue public forecast cache and archive probe
+'on':
+  push:
+    branches:
+      - diagnostic/meteoblue-run-selector-20261117
+    paths:
+      - '.github/workflows/meteoblue_public_archive_probe.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect public forecast delivery and public web archive snapshots
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          
+          TZ=ZoneInfo("America/Sao_Paulo")
+          OUT=Path("diagnostic-results")
+          OUT.mkdir(exist_ok=True)
+          BASE="https://www.meteoblue.com/en/weather/week/paraty_brazil_3455036"
+          report={"purpose":"public_forecast_cache_and_web_archive_probe",
+                  "started_at_brt":dt.datetime.now(TZ).isoformat(),"requests":[]}
+          
+          def scrub(text):
+              text=re.sub(r'([?&](?:apikey|apiKey|sig|token)=)[^&"\'<>\s]+',r'\1[REDACTED]',text)
+              text=re.sub(r'("(?:apikey|apiKey|accessToken)"\s*:\s*")[^"]+',r'\1[REDACTED]',text)
+              return text
+          
+          def get(name,url,timeout=18):
+              row={"name":name,"url":scrub(url),"queried_at_brt":dt.datetime.now(TZ).isoformat()}
+              text=None
+              try:
+                  req=urllib.request.Request(url,headers={"User-Agent":"RJSP-Weather-Archive-Research/1.0"})
+                  with urllib.request.urlopen(req,timeout=timeout) as r:
+                      row["http_status"]=r.status
+                      row["content_type"]=r.headers.get("Content-Type")
+                      row["date_header"]=r.headers.get("Date")
+                      row["last_modified"]=r.headers.get("Last-Modified")
+                      row["final_url"]=scrub(r.url)
+                      body=r.read(5000000)
+                  text=scrub(body.decode("utf-8","replace"))
+                  row["bytes"]=len(body)
+                  (OUT/(name+".txt")).write_text(text)
+                  try:
+                      obj=json.loads(text)
+                      row["json_type"]=type(obj).__name__
+                      if isinstance(obj,dict):
+                          row["json"]=obj
+                      elif isinstance(obj,list):
+                          row["json_count"]=len(obj)
+                          row["json_preview"]=obj[:10]
+                  except (ValueError,TypeError):
+                      pass
+              except urllib.error.HTTPError as e:
+                  row["http_status"]=e.code
+                  row["error"]=scrub(e.read().decode("utf-8","replace"))[:600]
+              except Exception as e:
+                  row["error_type"]=type(e).__name__
+                  row["error"]=scrub(str(e))[:400]
+              report["requests"].append(row)
+              return row,text
+          
+          row,html=get("public_week",BASE)
+          if html:
+              row["modelrun_markers"]=[]
+              for pattern in ["modelrun","modelRun","lastModelRun","meteogramData","dataUrl","forecastData"]:
+                  matches=list(re.finditer(re.escape(pattern),html))
+                  for m in matches[:4]:
+                      row["modelrun_markers"].append({"term":pattern,"snippet":html[max(0,m.start()-80):m.end()+160]})
+              row["json_assignments"]=[]
+              decoder=json.JSONDecoder()
+              for m in re.finditer(r"(?:var|const|let)\s+([A-Za-z_$][\w$]*)\s*=\s*([\[{])",html):
+                  try:
+                      obj,end=decoder.raw_decode(html[m.start(2):])
+                  except (ValueError,TypeError):
+                      continue
+                  row["json_assignments"].append({"name":m.group(1),"type":type(obj).__name__,
+                      "keys":list(obj)[:40] if isinstance(obj,dict) else None,
+                      "length":len(obj) if hasattr(obj,"__len__") else None})
+              scripts=[urllib.parse.urljoin(BASE,s) for s in re.findall(r'<script[^>]+src=["\']([^"\']+)',html,re.I)]
+              first=[s for s in scripts if urllib.parse.urlparse(s).hostname in ("www.meteoblue.com","static.meteoblue.com")]
+              first.sort(key=lambda s:0 if re.search(r"main|forecast|meteogram|weather",s,re.I) else 1)
+              row["first_party_scripts"]=[scrub(s) for s in first[:20]]
+              for i,src in enumerate(first[:2]):
+                  jsrow,js=get("public_script_"+str(i),src)
+                  if js:
+                      jsrow["relevant_markers"]=[]
+                      for pat in ["lastModelRun","modelrun","meteogramData","forecastData","/packages/","/server/","/cache/"]:
+                          for m in list(re.finditer(re.escape(pat),js))[:3]:
+                              jsrow["relevant_markers"].append({"term":pat,"snippet":js[max(0,m.start()-60):m.end()+160]})
+              get("public_week_date_selector",BASE+"?date=2026-11-16")
+              get("public_week_run_selector",BASE+"?modelrun=202611161800")
+          
+          get("wayback_nearest",
+              "https://archive.org/wayback/available?"+urllib.parse.urlencode({"url":BASE,"timestamp":"20261116180000"}))
+          get("wayback_exact_day",
+              "https://web.archive.org/cdx/search/cdx?"+urllib.parse.urlencode({
+                  "url":"www.meteoblue.com/*paraty*","matchType":"domain","from":"20261116","to":"20261116",
+                  "output":"json","filter":"statuscode:200","fl":"timestamp,original,statuscode,mimetype",
+                  "limit":50,"collapse":"urlkey"}))
+          get("commoncrawl_collections","https://index.commoncrawl.org/collinfo.json")
+          report["finished_at_brt"]=dt.datetime.now(TZ).isoformat()
+          (OUT/"public_archive_probe_20261117.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("PUBLIC_ARCHIVE_REPORT_JSON="+json.dumps(report,ensure_ascii=False),flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meteoblue-public-archive-20261117
+          path: diagnostic-results/
+          retention-days: 30
