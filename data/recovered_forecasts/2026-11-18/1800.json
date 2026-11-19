@@ -60,6 +60,29 @@
       "snapshot_differences": 0,
       "snapshot_difference_details": [],
       "original_snapshot_file": "data/2026-11/2026-11-18/182902.json"
+    },
+    "ECMWF": {
+      "retrieved_at_local": "2026-11-19T12:37:13.158143-03:00",
+      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
+      "requests": [
+        {
+          "run_utc": "2026-11-18T12:00",
+          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ecmwf_ifs&run=2026-11-18T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+          "values_present": 72,
+          "snapshot_matches": 72,
+          "snapshot_compared": 72,
+          "selection_accepted": true,
+          "snapshot_difference_details": []
+        }
+      ],
+      "errors": [],
+      "selection_accepted": true,
+      "selection_basis": "snapshot_correspondence",
+      "snapshot_matches": 72,
+      "snapshot_compared": 72,
+      "snapshot_differences": 0,
+      "snapshot_difference_details": [],
+      "original_snapshot_file": "data/2026-11/2026-11-18/182902.json"
     }
   },
   "station_results": {
@@ -75,6 +98,10 @@
         "GFS": [
           -23.254143,
           -44.648438
+        ],
+        "ECMWF": [
+          -23.233744,
+          -44.71698
         ]
       },
       "forecasts": [
@@ -188,11 +215,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 5,
+            "mean_kt": 1.2,
+            "gust_kt": 5.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -202,11 +232,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 81,
+            "mean_kt": 1.2,
+            "gust_kt": 11.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -216,11 +249,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 53,
+            "mean_kt": 1.5,
+            "gust_kt": 5.6,
+            "precip_mm": 0.1
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     },
@@ -236,6 +272,10 @@
         "GFS": [
           -23.019844,
           -44.414062
+        ],
+        "ECMWF": [
+          -22.952549,
+          -44.342377
         ]
       },
       "forecasts": [
@@ -349,11 +389,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 240,
+            "mean_kt": 1.9,
+            "gust_kt": 8.6,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -363,11 +406,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 253,
+            "mean_kt": 2.6,
+            "gust_kt": 13.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -377,11 +423,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 308,
+            "mean_kt": 1.6,
+            "gust_kt": 7.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     },
@@ -397,6 +446,10 @@
         "GFS": [
           -23.019844,
           -43.59375
+        ],
+        "ECMWF": [
+          -23.022848,
+          -43.542328
         ]
       },
       "forecasts": [
@@ -510,11 +563,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 172,
+            "mean_kt": 2.2,
+            "gust_kt": 6.4,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -524,11 +580,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 194,
+            "mean_kt": 2.4,
+            "gust_kt": 11.7,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -538,11 +597,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 117,
+            "mean_kt": 4.5,
+            "gust_kt": 11.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     },
@@ -558,6 +620,10 @@
         "GFS": [
           -22.902695,
           -43.242188
+        ],
+        "ECMWF": [
+          -22.952549,
+          -43.215027
         ]
       },
       "forecasts": [
@@ -671,11 +737,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 173,
+            "mean_kt": 2.4,
+            "gust_kt": 7.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -685,11 +754,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 203,
+            "mean_kt": 3.5,
+            "gust_kt": 12.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -699,11 +771,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 150,
+            "mean_kt": 3.3,
+            "gust_kt": 12.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     },
@@ -719,6 +794,10 @@
         "GFS": [
           -22.902695,
           -43.242188
+        ],
+        "ECMWF": [
+          -23.093145,
+          -43.117157
         ]
       },
       "forecasts": [
@@ -832,11 +911,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 203,
+            "mean_kt": 2.7,
+            "gust_kt": 3.7,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -846,11 +928,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 178,
+            "mean_kt": 2.5,
+            "gust_kt": 5.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -860,11 +945,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 109,
+            "mean_kt": 3.9,
+            "gust_kt": 8.0,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     },
@@ -880,6 +968,10 @@
         "GFS": [
           -22.902695,
           -43.242188
+        ],
+        "ECMWF": [
+          -22.952549,
+          -43.215027
         ]
       },
       "forecasts": [
@@ -993,11 +1085,14 @@
           "target_local": "2026-11-19T18:00",
           "valid_at_local": "2026-11-19T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 173,
+            "mean_kt": 2.4,
+            "gust_kt": 7.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -1007,11 +1102,14 @@
           "target_local": "2026-11-20T18:00",
           "valid_at_local": "2026-11-20T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 203,
+            "mean_kt": 3.5,
+            "gust_kt": 12.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ECMWF",
@@ -1021,14 +1119,17 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 150,
+            "mean_kt": 3.3,
+            "gust_kt": 12.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-18T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
         }
       ]
     }
   },
-  "last_retrieved_at_local": "2026-11-19T10:04:08.774455-03:00"
+  "last_retrieved_at_local": "2026-11-19T12:37:13.158143-03:00"
 }
