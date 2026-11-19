@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T15:10:17.717066-03:00",
+  "generated_at": "2026-11-19T15:28:19.073159-03:00",
   "purpose": "recovery-aware available pairs with original vs inferred vintages kept separate",
   "baseline_status_unchanged": "data/comparisons/status.json",
   "rounds_original_publication_verified_for_missing_slots": false,
@@ -32557,9 +32557,9 @@
       "source_archive": "data/recovered_forecasts/2026-11-16/1500.json",
       "counts": {
         "expected_pairs": 216,
-        "available_pairs": 138,
-        "eligible_pairs": 138,
-        "pair_source_original_capture": 138,
+        "available_pairs": 210,
+        "eligible_pairs": 210,
+        "pair_source_original_capture": 210,
         "forecast_source_original_capture": 216
       },
       "pairs": [
@@ -34730,13 +34730,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 97,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34745,13 +34745,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34760,13 +34760,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 2.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34775,13 +34775,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34790,13 +34790,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 117,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34805,13 +34805,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34820,13 +34820,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 13.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34835,13 +34835,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34850,13 +34850,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 51,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34865,13 +34865,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34880,13 +34880,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 11.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -34895,13 +34895,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34910,13 +34910,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 191,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34925,13 +34925,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34940,13 +34940,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 1.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34955,13 +34955,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34970,13 +34970,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 215,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -34985,13 +34985,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35000,13 +35000,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 9.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35015,13 +35015,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35030,13 +35030,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 213,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35045,13 +35045,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35060,13 +35060,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 16.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -35075,13 +35075,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35090,13 +35090,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 94,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35105,13 +35105,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35120,13 +35120,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 7.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35135,13 +35135,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35150,13 +35150,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 165,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35165,13 +35165,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35180,13 +35180,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 13.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35195,13 +35195,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35210,13 +35210,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 130,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35225,13 +35225,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35240,13 +35240,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 15.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -35255,13 +35255,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35270,13 +35270,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 108,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35285,13 +35285,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35300,13 +35300,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35315,13 +35315,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35330,13 +35330,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 123,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35345,13 +35345,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35360,13 +35360,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 18.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35375,13 +35375,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35390,13 +35390,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 138,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35405,13 +35405,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35420,13 +35420,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 17.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -35435,13 +35435,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35450,13 +35450,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 108,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35465,13 +35465,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35480,13 +35480,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 6.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35495,13 +35495,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35510,13 +35510,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 103,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35525,13 +35525,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 10.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35540,13 +35540,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 14.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35555,13 +35555,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35570,13 +35570,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 117,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35585,13 +35585,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 9.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35600,13 +35600,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 11.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -35615,13 +35615,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35630,13 +35630,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 108,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35645,13 +35645,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35660,13 +35660,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35675,13 +35675,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35690,13 +35690,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 123,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35705,13 +35705,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35720,13 +35720,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 18.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35735,13 +35735,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35750,13 +35750,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 138,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35765,13 +35765,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35780,13 +35780,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 17.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -35795,13 +35795,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-16/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         }
       ]
     },
@@ -42333,9 +42333,9 @@
       "source_archive": "data/recovered_forecasts/2026-11-17/1500.json",
       "counts": {
         "expected_pairs": 144,
-        "available_pairs": 72,
-        "eligible_pairs": 72,
-        "pair_source_original_capture": 72,
+        "available_pairs": 144,
+        "eligible_pairs": 144,
+        "pair_source_original_capture": 144,
         "forecast_source_original_capture": 144
       },
       "pairs": [
@@ -43426,13 +43426,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 76,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43441,13 +43441,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43456,13 +43456,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 3.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43471,13 +43471,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43486,13 +43486,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 115,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43501,13 +43501,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43516,13 +43516,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43531,13 +43531,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43546,13 +43546,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 48,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43561,13 +43561,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43576,13 +43576,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -43591,13 +43591,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43606,13 +43606,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 169,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43621,13 +43621,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43636,13 +43636,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 4.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43651,13 +43651,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43666,13 +43666,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 222,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43681,13 +43681,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43696,13 +43696,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43711,13 +43711,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43726,13 +43726,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 225,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43741,13 +43741,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43756,13 +43756,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 11.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -43771,13 +43771,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43786,13 +43786,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 185,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43801,13 +43801,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43816,13 +43816,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 7.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43831,13 +43831,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43846,13 +43846,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 165,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43861,13 +43861,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43876,13 +43876,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 13.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43891,13 +43891,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43906,13 +43906,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 113,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43921,13 +43921,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 9.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43936,13 +43936,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 22.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -43951,13 +43951,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -43966,13 +43966,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 194,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -43981,13 +43981,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 7.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -43996,13 +43996,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44011,13 +44011,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44026,13 +44026,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 144,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44041,13 +44041,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44056,13 +44056,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44071,13 +44071,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44086,13 +44086,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 111,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44101,13 +44101,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 7.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44116,13 +44116,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 20.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -44131,13 +44131,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44146,13 +44146,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 194,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44161,13 +44161,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 7.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44176,13 +44176,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 4.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44191,13 +44191,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44206,13 +44206,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 111,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44221,13 +44221,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44236,13 +44236,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 10.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44251,13 +44251,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44266,13 +44266,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 99,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44281,13 +44281,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 14.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44296,13 +44296,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 17.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -44311,13 +44311,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44326,13 +44326,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 194,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44341,13 +44341,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 7.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44356,13 +44356,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44371,13 +44371,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44386,13 +44386,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 144,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44401,13 +44401,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44416,13 +44416,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44431,13 +44431,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44446,13 +44446,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 111,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44461,13 +44461,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 7.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44476,13 +44476,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 20.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -44491,13 +44491,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-17/152533.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         }
       ]
     },
@@ -47789,9 +47789,9 @@
       "source_archive": "data/recovered_forecasts/2026-11-18/1500.json",
       "counts": {
         "expected_pairs": 72,
-        "available_pairs": 0,
-        "eligible_pairs": 0,
-        "pair_source_original_capture": 0,
+        "available_pairs": 72,
+        "eligible_pairs": 72,
+        "pair_source_original_capture": 72,
         "forecast_source_original_capture": 72
       },
       "pairs": [
@@ -47802,13 +47802,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 93,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47817,13 +47817,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47832,13 +47832,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 2.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47847,13 +47847,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47862,13 +47862,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 117,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47877,13 +47877,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47892,13 +47892,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 13.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47907,13 +47907,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47922,13 +47922,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 53,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 80.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47937,13 +47937,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 2.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 5.832,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47952,13 +47952,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 8.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 12.829,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a619_paraty",
@@ -47967,13 +47967,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -47982,13 +47982,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 193,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -47997,13 +47997,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48012,13 +48012,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 4.3,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48027,13 +48027,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48042,13 +48042,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 193,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48057,13 +48057,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48072,13 +48072,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 7.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48087,13 +48087,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48102,13 +48102,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 246,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 278.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48117,13 +48117,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 3.305,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48132,13 +48132,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.942,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a628_angra",
@@ -48147,13 +48147,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48162,13 +48162,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 164,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48177,13 +48177,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 8.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48192,13 +48192,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 5.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48207,13 +48207,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48222,13 +48222,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 162,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48237,13 +48237,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 5.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48252,13 +48252,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48267,13 +48267,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48282,13 +48282,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 136,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48297,13 +48297,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 7.581,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48312,13 +48312,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 17.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 11.469,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a602_marambaia",
@@ -48327,13 +48327,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48342,13 +48342,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 146,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48357,13 +48357,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48372,13 +48372,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 3.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48387,13 +48387,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48402,13 +48402,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 145,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48417,13 +48417,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48432,13 +48432,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48447,13 +48447,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48462,13 +48462,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 130,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 167.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48477,13 +48477,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 4.86,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48492,13 +48492,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 18.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.359,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "inmet_a652_copacabana",
@@ -48507,13 +48507,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48522,13 +48522,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 146,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48537,13 +48537,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48552,13 +48552,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 6.2,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48567,13 +48567,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48582,13 +48582,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 100,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48597,13 +48597,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48612,13 +48612,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 9.5,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48627,13 +48627,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48642,13 +48642,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 110,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 155,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48657,13 +48657,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 12.6,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 1.3,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48672,13 +48672,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 15.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 8.92,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_rasa",
@@ -48687,13 +48687,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48702,13 +48702,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 146,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48717,13 +48717,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 4.9,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48732,13 +48732,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 3.1,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48747,13 +48747,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48762,13 +48762,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 145,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48777,13 +48777,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 3.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48792,13 +48792,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 12.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48807,13 +48807,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.4,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48822,13 +48822,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "direction_deg",
           "forecast": 130,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 173,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48837,13 +48837,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "mean_kt",
           "forecast": 6.8,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 21.07,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48852,13 +48852,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "gust_kt",
           "forecast": 18.7,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 26.22,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         },
         {
           "station_id": "ilha_fiscal",
@@ -48867,13 +48867,13 @@
           "target_local": "2026-11-19T15:00:00-03:00",
           "variable": "precip_mm",
           "forecast": 0.0,
-          "actual": null,
-          "pair_available": false,
-          "eligible_as_verified_pair": false,
+          "actual": 0.0,
+          "pair_available": true,
+          "eligible_as_verified_pair": true,
           "forecast_vintage_class": "original_capture",
           "model_run_utc": null,
           "forecast_source": "data/2026-11/2026-11-18/152252.json",
-          "observation_source": null
+          "observation_source": "data/observations/reports/2026-11-19/152812317701_20261119_1500.json"
         }
       ]
     },
@@ -48887,13 +48887,13 @@
   ],
   "summary": {
     "expected_pairs": 3240,
-    "available_pairs": 2922,
-    "eligible_pairs": 1668,
+    "available_pairs": 3138,
+    "eligible_pairs": 1884,
     "pair_source_recovered_inferred": 1254,
     "forecast_source_recovered_inferred": 1296,
     "pair_source_recovered_snapshot_matched": 72,
     "forecast_source_recovered_snapshot_matched": 72,
-    "pair_source_original_capture": 1596,
+    "pair_source_original_capture": 1812,
     "forecast_source_original_capture": 1872
   },
   "unreadable_archives": []
