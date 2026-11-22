@@ -1,0 +1,242 @@
+{
+  "acquired_at_brt": "2026-11-22T12:24:51.757075-03:00",
+  "target_local": "2026-11-22T12:00:00-03:00",
+  "scheduled_cron": "40,50 14 * * *",
+  "nominal_refresh_attempt": true,
+  "acquisition_phase": "nominal_refresh",
+  "target_measurement_delayed_by_minutes": 24.9,
+  "target_utc": "2026-11-22T15:00:00+00:00",
+  "real_observations_only": true,
+  "series_start": "2026-11-07T15:00:00-03:00",
+  "stations": {
+    "inmet_a619_paraty": {
+      "station_name": "Paraty",
+      "source": "INMET WIS2 SYNOP",
+      "source_metadata": {
+        "provider": "inmet_wis2",
+        "station_code": "A619",
+        "wigos": "0-76-0-3303807000000141"
+      },
+      "lat": -23.2236111,
+      "lon": -44.72694443,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 72.0,
+        "mean_kt": 3.888,
+        "gust_kt": 9.525,
+        "precip_mm": 0.0
+      },
+      "direction_octant": "E",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-22T14:30:00Z/2026-11-22T15:24:51Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/inmet-wis2.json",
+          "source_response_sha256": "faafa29045a5e3c2b0dbe21251d02051db33c31b8452f84d33c252edd6ce7b35",
+          "archived_records_sha256": "8241ccec673bce7a522612c83d7a07e36f6cdf4db813e1c0409390c61867c023",
+          "features": 155
+        }
+      ],
+      "intervals_utc": {
+        "direction_deg": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "mean_kt": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "gust_kt": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z",
+        "precip_mm": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z"
+      },
+      "missing_five_minute_slots": null,
+      "errors": []
+    },
+    "inmet_a628_angra": {
+      "station_name": "Angra dos Reis",
+      "source": "INMET WIS2 SYNOP",
+      "source_metadata": {
+        "provider": "inmet_wis2",
+        "station_code": "A628",
+        "wigos": "0-76-0-3300100000000555"
+      },
+      "lat": -22.97555554,
+      "lon": -44.30333333,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 193.0,
+        "mean_kt": 3.11,
+        "gust_kt": 11.274,
+        "precip_mm": 0.0
+      },
+      "direction_octant": "S",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-22T14:30:00Z/2026-11-22T15:24:51Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/inmet-wis2.json",
+          "source_response_sha256": "faafa29045a5e3c2b0dbe21251d02051db33c31b8452f84d33c252edd6ce7b35",
+          "archived_records_sha256": "8241ccec673bce7a522612c83d7a07e36f6cdf4db813e1c0409390c61867c023",
+          "features": 155
+        }
+      ],
+      "intervals_utc": {
+        "direction_deg": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "mean_kt": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "gust_kt": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z",
+        "precip_mm": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z"
+      },
+      "missing_five_minute_slots": null,
+      "errors": []
+    },
+    "inmet_a602_marambaia": {
+      "station_name": "Marambaia",
+      "source": "INMET WIS2 SYNOP",
+      "source_metadata": {
+        "provider": "inmet_wis2",
+        "station_code": "A602",
+        "wigos": "0-76-0-3304557000000024"
+      },
+      "lat": -23.05027777,
+      "lon": -43.59555555,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 143.0,
+        "mean_kt": 12.829,
+        "gust_kt": 15.551,
+        "precip_mm": 0.0
+      },
+      "direction_octant": "SE",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-22T14:30:00Z/2026-11-22T15:24:51Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/inmet-wis2.json",
+          "source_response_sha256": "faafa29045a5e3c2b0dbe21251d02051db33c31b8452f84d33c252edd6ce7b35",
+          "archived_records_sha256": "8241ccec673bce7a522612c83d7a07e36f6cdf4db813e1c0409390c61867c023",
+          "features": 155
+        }
+      ],
+      "intervals_utc": {
+        "direction_deg": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "mean_kt": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "gust_kt": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z",
+        "precip_mm": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z"
+      },
+      "missing_five_minute_slots": null,
+      "errors": []
+    },
+    "inmet_a652_copacabana": {
+      "station_name": "Forte de Copacabana",
+      "source": "INMET WIS2 SYNOP",
+      "source_metadata": {
+        "provider": "inmet_wis2",
+        "station_code": "A652",
+        "wigos": "0-76-0-3304557000000187"
+      },
+      "lat": -22.98833333,
+      "lon": -43.19055555,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 145.0,
+        "mean_kt": 6.609,
+        "gust_kt": 9.525,
+        "precip_mm": 0.0
+      },
+      "direction_octant": "SE",
+      "requests": [
+        {
+          "url": "https://wis2bra.inmet.gov.br/oapi/collections/urn:wmo:md:br-inmet:synop/items?f=json&bbox=-44.80,-23.30,-42.90,-22.86&datetime=2026-11-22T14:30:00Z/2026-11-22T15:24:51Z&limit=5000",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/inmet-wis2.json",
+          "source_response_sha256": "faafa29045a5e3c2b0dbe21251d02051db33c31b8452f84d33c252edd6ce7b35",
+          "archived_records_sha256": "8241ccec673bce7a522612c83d7a07e36f6cdf4db813e1c0409390c61867c023",
+          "features": 155
+        }
+      ],
+      "intervals_utc": {
+        "direction_deg": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "mean_kt": "2026-11-22T14:50:00Z/2026-11-22T15:00:00Z",
+        "gust_kt": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z",
+        "precip_mm": "2026-11-22T14:00:00Z/2026-11-22T15:00:00Z"
+      },
+      "missing_five_minute_slots": null,
+      "errors": []
+    },
+    "ilha_rasa": {
+      "station_name": "Ilha Rasa",
+      "source": "PortosRio SMA",
+      "source_metadata": {
+        "provider": "portosrio_sma",
+        "station_id": 6,
+        "instrument": "GMX551"
+      },
+      "lat": -23.0634,
+      "lon": -43.146167,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 139,
+        "mean_kt": 2.74,
+        "precip_mm": 0.0,
+        "gust_kt": 7.17
+      },
+      "direction_octant": "SE",
+      "requests": [
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=6&date_start=2026-11-22+10:30&date_end=2026-11-22+12:25",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/portosrio-ilha_rasa-2026-11-22.json",
+          "source_response_sha256": "6b5157ce1142ef7b5b6555cb8db79b69d358252765b1f3813989de05e598c675",
+          "archived_records_sha256": "7f1b9f7466c41838dfaf96c3580f7757ecc81565bf4342570142440d543e664d"
+        }
+      ],
+      "intervals_utc": null,
+      "missing_five_minute_slots": {
+        "precip_mm": [],
+        "gust_kt": []
+      },
+      "errors": []
+    },
+    "ilha_fiscal": {
+      "station_name": "Ilha Fiscal",
+      "source": "PortosRio SMA",
+      "source_metadata": {
+        "provider": "portosrio_sma",
+        "station_id": 7,
+        "instrument": "GMX600"
+      },
+      "lat": -22.896683,
+      "lon": -43.165933,
+      "status": "observation_available",
+      "observed_at_local": "2026-11-22T12:00:00-03:00",
+      "observation_offset_minutes": 0.0,
+      "observed": {
+        "direction_deg": 165,
+        "mean_kt": 16.39,
+        "precip_mm": 0.0,
+        "gust_kt": 20.06
+      },
+      "direction_octant": "S",
+      "requests": [
+        {
+          "url": "https://sma.portosrio.gov.br/api/ma/estacao/sismowater?id=7&date_start=2026-11-22+10:30&date_end=2026-11-22+12:25",
+          "http_status": 200,
+          "raw_path": "data/observations/raw/2026-11-22/122451757075_20261122_1200/portosrio-ilha_fiscal-2026-11-22.json",
+          "source_response_sha256": "0a125b5e60c7d9789903413120fea2f1780f50e03e8bb4cbb5dc87b6da99df28",
+          "archived_records_sha256": "b1bb11fbe013bc468ba3efaf9a1ae1e76d52d8e6cd5ddae582edcae914a639eb"
+        }
+      ],
+      "intervals_utc": null,
+      "missing_five_minute_slots": {
+        "precip_mm": [],
+        "gust_kt": []
+      },
+      "errors": []
+    }
+  },
+  "errors": []
+}
