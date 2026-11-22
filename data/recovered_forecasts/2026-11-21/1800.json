@@ -1,0 +1,1034 @@
+{
+  "record_type": "historical_forecast_recovery",
+  "nominal_issue_at_local": "2026-11-21T18:00:00-03:00",
+  "operational_collection": false,
+  "official_series_eligible": false,
+  "accepted_for_study": true,
+  "collection_method": "daily_retrospective",
+  "recovery_status": "daily_retrospective",
+  "historical_round_publication_verified": false,
+  "method": "Open-Meteo Single Runs API, model-specific historical run",
+  "run_selection_policy": "rjsp_calibrated_reference_cycles_v1",
+  "model_runs_utc": {
+    "ICON": "2026-11-21T12:00",
+    "GFS": "2026-11-21T12:00",
+    "ECMWF": "2026-11-21T12:00"
+  },
+  "model_acquisition": {
+    "GFS": {
+      "retrieved_at_local": "2026-11-22T09:45:59.997557-03:00",
+      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
+      "requests": [
+        {
+          "run_utc": "2026-11-21T12:00",
+          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-21T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+          "values_present": 72,
+          "snapshot_matches": 72,
+          "snapshot_compared": 72,
+          "selection_accepted": true,
+          "snapshot_difference_details": []
+        }
+      ],
+      "errors": [],
+      "selection_accepted": true,
+      "selection_basis": "snapshot_correspondence",
+      "snapshot_matches": 72,
+      "snapshot_compared": 72,
+      "snapshot_differences": 0,
+      "snapshot_difference_details": [],
+      "original_snapshot_file": "data/2026-11/2026-11-21/181733.json"
+    },
+    "ECMWF": {
+      "retrieved_at_local": "2026-11-22T09:45:59.997557-03:00",
+      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
+      "requests": [
+        {
+          "run_utc": "2026-11-21T12:00",
+          "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ecmwf_ifs&run=2026-11-21T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+          "values_present": 72,
+          "snapshot_matches": 72,
+          "snapshot_compared": 72,
+          "selection_accepted": true,
+          "snapshot_difference_details": []
+        }
+      ],
+      "errors": [],
+      "selection_accepted": true,
+      "selection_basis": "snapshot_correspondence",
+      "snapshot_matches": 72,
+      "snapshot_compared": 72,
+      "snapshot_differences": 0,
+      "snapshot_difference_details": [],
+      "original_snapshot_file": "data/2026-11/2026-11-21/181733.json"
+    }
+  },
+  "station_results": {
+    "inmet_a619_paraty": {
+      "name": "Paraty",
+      "lat": -23.2236111,
+      "lon": -44.72694443,
+      "grid_by_model": {
+        "GFS": [
+          -23.254143,
+          -44.648438
+        ],
+        "ECMWF": [
+          -23.233744,
+          -44.71698
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 100,
+            "mean_kt": 2.2,
+            "gust_kt": 4.3,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 50,
+            "mean_kt": 1.5,
+            "gust_kt": 1.7,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 67,
+            "mean_kt": 1.5,
+            "gust_kt": 2.9,
+            "precip_mm": 0.5
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 47,
+            "mean_kt": 2.0,
+            "gust_kt": 5.2,
+            "precip_mm": 0.1
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 32,
+            "mean_kt": 1.5,
+            "gust_kt": 5.4,
+            "precip_mm": 0.7
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 80,
+            "mean_kt": 2.8,
+            "gust_kt": 8.6,
+            "precip_mm": 2.8
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    },
+    "inmet_a628_angra": {
+      "name": "Angra dos Reis",
+      "lat": -22.97555554,
+      "lon": -44.30333333,
+      "grid_by_model": {
+        "GFS": [
+          -23.019844,
+          -44.414062
+        ],
+        "ECMWF": [
+          -22.952549,
+          -44.342377
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 222,
+            "mean_kt": 4.7,
+            "gust_kt": 3.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 212,
+            "mean_kt": 2.5,
+            "gust_kt": 2.7,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 194,
+            "mean_kt": 0.8,
+            "gust_kt": 3.9,
+            "precip_mm": 1.1
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 307,
+            "mean_kt": 1.9,
+            "gust_kt": 9.9,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 354,
+            "mean_kt": 1.0,
+            "gust_kt": 5.8,
+            "precip_mm": 0.3
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 235,
+            "mean_kt": 3.2,
+            "gust_kt": 11.5,
+            "precip_mm": 8.5
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    },
+    "inmet_a602_marambaia": {
+      "name": "Marambaia",
+      "lat": -23.05027777,
+      "lon": -43.59555555,
+      "grid_by_model": {
+        "GFS": [
+          -23.019844,
+          -43.59375
+        ],
+        "ECMWF": [
+          -23.022848,
+          -43.542328
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 94,
+            "mean_kt": 5.8,
+            "gust_kt": 9.9,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 148,
+            "mean_kt": 3.7,
+            "gust_kt": 3.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 104,
+            "mean_kt": 6.4,
+            "gust_kt": 9.7,
+            "precip_mm": 1.5
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 98,
+            "mean_kt": 7.3,
+            "gust_kt": 16.3,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 232,
+            "mean_kt": 8.2,
+            "gust_kt": 18.9,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 105,
+            "mean_kt": 6.3,
+            "gust_kt": 21.2,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    },
+    "inmet_a652_copacabana": {
+      "name": "Forte de Copacabana",
+      "lat": -22.98833333,
+      "lon": -43.19055555,
+      "grid_by_model": {
+        "GFS": [
+          -22.902695,
+          -43.242188
+        ],
+        "ECMWF": [
+          -22.952549,
+          -43.215027
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 141,
+            "mean_kt": 5.3,
+            "gust_kt": 9.7,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 155,
+            "mean_kt": 3.2,
+            "gust_kt": 5.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 144,
+            "mean_kt": 4.3,
+            "gust_kt": 6.6,
+            "precip_mm": 0.4
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 90,
+            "mean_kt": 6.3,
+            "gust_kt": 15.0,
+            "precip_mm": 1.4
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 236,
+            "mean_kt": 6.7,
+            "gust_kt": 21.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 116,
+            "mean_kt": 4.7,
+            "gust_kt": 14.6,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    },
+    "ilha_rasa": {
+      "name": "Ilha Rasa",
+      "lat": -23.0634,
+      "lon": -43.146167,
+      "grid_by_model": {
+        "GFS": [
+          -22.902695,
+          -43.242188
+        ],
+        "ECMWF": [
+          -23.093145,
+          -43.117157
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 141,
+            "mean_kt": 5.3,
+            "gust_kt": 12.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 155,
+            "mean_kt": 3.2,
+            "gust_kt": 3.9,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 144,
+            "mean_kt": 4.3,
+            "gust_kt": 13.2,
+            "precip_mm": 0.4
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 66,
+            "mean_kt": 13.7,
+            "gust_kt": 15.6,
+            "precip_mm": 0.6
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 239,
+            "mean_kt": 8.2,
+            "gust_kt": 11.1,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 98,
+            "mean_kt": 13.6,
+            "gust_kt": 17.1,
+            "precip_mm": 0.3
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    },
+    "ilha_fiscal": {
+      "name": "Ilha Fiscal",
+      "lat": -22.896683,
+      "lon": -43.165933,
+      "grid_by_model": {
+        "GFS": [
+          -22.902695,
+          -43.242188
+        ],
+        "ECMWF": [
+          -22.952549,
+          -43.215027
+        ]
+      },
+      "forecasts": [
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "ICON",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          }
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 141,
+            "mean_kt": 5.3,
+            "gust_kt": 9.7,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 155,
+            "mean_kt": 3.2,
+            "gust_kt": 5.2,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "GFS",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 144,
+            "mean_kt": 4.3,
+            "gust_kt": 6.6,
+            "precip_mm": 0.4
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 1,
+          "nominal_horizon_hours": 24,
+          "target_local": "2026-11-22T18:00",
+          "valid_at_local": "2026-11-22T18:00",
+          "values": {
+            "direction_deg": 90,
+            "mean_kt": 6.3,
+            "gust_kt": 15.0,
+            "precip_mm": 1.4
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 2,
+          "nominal_horizon_hours": 48,
+          "target_local": "2026-11-23T18:00",
+          "valid_at_local": "2026-11-23T18:00",
+          "values": {
+            "direction_deg": 236,
+            "mean_kt": 6.7,
+            "gust_kt": 21.8,
+            "precip_mm": 0.0
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        },
+        {
+          "model": "ECMWF",
+          "source": "Open-Meteo Single Runs historical",
+          "day_offset": 3,
+          "nominal_horizon_hours": 72,
+          "target_local": "2026-11-24T18:00",
+          "valid_at_local": "2026-11-24T18:00",
+          "values": {
+            "direction_deg": 116,
+            "mean_kt": 4.7,
+            "gust_kt": 14.6,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-21T12:00",
+          "provenance": "daily_retrospective",
+          "original_publication_at_slot_verified": false
+        }
+      ]
+    }
+  },
+  "last_retrieved_at_local": "2026-11-22T09:45:59.997557-03:00"
+}
