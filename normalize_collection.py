@@ -33,6 +33,7 @@ def nearest_time(times, target):
 
 
 def normalize_collection(result):
+    meteoblue_only = result.get("collection_scope") == "meteoblue_only"
     for sid,station in result["station_results"].items():
         if station["lat"] is None or station["lon"] is None:
             station["status"]="pending_verified_coordinates"
@@ -47,7 +48,8 @@ def normalize_collection(result):
         offset=None
         if all(x is not None for x in grid):
             offset=round(distance((station["lat"],station["lon"]),grid),3)
-        station["open_meteo_grid"]={"latitude":grid[0],"longitude":grid[1],"distance_km":offset}
+        if not meteoblue_only:
+            station["open_meteo_grid"]={"latitude":grid[0],"longitude":grid[1],"distance_km":offset}
         b=basic.get("data_1h",{})
         w=wind.get("data_3h",{})
         bu=basic.get("units",{})
@@ -66,8 +68,8 @@ def normalize_collection(result):
                 or nearest_time(basic_times, nominal)
                 or nearest_time(wind_times, nominal)
             )
-            target_ok &= open_valid is not None and meteoblue_valid in common_times
-            for name,suffix in MODELS.items():
+            target_ok &= (meteoblue_valid in common_times and (meteoblue_only or open_valid is not None))
+            for name,suffix in (() if meteoblue_only else MODELS.items()):
                 values={}
                 for field,base in FIELDS.items():
                     key=base+"_"+suffix
@@ -92,16 +94,18 @@ def normalize_collection(result):
             row["direction_octant"] = direction_octant(row["values"]["direction_deg"])
         station["forecasts"]=rows
         station["completeness"]={"present":sum(v is not None for r in rows for v in r["values"].values()),"expected":len(rows)*4}
-        time_ok=(om.get("timezone")=="America/Sao_Paulo" and om.get("utc_offset_seconds")==-10800
+        time_ok=((meteoblue_only or (om.get("timezone")=="America/Sao_Paulo" and om.get("utc_offset_seconds")==-10800))
                  and basic.get("metadata",{}).get("utc_timeoffset")==-3
                  and wind.get("metadata",{}).get("utc_timeoffset")==-3)
-        grid_ok=(offset is not None and offset<=30 and -24.5<grid[0]<-21 and -46<grid[1]<-42)
+        grid_ok=(None if meteoblue_only else
+                 (offset is not None and offset<=30 and -24.5<grid[0]<-21 and -46<grid[1]<-42))
         station["notation_audit"]={"timezone_ok":time_ok,"date_and_target_ok":target_ok,
-                                   "grid_sanity_ok":grid_ok,"passed":time_ok and target_ok and grid_ok}
+                                   "grid_sanity_ok":grid_ok,"passed":time_ok and target_ok and (meteoblue_only or grid_ok)}
         if not station["notation_audit"]["passed"]:
             station["errors"].append("Notation audit failed")
     result["collection_summary"]={
         "stations_total":len(result["station_results"]),
         "stations_with_coordinates":sum(s["lat"] is not None for s in result["station_results"].values()),
         "forecast_values_present":sum(s.get("completeness",{}).get("present",0) for s in result["station_results"].values()),
+        "forecast_values_expected":sum(s.get("completeness",{}).get("expected",0) for s in result["station_results"].values()),
         "notation_audits_passed":sum(s.get("notation_audit",{}).get("passed",False) for s in result["station_results"].values())}

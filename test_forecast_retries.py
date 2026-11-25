@@ -285,6 +285,10 @@ class ForecastRetryTests(unittest.TestCase):
         archived = json.loads(next(folder.glob("*.json")).read_text())
         self.assertTrue(collect.meteoblue_collection_complete(archived, self.issue, self.targets))
         self.assertFalse(collect.collection_complete(archived, self.issue, self.targets))
+        self.assertEqual(archived["collection_summary"]["forecast_values_expected"], 72)
+        self.assertEqual(archived["collection_summary"]["notation_audits_passed"], len(STATIONS))
+        self.assertTrue(all(row["model"].startswith("Meteoblue")
+                            for site in archived["station_results"].values() for row in site["forecasts"]))
         self.assertEqual(sum(
             collect.values_present(row["values"])
             for site in archived["station_results"].values()
