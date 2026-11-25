@@ -233,8 +233,6 @@ def select_group(issue, model, stations, original, existing, fetcher):
                 options.append((matches, present, run, data, differences))
             requests.append({"run_utc": run, "url": url, "values_present": present,
                              "snapshot_matches": matches, "snapshot_compared": len(reference),
-                        "snapshot_comparison_policy": SNAPSHOT_COMPARISON_POLICY,
-                        "snapshot_raw_differences": len(differences),
                              "snapshot_comparison_policy": SNAPSHOT_COMPARISON_POLICY,
                              "snapshot_raw_differences": len(differences),
                              "selection_accepted": accepted,
@@ -256,6 +254,8 @@ def select_group(issue, model, stations, original, existing, fetcher):
                         "selection_basis": "snapshot_correspondence" if reference else POLICY,
                         "snapshot_matches": matches, "snapshot_compared": len(reference),
                         "snapshot_differences": len(reference) - matches,
+                        "snapshot_comparison_policy": SNAPSHOT_COMPARISON_POLICY,
+                        "snapshot_raw_differences": len(differences),
                         "snapshot_difference_details": differences,
                         "original_snapshot_file": original[2] if original else None}
 
