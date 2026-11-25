@@ -83,8 +83,15 @@ preservados nas novas tentativas, usando a mesma rodada ao completar um conjunto
 Resultados: `data/recovered_forecasts/AAAA-MM-DD/HHMM.json`.
 Estado e tentativas: `data/daily_recovery/AAAA-MM-DD/status.json`.
 Os pares são atualizados em `data/comparisons/recovered_pairs_status.json`.
-As capturas originais são mantidas, e a coleta anterior continua em paralelo
-durante a validação desta ativação. Meteoblue e actuals mantêm seus agendamentos.
+As capturas originais são mantidas como evidência histórica. A partir da referência
+25/11/2026 15h BRT, ICON, GFS e ECMWF passam a operar exclusivamente em D+1;
+o coletor em tempo real consulta somente Meteoblue. As rotinas de Meteoblue e
+actuals mantêm seus agendamentos. Os três modelos usam a mesma validação, extração,
+controle de tentativas, armazenamento e deduplicação; somente os ciclos calibrados
+por modelo diferem. Para auditorias históricas anteriores à transição, a comparação
+usa igualdade numérica e normalização da precipitação para uma casa decimal,
+sem exceção por modelo; os valores brutos e as divergências são preservados.
+A aceitação anterior de arquivos já armazenados não é reescrita.
 
 Uma alteração do código no main executa uma primeira coleta real. Também é
 possível usar workflow_dispatch, informando opcionalmente a data de referência,
@@ -113,10 +120,9 @@ Fonte auditável: `data/recovery_candidates/openmeteo_retrospective_test_2026111
 ## Resilience of the existing GitHub Meteoblue collection (16/11/2026)
 
 The GitHub Actions schedule remains the active platform; no cloud migration is enabled.
-Meteoblue is queried **before** Open-Meteo to prevent unrelated provider timeouts
-from consuming the narrow forecast capture window. Meteoblue numerical coverage
-and on-window acquisition timestamps are evaluated independently, while original
-Open-Meteo collection continues in parallel during validation.
+Since the 25/11/2026 cutover, real-time acquisition queries **only Meteoblue**.
+Meteoblue numerical coverage and on-window acquisition timestamps are evaluated
+independently; Open-Meteo is acquired exclusively by the previous-day collector.
 
 Each provider response is saved atomically to a *local incremental checkpoint*.
 When the final original forecast snapshot is successfully written, this temporary
@@ -156,7 +162,7 @@ do envio ao repositório. A janela de aquisição original nunca é ampliada.
   Se encontrar, encerra sem nova consulta. Uma captura parcial não bloqueia a reserva.
 - O coletor repete a verificação imediatamente antes de consultar. Os snapshots
   antecipados usam nomes com microssegundos para evitar sobrescrita entre rotinas.
-- A rotina anterior permanece como backup, podendo produzir outra captura bruta.
+- A rotina anterior permanece como backup exclusivamente da Meteoblue, podendo produzir outra captura bruta.
   A seleção em `compare_forecasts.forecast_archives` escolhe somente um frame
   Meteoblue completo por referência, independentemente da cobertura Open-Meteo:
   menor distância ao horário nominal, depois horário de consulta e nome do arquivo.

@@ -248,6 +248,7 @@ def main():
         "explicit_push_capture": explicit_push,
         "nominal_refresh_attempt": now >= nominal_issue,
         "information_time_convention": "actual consultation time",
+        "collection_scope": "meteoblue_only",
         "targets_local": targets,
         "station_results": {},
         "note": "Raw forecasts only; no observations or skill scores",
@@ -273,7 +274,7 @@ def main():
             item["errors"].append("Coordinates not independently verified")
     checkpoint()
 
-    # Protect the time-sensitive Meteoblue observations from Open-Meteo timeouts.
+    # Only time-sensitive Meteoblue forecasts are acquired in this workflow.
     # Each source response is preserved before the next external request begins.
     for st in STATIONS:
         item=result["station_results"][st["id"]]
@@ -300,29 +301,8 @@ def main():
                 item["errors"].append("Meteoblue "+package+" "+type(e).__name__)
             checkpoint()
 
-    # The early worker only handles time-sensitive Meteoblue. The existing
-    # workflow and D+1 recovery retain their Open-Meteo paths.
-    # Keep the original Open-Meteo process running in parallel during validation.
-    # It is no longer allowed to delay the Meteoblue requests.
-    for st in (() if early_worker else STATIONS):
-        item=result["station_results"][st["id"]]
-        if item.get("status") or st["lat"] is None or st["lon"] is None:
-            continue
-        if official and not within_slot(dt.datetime.now(TZ), nominal_issue):
-            item["errors"].append("Open-Meteo skipped: capture window already closed")
-            checkpoint()
-            continue
-        params={"latitude":st["lat"],"longitude":st["lon"],"hourly":",".join(VARS),
-                "models":",".join(MODELS),"wind_speed_unit":"kn",
-                "timezone":"America/Sao_Paulo","forecast_days":5}
-        try:
-            raw=fetch("https://api.open-meteo.com/v1/forecast",params)
-            item["sources"]["open_meteo"]={
-                "retrieved_at":dt.datetime.now(dt.timezone.utc).isoformat(),
-                "raw":raw,"target_times":targets,"model_run":"not reported explicitly"}
-        except Exception as e:
-            item["errors"].append("Open-Meteo "+type(e).__name__)
-        checkpoint()
+    # ICON, GFS and ECMWF are collected exclusively by collect_previous_day.py.
+    # Both scheduled and early real-time workers query Meteoblue only.
     # Preserve raw API responses and generate normalized, audited forecast records.
     from normalize_collection import normalize_collection
     normalize_collection(result)

@@ -7,6 +7,7 @@ one attempt; GitHub schedules ten opportunities from 09:00 through 12:00 BRT.
 import argparse
 import json
 import math
+from decimal import Decimal, ROUND_HALF_UP
 import os
 from datetime import date, datetime, timedelta, timezone
 import urllib.parse
@@ -29,6 +30,8 @@ RUN_HOURS = {9: {"ICON": 6, "GFS": 6, "ECMWF": 0},
              18: {"ICON": 12, "GFS": 12, "ECMWF": 12}}
 MAX_ATTEMPTS = 10
 POLICY = "rjsp_calibrated_reference_cycles_v1"
+SNAPSHOT_COMPARISON_POLICY = "uniform_precip_1dp_v1"
+RETROSPECTIVE_ONLY_FROM = datetime(2026, 11, 25, 15, tzinfo=TZ)
 
 
 def numeric(value):
@@ -177,7 +180,23 @@ def snapshot_values(original, model, issue, stations):
     return values
 
 
+def snapshot_match(field, value, previous):
+    if not numeric(value) or previous is None:
+        return False
+    if abs(value - previous) < 1e-8:
+        return True
+    if field == "precip_mm":
+        quantum = Decimal("0.1")
+        return (Decimal(str(value)).quantize(quantum, rounding=ROUND_HALF_UP)
+                == Decimal(str(previous)).quantize(quantum, rounding=ROUND_HALF_UP))
+    return False
+
+
 def select_group(issue, model, stations, original, existing, fetcher):
+    # From the definitive D+1 cutover, no real-time snapshot is required or used
+    # to select the model run. Historical records remain available for audit.
+    if issue >= RETROSPECTIVE_ONLY_FROM:
+        original = None
     reference = snapshot_values(original, model, issue, stations)
     locked = existing.get("model_runs_utc", {}).get(model)
     has_previous = group_values(existing, model, issue, stations) > 0
@@ -202,17 +221,22 @@ def select_group(issue, model, stations, original, existing, fetcher):
                         present += int(valid_value(field, value))
                         previous = reference.get((sid, row["target_local"], field))
                         compared_present += int(numeric(value) and previous is not None)
-                        matches += int(numeric(value) and previous is not None and abs(value - previous) < 1e-8)
+                        matches += int(snapshot_match(field, value, previous))
                         if numeric(value) and previous is not None and abs(value - previous) >= 1e-8:
                             differences.append({"station_id": sid, "target_local": row["target_local"],
-                                                "variable": field, "snapshot": previous, "retrieved": value})
+                                                "variable": field, "snapshot": previous, "retrieved": value,
+                                                "matches_after_precision_normalization": snapshot_match(field, value, previous)})
             accepted = (not reference or has_previous or
                         (matches > 0 and (run == policy_run or compared_present == len(reference))
-                         and all(model == "GFS" and d["variable"] == "gust_kt" for d in differences)))
+                         and all(d["matches_after_precision_normalization"] for d in differences)))
             if accepted:
                 options.append((matches, present, run, data, differences))
             requests.append({"run_utc": run, "url": url, "values_present": present,
                              "snapshot_matches": matches, "snapshot_compared": len(reference),
+                        "snapshot_comparison_policy": SNAPSHOT_COMPARISON_POLICY,
+                        "snapshot_raw_differences": len(differences),
+                             "snapshot_comparison_policy": SNAPSHOT_COMPARISON_POLICY,
+                             "snapshot_raw_differences": len(differences),
                              "selection_accepted": accepted,
                              "snapshot_difference_details": differences})
             if accepted and present == len(stations) * len(HORIZON_HOURS) * len(FIELDS) and (
@@ -303,7 +327,9 @@ def collect_day(reference_date, *, root=ROOT, now=None, fetcher=fetch, originals
     if run_id and any(a.get("github_run_id") == run_id for a in report["attempts"]):
         return {**report, "_changed": False}
     unreadable = []
-    originals = forecast_archives(unreadable) if originals is None else originals
+    if originals is None:
+        originals = (forecast_archives(unreadable)
+                     if any(issue < RETROSPECTIVE_ONLY_FROM for issue in issues) else {})
     attempt = {"number": len(report["attempts"]) + 1, "started_at_local": now.isoformat(),
                "github_run_id": run_id, "groups": [], "unreadable_original_archives": unreadable}
     for issue, payload in archives.items():

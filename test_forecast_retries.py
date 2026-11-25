@@ -196,10 +196,10 @@ class ForecastRetryTests(unittest.TestCase):
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=11)
         with patch.object(collect, "fetch", side_effect=self.response) as fetch:
             collect.main()
-        self.assertEqual(fetch.call_count, len(STATIONS) * 3)
-        complete = collect.completed_capture(self.issue, self.targets)
+        self.assertEqual(fetch.call_count, len(STATIONS) * 2)
+        complete = collect.meteoblue_capture_state(self.issue, self.targets)[0]
         saved = json.loads(complete.read_text(encoding="utf-8"))
-        self.assertEqual(saved["collection_summary"]["forecast_values_present"], 288)
+        self.assertEqual(saved["collection_summary"]["forecast_values_present"], 72)
         self.assertEqual(first.read_bytes(), first_bytes)
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=21)
         with patch.object(collect, "fetch") as fetch:
@@ -214,7 +214,7 @@ class ForecastRetryTests(unittest.TestCase):
             FrozenDateTime.current = self.issue + dt.timedelta(minutes=minutes)
             with patch.object(collect, "fetch", side_effect=self.response) as fetch:
                 collect.main()
-            self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+            self.assertEqual(fetch.call_count, len(STATIONS) * 2)
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=10)
         with patch.object(collect, "fetch") as fetch:
             collect.main()
@@ -237,7 +237,7 @@ class ForecastRetryTests(unittest.TestCase):
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=12)
         with patch.object(collect, "fetch", side_effect=self.response) as fetch:
             collect.main()
-        self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+        self.assertEqual(fetch.call_count, len(STATIONS) * 2)
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=20)
         with patch.object(collect, "fetch") as fetch:
             collect.main()
@@ -247,7 +247,7 @@ class ForecastRetryTests(unittest.TestCase):
         FrozenDateTime.current = self.issue + dt.timedelta(minutes=30)
         with patch.object(collect, "fetch", side_effect=self.response) as fetch:
             collect.main()
-        self.assertEqual(fetch.call_count, len(STATIONS) * 3)
+        self.assertEqual(fetch.call_count, len(STATIONS) * 2)
 
     def test_deployment_does_not_make_unscheduled_source_calls(self):
         with patch.dict(collect.os.environ, {"GITHUB_EVENT_NAME": "push", "GITHUB_EVENT_SCHEDULE": ""}):
@@ -272,13 +272,15 @@ class ForecastRetryTests(unittest.TestCase):
         self.assertTrue(chosen[2].endswith("090000.json"))
 
 
-    def test_meteoblue_is_complete_when_open_meteo_fails(self):
+    def test_realtime_collects_only_meteoblue(self):
         def only_meteoblue(endpoint, params):
             if "open-meteo.com" in endpoint:
                 raise TimeoutError("unrelated upstream failure")
             return self.response(endpoint, params)
-        with patch.object(collect, "fetch", side_effect=only_meteoblue):
+        with patch.object(collect, "fetch", side_effect=only_meteoblue) as fetch:
             collect.main()
+        self.assertEqual(fetch.call_count, len(STATIONS) * 2)
+        self.assertTrue(all("meteoblue" in call.args[0] for call in fetch.call_args_list))
         folder = self.root / "data" / "2026-11" / "2026-11-11"
         archived = json.loads(next(folder.glob("*.json")).read_text())
         self.assertTrue(collect.meteoblue_collection_complete(archived, self.issue, self.targets))

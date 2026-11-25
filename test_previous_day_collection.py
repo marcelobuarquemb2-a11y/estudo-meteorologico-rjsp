@@ -215,7 +215,7 @@ class PreviousDayTests(unittest.TestCase):
         self.assertIsNone(selected)
         self.assertTrue(all(not r["selection_accepted"] for r in evidence["requests"]))
 
-    def test_only_the_documented_gfs_gust_difference_is_accepted(self):
+    def test_gust_difference_has_identical_historical_treatment_for_all_models(self):
         issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
         for model in ("GFS", "ICON", "ECMWF"):
             snapshot = daily.empty_archive(issue, STATIONS)
@@ -226,7 +226,46 @@ class PreviousDayTests(unittest.TestCase):
             original = (None, issue, "original.json", snapshot["station_results"])
             selected, _ = daily.select_group(issue, model, STATIONS, original,
                                              daily.empty_archive(issue, STATIONS), self.response)
-            self.assertEqual(selected is not None, model == "GFS")
+            self.assertIsNone(selected)
+
+    def test_precipitation_precision_is_normalized_equally_for_all_models(self):
+        issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
+        for model in daily.MODELS:
+            archive = daily.empty_archive(issue, STATIONS)
+            for station in archive["station_results"].values():
+                for row in station["forecasts"]:
+                    if row["model"] == model:
+                        row["values"] = {"direction_deg": 90, "mean_kt": 0, "gust_kt": 0, "precip_mm": 0.1}
+            original = (None, issue, "original.json", archive["station_results"])
+            def more_precision(params):
+                reports = self.response(params)
+                for report in reports:
+                    report["hourly"]["precipitation"] = [0.13] * len(report["hourly"]["time"])
+                return reports
+            selected, evidence = daily.select_group(issue, model, STATIONS, original,
+                                                    daily.empty_archive(issue, STATIONS), more_precision)
+            self.assertIsNotNone(selected)
+            self.assertEqual(evidence["snapshot_matches"], 72)
+            self.assertEqual(evidence["snapshot_raw_differences"], 18)
+            self.assertEqual(evidence["snapshot_differences"], 0)
+            self.assertEqual(selected[1][STATIONS[0]["id"]]["forecasts"][0]["values"]["precip_mm"], 0.13)
+
+    def test_definitive_d_plus_one_uses_calibrated_cycle_for_all_models(self):
+        issue = daily.RETROSPECTIVE_ONLY_FROM
+        for model in daily.MODELS:
+            archive = daily.empty_archive(issue, STATIONS)
+            for station in archive["station_results"].values():
+                for row in station["forecasts"]:
+                    if row["model"] == model:
+                        row["values"] = {"direction_deg": 180, "mean_kt": 99, "gust_kt": 99, "precip_mm": 99}
+            original = (None, issue, "old_snapshot.json", archive["station_results"])
+            fetcher = Mock(side_effect=self.response)
+            selected, evidence = daily.select_group(issue, model, STATIONS, original,
+                                                    daily.empty_archive(issue, STATIONS), fetcher)
+            self.assertEqual(selected[0], daily.run_label(issue, model))
+            self.assertEqual(evidence["selection_basis"], daily.POLICY)
+            self.assertEqual(evidence["snapshot_compared"], 0)
+            self.assertEqual(fetcher.call_count, 1)
 
     def test_sparse_alternative_cycle_cannot_lock_retry_to_an_unverified_run(self):
         issue = datetime(2026, 11, 15, 18, tzinfo=TZ)
