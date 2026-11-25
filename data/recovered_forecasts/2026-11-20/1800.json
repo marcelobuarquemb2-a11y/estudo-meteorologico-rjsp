@@ -60,6 +60,47 @@
       "snapshot_differences": 0,
       "snapshot_difference_details": [],
       "original_snapshot_file": "data/2026-11/2026-11-20/182550.json"
+    },
+    "ICON": {
+      "selection_accepted": true,
+      "accepted_for_study": true,
+      "selection_policy": "rjsp_calibrated_reference_cycles_v1",
+      "selection_basis": "snapshot_precision_matched",
+      "source_attempt_file": "data/daily_recovery/2026-11-20/status.json",
+      "source_attempt_number": 4,
+      "original_snapshot_file": "data/2026-11/2026-11-20/182550.json",
+      "retrieved_at_local": "2026-11-21T12:35:49.842616-03:00",
+      "snapshot_compared": 72,
+      "snapshot_matches": 72,
+      "snapshot_raw_matches": 71,
+      "snapshot_raw_differences": 1,
+      "snapshot_difference_details": [
+        {
+          "station_id": "inmet_a602_marambaia",
+          "target_local": "2026-11-23T18:00",
+          "variable": "precip_mm",
+          "snapshot": 0,
+          "retrieved": 0.03
+        }
+      ],
+      "source_request": {
+        "run_utc": "2026-11-20T12:00",
+        "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=icon_global&run=2026-11-20T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+        "values_present": 72,
+        "snapshot_matches": 71,
+        "snapshot_compared": 72,
+        "selection_accepted": false,
+        "snapshot_difference_details": [
+          {
+            "station_id": "inmet_a602_marambaia",
+            "target_local": "2026-11-23T18:00",
+            "variable": "precip_mm",
+            "snapshot": 0,
+            "retrieved": 0.03
+          }
+        ]
+      },
+      "backfill_method": "One-time reconstruction from complete original comparison and logged retrieved differences; equal values retained within 1e-8; no new API request; original archive unchanged; exact returned grid not retained in rejected log."
     }
   },
   "station_results": {
@@ -86,11 +127,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 104,
+            "mean_kt": 1.6,
+            "gust_kt": 6.8,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -100,11 +144,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 62,
+            "mean_kt": 3.3,
+            "gust_kt": 8.4,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -114,11 +161,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 160,
+            "mean_kt": 2.9,
+            "gust_kt": 7,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -165,7 +215,7 @@
             "direction_deg": 21,
             "mean_kt": 1.7,
             "gust_kt": 3.7,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -182,7 +232,7 @@
             "direction_deg": 351,
             "mean_kt": 1.8,
             "gust_kt": 4.9,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -247,11 +297,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 185,
+            "mean_kt": 2.1,
+            "gust_kt": 4.5,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -261,11 +314,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 300,
+            "mean_kt": 1.6,
+            "gust_kt": 5.6,
+            "precip_mm": 1.2
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -275,11 +331,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 184,
+            "mean_kt": 2.9,
+            "gust_kt": 6.2,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -290,9 +349,9 @@
           "valid_at_local": "2026-11-21T18:00",
           "values": {
             "direction_deg": 233,
-            "mean_kt": 1.0,
+            "mean_kt": 1,
             "gust_kt": 0.8,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -326,7 +385,7 @@
             "direction_deg": 243,
             "mean_kt": 1.3,
             "gust_kt": 2.3,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -343,7 +402,7 @@
             "direction_deg": 326,
             "mean_kt": 0.7,
             "gust_kt": 5.1,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -408,11 +467,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 212,
+            "mean_kt": 5.9,
+            "gust_kt": 15.4,
+            "precip_mm": 0.6
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -422,11 +484,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 201,
+            "mean_kt": 2.7,
+            "gust_kt": 8.4,
+            "precip_mm": 2.1
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -436,11 +501,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 187,
+            "mean_kt": 4.5,
+            "gust_kt": 10.9,
+            "precip_mm": 0.03
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -470,7 +538,7 @@
             "direction_deg": 183,
             "mean_kt": 3.3,
             "gust_kt": 3.7,
-            "precip_mm": 1.0
+            "precip_mm": 1
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -504,7 +572,7 @@
             "direction_deg": 103,
             "mean_kt": 3.9,
             "gust_kt": 12.6,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -569,11 +637,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 219,
+            "mean_kt": 5,
+            "gust_kt": 15.7,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -583,11 +654,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 141,
+            "mean_kt": 3.7,
+            "gust_kt": 10.7,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -597,11 +671,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 130,
+            "mean_kt": 3.3,
+            "gust_kt": 10.7,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -646,7 +723,7 @@
           "valid_at_local": "2026-11-23T18:00",
           "values": {
             "direction_deg": 153,
-            "mean_kt": 3.0,
+            "mean_kt": 3,
             "gust_kt": 6.8,
             "precip_mm": 0.6
           },
@@ -665,7 +742,7 @@
             "direction_deg": 141,
             "mean_kt": 3.9,
             "gust_kt": 13.4,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -680,7 +757,7 @@
           "valid_at_local": "2026-11-22T18:00",
           "values": {
             "direction_deg": 198,
-            "mean_kt": 5.0,
+            "mean_kt": 5,
             "gust_kt": 14.4,
             "precip_mm": 0.9
           },
@@ -699,7 +776,7 @@
             "direction_deg": 231,
             "mean_kt": 5.5,
             "gust_kt": 16.7,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -730,11 +807,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 254,
+            "mean_kt": 8.9,
+            "gust_kt": 12.2,
+            "precip_mm": 0.1
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -744,11 +824,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 111,
+            "mean_kt": 3.8,
+            "gust_kt": 6.2,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -758,11 +841,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 141,
+            "mean_kt": 6.5,
+            "gust_kt": 9.1,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -791,7 +877,7 @@
           "values": {
             "direction_deg": 183,
             "mean_kt": 4.3,
-            "gust_kt": 6.0,
+            "gust_kt": 6,
             "precip_mm": 0.6
           },
           "run_utc": "2026-11-20T12:00",
@@ -807,7 +893,7 @@
           "valid_at_local": "2026-11-23T18:00",
           "values": {
             "direction_deg": 153,
-            "mean_kt": 3.0,
+            "mean_kt": 3,
             "gust_kt": 4.1,
             "precip_mm": 0.6
           },
@@ -826,7 +912,7 @@
             "direction_deg": 96,
             "mean_kt": 5.2,
             "gust_kt": 6.8,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -860,7 +946,7 @@
             "direction_deg": 256,
             "mean_kt": 8.1,
             "gust_kt": 11.5,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -891,11 +977,14 @@
           "target_local": "2026-11-21T18:00",
           "valid_at_local": "2026-11-21T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 219,
+            "mean_kt": 5,
+            "gust_kt": 15.7,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -905,11 +994,14 @@
           "target_local": "2026-11-22T18:00",
           "valid_at_local": "2026-11-22T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 141,
+            "mean_kt": 3.7,
+            "gust_kt": 10.7,
+            "precip_mm": 0
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "ICON",
@@ -919,11 +1011,14 @@
           "target_local": "2026-11-23T18:00",
           "valid_at_local": "2026-11-23T18:00",
           "values": {
-            "direction_deg": null,
-            "mean_kt": null,
-            "gust_kt": null,
-            "precip_mm": null
-          }
+            "direction_deg": 130,
+            "mean_kt": 3.3,
+            "gust_kt": 10.7,
+            "precip_mm": 0.2
+          },
+          "run_utc": "2026-11-20T12:00",
+          "provenance": "retrospective_logged_candidate",
+          "original_publication_at_slot_verified": false
         },
         {
           "model": "GFS",
@@ -968,7 +1063,7 @@
           "valid_at_local": "2026-11-23T18:00",
           "values": {
             "direction_deg": 153,
-            "mean_kt": 3.0,
+            "mean_kt": 3,
             "gust_kt": 6.8,
             "precip_mm": 0.6
           },
@@ -987,7 +1082,7 @@
             "direction_deg": 141,
             "mean_kt": 3.9,
             "gust_kt": 13.4,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
@@ -1002,7 +1097,7 @@
           "valid_at_local": "2026-11-22T18:00",
           "values": {
             "direction_deg": 198,
-            "mean_kt": 5.0,
+            "mean_kt": 5,
             "gust_kt": 14.4,
             "precip_mm": 0.9
           },
@@ -1021,7 +1116,7 @@
             "direction_deg": 231,
             "mean_kt": 5.5,
             "gust_kt": 16.7,
-            "precip_mm": 0.0
+            "precip_mm": 0
           },
           "run_utc": "2026-11-20T12:00",
           "provenance": "daily_retrospective",
