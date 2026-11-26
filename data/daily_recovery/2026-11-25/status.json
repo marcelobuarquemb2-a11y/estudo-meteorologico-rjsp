@@ -318,12 +318,101 @@
         }
       ],
       "unreadable_original_archives": []
+    },
+    {
+      "number": 2,
+      "started_at_local": "2026-11-26T11:33:17.932957-03:00",
+      "github_run_id": "45840143318",
+      "groups": [
+        {
+          "issue_local": "2026-11-25T09:00:00-03:00",
+          "model": "GFS",
+          "requests": [
+            {
+              "run_utc": "2026-11-25T06:00",
+              "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-25T06%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+              "values_present": 54,
+              "snapshot_matches": 0,
+              "snapshot_compared": 0,
+              "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+              "snapshot_raw_differences": 0,
+              "selection_accepted": true,
+              "snapshot_difference_details": []
+            }
+          ],
+          "errors": [],
+          "selection_accepted": true,
+          "selection_basis": "rjsp_calibrated_reference_cycles_v1",
+          "snapshot_matches": 0,
+          "snapshot_compared": 0,
+          "snapshot_differences": 0,
+          "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+          "snapshot_raw_differences": 0,
+          "snapshot_difference_details": [],
+          "original_snapshot_file": "data/2026-11/2026-11-25/090204482362.json"
+        },
+        {
+          "issue_local": "2026-11-25T12:00:00-03:00",
+          "model": "GFS",
+          "requests": [
+            {
+              "run_utc": "2026-11-25T06:00",
+              "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-25T06%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+              "values_present": 54,
+              "snapshot_matches": 0,
+              "snapshot_compared": 0,
+              "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+              "snapshot_raw_differences": 0,
+              "selection_accepted": true,
+              "snapshot_difference_details": []
+            }
+          ],
+          "errors": [],
+          "selection_accepted": true,
+          "selection_basis": "rjsp_calibrated_reference_cycles_v1",
+          "snapshot_matches": 0,
+          "snapshot_compared": 0,
+          "snapshot_differences": 0,
+          "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+          "snapshot_raw_differences": 0,
+          "snapshot_difference_details": [],
+          "original_snapshot_file": "data/2026-11/2026-11-25/115911048314.json"
+        },
+        {
+          "issue_local": "2026-11-25T15:00:00-03:00",
+          "model": "GFS",
+          "requests": [
+            {
+              "run_utc": "2026-11-25T12:00",
+              "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=-23.2236111%2C-22.97555554%2C-23.05027777%2C-22.98833333%2C-23.0634%2C-22.896683&longitude=-44.72694443%2C-44.30333333%2C-43.59555555%2C-43.19055555%2C-43.146167%2C-43.165933&models=ncep_gfs_global&run=2026-11-25T12%3A00&hourly=wind_direction_10m%2Cwind_speed_10m%2Cwind_gusts_10m%2Cprecipitation&timezone=America%2FSao_Paulo&wind_speed_unit=kn&forecast_days=6",
+              "values_present": 72,
+              "snapshot_matches": 0,
+              "snapshot_compared": 0,
+              "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+              "snapshot_raw_differences": 0,
+              "selection_accepted": true,
+              "snapshot_difference_details": []
+            }
+          ],
+          "errors": [],
+          "selection_accepted": true,
+          "selection_basis": "rjsp_calibrated_reference_cycles_v1",
+          "snapshot_matches": 0,
+          "snapshot_compared": 0,
+          "snapshot_differences": 0,
+          "snapshot_comparison_policy": "uniform_precip_1dp_v1",
+          "snapshot_raw_differences": 0,
+          "snapshot_difference_details": [],
+          "original_snapshot_file": null
+        }
+      ],
+      "unreadable_original_archives": []
     }
   ],
   "record_type": "daily_retrospective_collection_status",
-  "updated_at_local": "2026-11-26T10:10:01.772114-03:00",
+  "updated_at_local": "2026-11-26T11:33:17.932957-03:00",
   "status": "partial",
-  "attempt_count": 1,
+  "attempt_count": 2,
   "maximum_attempts": 10,
   "retry_interval_minutes": 20,
   "start_hour_brt": 9,
@@ -346,7 +435,7 @@
     15,
     18
   ],
-  "forecast_values_present": 756,
+  "forecast_values_present": 828,
   "forecast_values_expected": 864,
   "complete": false,
   "archives": [
