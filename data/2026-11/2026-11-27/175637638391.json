@@ -1,0 +1,467 @@
+{
+  "consulted_at": "2026-11-27T17:56:37.638391-03:00",
+  "official_series_start_local": "2026-11-07T15:00:00-03:00",
+  "official_series_eligible": true,
+  "nominal_issue_at_local": "2026-11-27T18:00:00-03:00",
+  "nominal_slot_hour_brt": 18,
+  "consultation_offset_minutes": -3.3727,
+  "schedule_event": "47 19 * * *",
+  "trigger_event": "workflow_dispatch",
+  "explicit_push_capture": false,
+  "nominal_refresh_attempt": false,
+  "information_time_convention": "actual consultation time",
+  "collection_scope": "meteoblue_only",
+  "targets_local": [
+    "2026-11-28T18:00",
+    "2026-11-29T18:00",
+    "2026-11-30T18:00"
+  ],
+  "station_results": {
+    "inmet_a619_paraty": {
+      "name": "Paraty",
+      "lat": -23.2236111,
+      "lon": -44.72694443,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    },
+    "inmet_a628_angra": {
+      "name": "Angra dos Reis",
+      "lat": -22.97555554,
+      "lon": -44.30333333,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    },
+    "inmet_a602_marambaia": {
+      "name": "Marambaia",
+      "lat": -23.05027777,
+      "lon": -43.59555555,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    },
+    "inmet_a652_copacabana": {
+      "name": "Forte de Copacabana",
+      "lat": -22.98833333,
+      "lon": -43.19055555,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    },
+    "ilha_rasa": {
+      "name": "Ilha Rasa",
+      "lat": -23.0634,
+      "lon": -43.146167,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    },
+    "ilha_fiscal": {
+      "name": "Ilha Fiscal",
+      "lat": -22.896683,
+      "lon": -43.165933,
+      "sources": {},
+      "errors": [
+        "Meteoblue basic-1h HTTPError",
+        "Meteoblue wind-3h HTTPError",
+        "Notation audit failed"
+      ],
+      "coordinate_status": "official_observation_station",
+      "forecast_acquisition_validated": false,
+      "forecasts": [
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 1,
+          "target_local": "2026-11-28T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 2,
+          "target_local": "2026-11-29T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        },
+        {
+          "model": "Meteoblue package (AI/mLM unverified)",
+          "source": "Meteoblue",
+          "day_offset": 3,
+          "target_local": "2026-11-30T18:00",
+          "valid_at_local": null,
+          "values": {
+            "direction_deg": null,
+            "mean_kt": null,
+            "gust_kt": null,
+            "precip_mm": null
+          },
+          "gust_height": "unverified",
+          "model_identity": "AI/mLM unverified",
+          "direction_octant": null
+        }
+      ],
+      "completeness": {
+        "present": 0,
+        "expected": 12
+      },
+      "notation_audit": {
+        "timezone_ok": false,
+        "date_and_target_ok": false,
+        "grid_sanity_ok": null,
+        "passed": false
+      }
+    }
+  },
+  "note": "Raw forecasts only; no observations or skill scores",
+  "collection_summary": {
+    "stations_total": 6,
+    "stations_with_coordinates": 6,
+    "forecast_values_present": 0,
+    "forecast_values_expected": 72,
+    "notation_audits_passed": 0
+  }
+}
